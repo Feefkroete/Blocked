@@ -17,6 +17,7 @@ public class KeyInput implements KeyListener
 
     public static void tick()
     {
+        //Booleans werden auf true gesetzt, wenn Taste gedrückt
         up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
         down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
         right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
@@ -35,10 +36,10 @@ public class KeyInput implements KeyListener
     @Override
     public void keyPressed(KeyEvent e)
     {
-        keys[e.getKeyCode()] = true;
+        keys[e.getKeyCode()] = true;                //Array auf true setzen bei der id der Taste
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
         {
-            if (Game.gameState == 0)
+            if (Game.gameState == 0)    //Wenn esc gedrückt und das Spiel läuft => Hauptmenu
             {
                 Game.gameState = 1;
                 (Game.getWorld()).saveWorld(Game.getPlayer());
@@ -50,6 +51,6 @@ public class KeyInput implements KeyListener
     @Override
     public void keyReleased(KeyEvent e)
     {
-            keys[e.getKeyCode()] = false;
+            keys[e.getKeyCode()] = false;   //Wenn Taste nicht mehr gedrückt => Array an der Stelle der Tastenid auf fals gesetzt
     }
 }

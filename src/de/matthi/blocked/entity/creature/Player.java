@@ -51,7 +51,7 @@ public class Player extends Creature
     @Override
     public void tick()
     {
-        int geschw = 6;
+        int geschw = 1;
 
         /*
         if(impulse > -10)
@@ -60,48 +60,48 @@ public class Player extends Creature
             impulse--;
         }
          */
-
-        if (KeyInput.sprint)
-        {
-            geschw *= 1.8;
-        }
-        if (KeyInput.up)
-        {
-            //impulse = 10;
-            if (o) {
-                this.move(0, -1 * geschw);
+            if (KeyInput.sprint) {
+                geschw *= 1.8;
             }
-        }
-        if (KeyInput.down)
-        {
-            if (u) {
-                this.move(0, geschw);
+            if (KeyInput.up) {
+                //impulse = 10;
+                if (o) {
+                    this.move(0, -1 * geschw);
+                }
             }
-        }
-        if (KeyInput.left)
-        {
-            if (l) {
-                this.move(-1 * geschw, 0);
+            if (KeyInput.down && posy+30 < Game.getWorld().getHeight()*60) {
+                Block lu = Game.getWorld().getBlock((int) (posx - 29) / 60, (int) (posy + 30) / 60);
+                Block ru = Game.getWorld().getBlock((int) (posx + 29) / 60, (int) (posy + 30) / 60);
+                if (lu == Block.blocks[4] || lu == null && ru == Block.blocks[4] || ru == null) {
+                    this.move(0, geschw);
+                }
             }
-        }
-        if (KeyInput.right)
-        {
-            if (r) {
-                this.move(geschw, 0);
+            if (KeyInput.left && posx-30 >= 0) {
+                Block lo = Game.getWorld().getBlock((int) (posx - 30) / 60, (int) (posy - 29) / 60);
+                Block lu = Game.getWorld().getBlock((int) (posx - 30) / 60, (int) (posy + 29) / 60);
+                if (lo == Block.blocks[4] || lo == null && lu == Block.blocks[4] || lu == null) {
+                    this.move(-1 * geschw, 0);
+                }
             }
-        }
+            if (KeyInput.right && posx+30 < Game.getWorld().getWidth()*60) {
+                Block ro = Game.getWorld().getBlock((int) (posx + 30) / 60, (int) (posy - 29) / 60);
+                Block ru = Game.getWorld().getBlock((int) (posx + 30) / 60, (int) (posy + 29) / 60);
+                if (ro == Block.blocks[4] || ro == null && ru == Block.blocks[4] || ru == null) {
+                    this.move(geschw, 0);
+                }
+            }
 
         //TESTCODE!! boolean t auch entfernen!
         /*
-            eventuell mit vier booleans (colisiono/colisionu/colisionl/colisionr)
-            und dann für jeden boolean jeweils 2 Ecken überprüfen (z.B. für links -> links oben + links unten)
+            Für jede Bewegungsrichtung individuell Ecken + 1(in Bewegungsrichtung) überprüfen
+            Unterschied Ecke - Blockposition => Unterschied noch bewegen
         */
 
         Block testlo = null;
         Block testro = null;
         Block testlu = null;
         Block testru = null;
-        if (posx < Game.getWorld().getWidth()*60 && posx >= 0 && posy < Game.getWorld().getHeight()*60 && posy >= 0)
+        if (posx+30 < Game.getWorld().getWidth()*60 && posx-30 >= 0 && posy+30 < Game.getWorld().getHeight()*60 && posy-30 >= 0)
         {
             testlo = Game.getWorld().getBlock((int) (posx - 30) / 60, (int) (posy - 27) / 60);
             testro = Game.getWorld().getBlock((int) (posx + 30) / 60, (int) (posy - 30) / 60);
