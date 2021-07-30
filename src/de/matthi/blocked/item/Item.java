@@ -20,6 +20,7 @@ public abstract class Item
     public static Item leaves_item = new LeavesItem(3);
     public static Item air_item = new AirItem(4);
     public static Item dirt_item = new DirtItem(5);
+    public static Item mud_bricks_item = new MudBricksItem(6);
 
     protected BufferedImage textur;
 

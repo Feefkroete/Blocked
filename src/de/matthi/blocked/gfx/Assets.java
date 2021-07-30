@@ -7,7 +7,7 @@ public class Assets
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
-    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, air, dirt, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8;
+    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, air, dirt, mud_bricks, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8;
 
     public static void init()
     {
@@ -40,5 +40,6 @@ public class Assets
         inv = sheet.pacman(WIDTH*2+3, HEIGHT*2+3, WIDTH, HEIGHT);
         air = sheet.pacman(WIDTH*3+4, HEIGHT*2+3, WIDTH, HEIGHT);
         dirt = sheet.pacman(1, HEIGHT*3+4, WIDTH, HEIGHT);
+        mud_bricks = sheet.pacman(WIDTH + 2, HEIGHT*3+4, WIDTH, HEIGHT);
     }
 }

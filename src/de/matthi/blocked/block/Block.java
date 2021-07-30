@@ -16,6 +16,7 @@ public abstract class Block
     public static Block leaves_block = new Leaves(3);
     public static Block air_block = new Air(4);
     public static Block dirt_block = new Dirt(5);
+    public static Block mud_bricks_block = new MudBricks(6);
 
     protected BufferedImage textur;
 
