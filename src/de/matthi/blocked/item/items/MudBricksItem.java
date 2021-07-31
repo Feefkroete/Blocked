@@ -21,4 +21,9 @@ public class MudBricksItem extends Item
     public void tick() {
 
     }
+
+    @Override
+    public boolean isWallItem() {
+        return false;
+    }
 }

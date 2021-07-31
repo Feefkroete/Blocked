@@ -21,4 +21,9 @@ public class Leaves extends Block
     public void tick() {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return false;
+    }
 }

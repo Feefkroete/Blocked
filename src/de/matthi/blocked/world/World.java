@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class World
 {
@@ -68,18 +67,19 @@ public class World
 
     public void createWorld(int width)
     {
-        int x = 0;
+        final int height = 60;
+        int nummer = 0;
         try
         {
             while (true)
             {
-                File worldFile = new File("res/worlds/world" + x + ".txt");
+                File worldFile = new File("res/worlds/world" + nummer + ".txt");
                 if (!worldFile.createNewFile()) {                   //Versucht, eine Datei mit diesem Namen zu erstellen; wenns nicht geht, wird die Zahl im Weltnamen erhöht
-                    x++;
+                    nummer++;
                 }
                 else
                 {
-                    System.out.println("Welt " + "world" + x + " gespeichert.");
+                    System.out.println("Welt " + "world" + nummer + " gespeichert.");
                     break;                                          //Aus dem while-loop gehen
                 }
             }
@@ -88,19 +88,73 @@ public class World
         {
             e.printStackTrace();
         }
-        String[] saveData = new String[width * 30 + 4];             //Wird zukünftig die Daten der generierten Welt enthalten
+        int[][] worldData = new int[width][height];
 
-        Arrays.fill(saveData, "1");     //TEMPORÄR!!!!!!!!
+        for (int x = 0; x<width; x++)
+        {
+            double noise = ((0.2*Math.sin(0.3*x)+4)/3)*0.3*Math.sin(0.15*x)+Math.sin(0.2*x*3)+18-(1*Math.sin(0.65*x)+2)-(2*Math.sin(0.3*x)+7)*((2.5*Math.sin(0.25*x)+4)/100)*19;
+            for (int y = 0; y< height; y++)
+            {
+                if(y > noise)
+                {
+                    if (worldData[x][y-1] == 4)     //Oberfläche (=Gras) wird generiert => Sachen auf der Oberfläche gleich mit  [Wird evtl. noch verschoben auf nach der Weltgenerierung]
+                    {
+                        worldData[x][y] = 0;
+                        /*
+                        if (Math.random() < 0.25)
+                        {
+                            int[][] tree = Tree.generate();
+                            for (int ax = 0; ax < Tree.WIDTH; ax++)
+                            {
+                                for (int ay = 0; ay < Tree.HEIGHT; ay++)
+                                {
+                                    if(tree[ax][ay] != 4 && x - (ax - (Tree.WIDTH / 2)) < width) {
+                                        worldData[x - (ax - (Tree.WIDTH / 2))][(y - 1) - (ay - (Tree.HEIGHT / 2))] = tree[ax][ay];
+                                    }
+                                }
+                            }
+                        }
+                         */
+                    }
+                    else {
+                        if(worldData[x][y] != 3)         //Damit die Bäume nicht abgeschnitten werden; ist ne naja-Lösung
+                        {
+                            if (worldData[x][y - 1] == 0 || worldData[x][y - 2] == 0 || worldData[x][y - 3] == 0) {
+                                worldData[x][y] = 5;
+                            } else {
+                                worldData[x][y] = 1;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    worldData[x][y] = 4;
+                }
+            }
+        }
+        String[] saveData = new String[width * height + 4];
+
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                saveData[(x+y*width) + 4] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
+            }
+        }
+
+        //Arrays.fill(saveData, "1");     //TEMPORÄR!!!!!!!!
 
         saveData[0] = String.valueOf(width);                        //Wie üblich erste vier Werte schreiben
-        saveData[1] = String.valueOf(30);
+        saveData[1] = String.valueOf(height);
         saveData[2] = String.valueOf(0);
         saveData[3] = String.valueOf(0);
 
-        FileHandler.writeWorldAsFile("/worlds/world" + x + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
+        FileHandler.writeWorldAsFile("/worlds/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
-        loadWorld("/worlds/world" + x + ".txt");
+        loadWorld("/worlds/world" + nummer + ".txt");
     }
 
     public void tick(JFrame fenster)

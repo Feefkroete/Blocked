@@ -23,4 +23,9 @@ public class Grass extends Block
     {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return true;
+    }
 }

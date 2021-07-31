@@ -23,4 +23,9 @@ public class Trunk extends Block
     public void tick() {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return false;
+    }
 }

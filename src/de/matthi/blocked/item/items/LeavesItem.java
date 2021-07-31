@@ -23,4 +23,9 @@ public class LeavesItem extends Item
     public void tick() {
 
     }
+
+    @Override
+    public boolean isWallItem() {
+        return false;
+    }
 }

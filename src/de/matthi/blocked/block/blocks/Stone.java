@@ -24,4 +24,9 @@ public class Stone extends Block
     {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return true;
+    }
 }

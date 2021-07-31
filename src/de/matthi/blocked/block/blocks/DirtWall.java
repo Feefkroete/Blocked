@@ -5,15 +5,16 @@ import de.matthi.blocked.gfx.Assets;
 
 import java.awt.*;
 
-public class MudBricks extends Block {
+public class DirtWall extends Block {
 
-    public MudBricks(int id)
+    public DirtWall(int id)
     {
-        super(Assets.mud_bricks, id);
+        super(Assets.dirt, id);
     }
 
     @Override
-    public void render(Graphics graphics, int posx, int posy) {
+    public void render(Graphics graphics, int posx, int posy)
+    {
         graphics.drawImage(textur, posx, posy, 60, 60, null);
     }
 
@@ -24,6 +25,6 @@ public class MudBricks extends Block {
 
     @Override
     public boolean isSolid() {
-        return true;
+        return false;
     }
 }

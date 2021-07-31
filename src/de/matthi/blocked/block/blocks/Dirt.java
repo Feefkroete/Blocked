@@ -22,4 +22,9 @@ public class Dirt extends Block {
     public void tick() {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return true;
+    }
 }

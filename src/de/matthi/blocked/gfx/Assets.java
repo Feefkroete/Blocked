@@ -7,13 +7,17 @@ public class Assets
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
-    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, air, dirt, mud_bricks, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8;
+    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, air, dirt, mud_bricks, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
 
     public static void init()
     {
-        SpriteSheet sheet = new SpriteSheet(Texture.load("/textures/sprite.png"));
         SpriteSheet background = new SpriteSheet(Texture.load("/textures/sprite_background.png"));
         SpriteSheet button = new SpriteSheet(Texture.load("/textures/sprite_button.png"));
+        SpriteSheet block = new SpriteSheet(Texture.load("/textures/sprite_block.png"));
+        SpriteSheet entity = new SpriteSheet(Texture.load("/textures/sprite_entity.png"));
+        SpriteSheet item = new SpriteSheet(Texture.load("/textures/sprite_item.png"));
+        SpriteSheet player = new SpriteSheet(Texture.load("/textures/sprite_player.png"));
+        SpriteSheet ui = new SpriteSheet(Texture.load("/textures/sprite_ui.png"));
 
         worldBackground = background.pacman(0,0,512, 512);
         menuBackground = background.pacman(513, 0, 511, 512);
@@ -27,19 +31,24 @@ public class Assets
         button7 = button.pacman(97, 9, 31, 15);
         button8 = button.pacman(97, 41, 31, 15);
 
-        spieler1 = sheet.pacman(1,1,WIDTH, HEIGHT);
-        spieler2 = sheet.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
-        spieler3 = sheet.pacman(WIDTH*2 + 3, 1, WIDTH, HEIGHT);
-        spieler4 = sheet.pacman(WIDTH*3 + 4, 1, WIDTH, HEIGHT);
-        grass = sheet.pacman(1, HEIGHT+2, WIDTH, HEIGHT);
-        trunk = sheet.pacman(WIDTH+2, HEIGHT+2, WIDTH, HEIGHT);
-        leaves = sheet.pacman(WIDTH*2+3, HEIGHT+2, WIDTH, HEIGHT);
-        stone = sheet.pacman(WIDTH*3+4, HEIGHT+2, WIDTH, HEIGHT);
-        pig = sheet.pacman(1, HEIGHT*2+3, WIDTH, HEIGHT);
-        select = sheet.pacman(WIDTH + 2, HEIGHT*2+3, WIDTH, HEIGHT);
-        inv = sheet.pacman(WIDTH*2+3, HEIGHT*2+3, WIDTH, HEIGHT);
-        air = sheet.pacman(WIDTH*3+4, HEIGHT*2+3, WIDTH, HEIGHT);
-        dirt = sheet.pacman(1, HEIGHT*3+4, WIDTH, HEIGHT);
-        mud_bricks = sheet.pacman(WIDTH + 2, HEIGHT*3+4, WIDTH, HEIGHT);
+        spieler1 = player.pacman(1,1,WIDTH, HEIGHT);
+        spieler2 = player.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
+        spieler3 = player.pacman(WIDTH*2 + 3, 1, WIDTH, HEIGHT);
+        spieler4 = player.pacman(WIDTH*3 + 4, 1, WIDTH, HEIGHT);
+
+        grass = block.pacman(1, 1, WIDTH, HEIGHT);
+        trunk = block.pacman(WIDTH+2, 1, WIDTH, HEIGHT);
+        leaves = block.pacman(WIDTH*2+3, 1, WIDTH, HEIGHT);
+        stone = block.pacman(WIDTH*3+4, 1, WIDTH, HEIGHT);
+        dirt = block.pacman(WIDTH*4+5, 1, WIDTH, HEIGHT);
+        mud_bricks = block.pacman(WIDTH*5+6, 1, WIDTH, HEIGHT);
+
+        pig = entity.pacman(1, 1, WIDTH, HEIGHT);
+
+        select = ui.pacman(1, 1, WIDTH, HEIGHT);
+        inv = ui.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
+
+        air = item.pacman(1, 1, WIDTH, HEIGHT);
+        wallOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
     }
 }

@@ -22,4 +22,9 @@ public class Air extends Block {
     {
 
     }
+
+    @Override
+    public boolean isSolid() {
+        return false;
+    }
 }

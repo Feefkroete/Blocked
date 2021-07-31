@@ -23,4 +23,9 @@ public class AirItem extends Item
     public void tick() {
 
     }
+
+    @Override
+    public boolean isWallItem() {
+        return false;
+    }
 }

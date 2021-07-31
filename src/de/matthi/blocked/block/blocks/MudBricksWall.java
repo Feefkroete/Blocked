@@ -5,9 +5,9 @@ import de.matthi.blocked.gfx.Assets;
 
 import java.awt.*;
 
-public class MudBricks extends Block {
+public class MudBricksWall extends Block {
 
-    public MudBricks(int id)
+    public MudBricksWall(int id)
     {
         super(Assets.mud_bricks, id);
     }
@@ -24,6 +24,6 @@ public class MudBricks extends Block {
 
     @Override
     public boolean isSolid() {
-        return true;
+        return false;
     }
 }

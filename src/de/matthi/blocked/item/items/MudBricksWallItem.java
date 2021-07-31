@@ -5,17 +5,15 @@ import de.matthi.blocked.item.Item;
 
 import java.awt.*;
 
-public class DirtItem extends Item
+public class MudBricksWallItem extends Item
 {
-
-    public DirtItem(int id)
+    public MudBricksWallItem(int id)
     {
-        super(Assets.dirt, id);
+        super(Assets.mud_bricks, id);
     }
 
     @Override
-    public void render(Graphics graphics, int posx, int posy, int width, int height)
-    {
+    public void render(Graphics graphics, int posx, int posy, int width, int height) {
         graphics.drawImage(textur, posx, posy, width, height, null);
     }
 
@@ -26,6 +24,6 @@ public class DirtItem extends Item
 
     @Override
     public boolean isWallItem() {
-        return false;
+        return true;
     }
 }

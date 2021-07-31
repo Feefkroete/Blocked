@@ -5,10 +5,10 @@ import de.matthi.blocked.item.Item;
 
 import java.awt.*;
 
-public class DirtItem extends Item
+public class DirtWallItem extends Item
 {
 
-    public DirtItem(int id)
+    public DirtWallItem(int id)
     {
         super(Assets.dirt, id);
     }
@@ -26,6 +26,6 @@ public class DirtItem extends Item
 
     @Override
     public boolean isWallItem() {
-        return false;
+        return true;
     }
 }
