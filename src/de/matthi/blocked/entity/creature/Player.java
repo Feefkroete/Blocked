@@ -7,30 +7,31 @@ import de.matthi.blocked.utils.KeyInput;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends Creature
-{
-    BufferedImage textur;
-    boolean collisionO, collisionU, collisionL, collisionR;
-    int test = 0;
+public class Player extends Creature{
 
-    public Player(double posx, double posy, int width, int height, int hp, BufferedImage textur)
-    {
-        super(posx, posy, width, height, hp);
+    BufferedImage textur;
+    int hitboxWidth = 48, hitboxHeight = 52;    //Hitboxen - WOW!
+    int hp;
+    boolean collisionU, collisionO, collisionL, collisionR;
+    int fallSpeed = 0;
+
+    public Player(double posx, double posy, int width, int heigth, int hp, BufferedImage textur) {
+        super(posx, posy, width, heigth, hp);
         this.textur = textur;
+        this.hp = hp;
         Game.poffx = posx + (Game.getFenster().getWidth()/2);
         Game.poffy = posy + (Game.getFenster().getHeight()/2);
     }
 
-    public void move(double posx, double posy)
+    public void move(double x, double y)
     {
-        this.posx += posx;
-        this.posy += posy;
+        this.posx += x;
+        this.posy += y;
         Game.poffx = this.posx - (Game.getFenster().getWidth()/2);
         Game.poffy = this.posy - (Game.getFenster().getHeight()/2);
     }
 
-    public void teleport(double posx, double posy)
-    {
+    public void teleport(double posx, double posy) {
         this.posx = posx;
         this.posy = posy;
         Game.poffx = this.posx - (Game.getFenster().getWidth()/2);
@@ -38,72 +39,126 @@ public class Player extends Creature
     }
 
     @Override
-    public void render(Graphics graphics)
-    {
-        graphics.setColor(Color.red);
-        //graphics.fillRect(Game.getFenster().getWidth()/2 - 30, Game.getFenster().getHeight()/2 -30, width, heigth);
+    public void render(Graphics graphics) {
+        if (KeyInput.hitBox) {                  //Hitbox nur auf Tastendruck togglen
+            graphics.setColor(Color.red);
+            graphics.fillRect(Game.getFenster().getWidth()/2 - 26, Game.getFenster().getHeight()/2 -22, hitboxWidth, hitboxHeight);
+        }
         graphics.drawImage(textur, Game.getFenster().getWidth()/2 - 30, Game.getFenster().getHeight()/2 -30, width, heigth, null);
     }
 
     @Override
-    public void tick()
-    {
-        int geschw = 5;
+    public void tick() {
+        int speed = 5;
         if (KeyInput.sprint) {
-            geschw *= 2;
+            speed *= 2;             //Wenn sprint -> 2-fache Geschwindigkeit
         }
 
-        if (KeyInput.up && posy-30 >= 0) {
-            Block blo = Game.getWorld().getBlock((int) (posx - (width/2) + 1) / 60, (int) (posy - (heigth/2) - geschw + 1) / 60);
-            Block bro = Game.getWorld().getBlock((int) (posx + (width/2) - 1) / 60, (int) (posy - (heigth/2) - geschw + 1) / 60);
-            boolean lo = blo == null || !blo.isSolid();
-            boolean ro = bro == null || !bro.isSolid();
-                if (lo && ro) {
-                    this.move(0, -1 * geschw);
-                    collisionO = false;
+        if (!KeyInput.fly) {        //Wenn Flugmodus inaktiv
+            if (isCollisionU()) {   //Wenn spieler auf einem Block steht
+                if (KeyInput.up) {
+                    fallSpeed = -10;    //Quasi nach oben fliegen... ja halt negative Fallgeschwindigkeit = nach-oben-flieg-geschwindigkeit
                 }
                 else {
-                    collisionO = true;
+                    fallSpeed = 0;      //Hier kann später dann auch falldamage rein
                 }
+            }
+            if (!isCollisionU()) {      //Wenn Spieler in der Luft
+                fallSpeed++;
+                if (fallSpeed > 0) {
+                    moveDown(fallSpeed);    //Fallen mit der Aktuellen fallgeschwindigkeit
+                }
+            }
+            if (fallSpeed < 0) {
+                moveUp(-1 * fallSpeed); //Nach oben fliegen mit der negativen Fallgeschwindigkeit
+            }
         }
-        if (KeyInput.down && posy+31 < Game.getWorld().getHeight()*60) {
-            Block lu = Game.getWorld().getBlock((int) (posx - (width/2) + 1) / 60, (int) (posy + (heigth/2) + geschw - 1) / 60);
-            Block ru = Game.getWorld().getBlock((int) (posx + (width/2) - 1) / 60, (int) (posy + (heigth/2) + geschw - 1) / 60);
-            if (lu == null || !lu.isSolid()) {
-                if (ru == null || !ru.isSolid()) {
-                    this.move(0, geschw);
-                    collisionU = false;
-                }
-                else {
-                    collisionU = true;
+        else {
+            fallSpeed = 0;      //Wenn Flugmodus im Fall angeschaltet wird -> Fallgeschwindigkeit auf null
+        }
+
+        if (KeyInput.up && posy-30 >= 0 && KeyInput.fly) {
+            moveUp(speed);
+        }
+        if (KeyInput.down && posy+31 < Game.getWorld().getHeight()*60 && KeyInput.fly) {
+            moveDown(speed);
+        }
+        if (KeyInput.left && posx-30 >= 0) {
+            moveLeft(speed);
+        }
+        if (KeyInput.right && posx+30 < Game.getWorld().getWidth()*60) {
+            moveRight(speed);
+        }
+    }
+
+    public void moveUp(int dist) {
+        for(int i = 0; i <= dist; i++) {
+            Block lo = Game.getWorld().getBlock((int) (posx - (hitboxWidth / 2)) / 60, (int) (posy - (hitboxHeight / 2)+3) / 60);
+            Block ro = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) - 3) / 60, (int) (posy - (hitboxHeight / 2)+3) / 60);
+            if (lo == null || !lo.isSolid()) {
+                if (ro == null || !ro.isSolid()) {
+                    this.move(0, -1);
+                    collisionO = false;
+                } else {
+                    collisionO = true;
                 }
             }
         }
-        if (KeyInput.left && posx-30 >= 0) {
-            Block lo = Game.getWorld().getBlock((int) (posx - (width/2) - geschw + 1) / 60, (int) (posy - (heigth/2) + 2) / 60);
-            Block lu = Game.getWorld().getBlock((int) (posx - (width/2) - geschw + 1) / 60, (int) (posy + (heigth/2) - 2) / 60);
+    }
+    public void moveDown(int dist) {
+        for (int i = 0; i <= dist; i++) {
+            Block lu = Game.getWorld().getBlock((int) (posx - (hitboxWidth / 2)) / 60, (int) (posy + (hitboxHeight / 2)+4) / 60);
+            Block ru = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) - 3) / 60, (int) (posy + (hitboxHeight / 2)+4) / 60);
+            if (lu == null || !lu.isSolid()) {
+                if (ru == null || !ru.isSolid()) {
+                    this.move(0, 1);
+                    collisionU = false;
+                } else {
+                    collisionU = true;
+                }
+            }
+            else {
+                collisionU = true;
+            }
+        }
+    }
+    public void moveLeft(int dist) {
+        for (int i = 0; i<=dist; i++) {
+            Block lo = Game.getWorld().getBlock((int) (posx - (hitboxWidth/2)-3) / 60, (int) (posy - (hitboxHeight/2) +4) / 60);
+            Block lu = Game.getWorld().getBlock((int) (posx - (hitboxWidth/2)-3) / 60, (int) (posy + (hitboxHeight/2)) / 60);
             if (lo == null || !lo.isSolid()) {
                 if (lu == null || !lu.isSolid()) {
-                    this.move(-1 * geschw, 0);
+                    this.move(-1, 0);
                     collisionL = false;
-                }
-                else {
+                } else {
                     collisionL = true;
                 }
             }
         }
-        if (KeyInput.right && posx+30 < Game.getWorld().getWidth()*60) {
-            Block ro = Game.getWorld().getBlock((int) (posx + (width/2) + geschw - 1) / 60, (int) (posy - (heigth/2) + 2) / 60);
-            Block ru = Game.getWorld().getBlock((int) (posx + (width/2) + geschw - 1) / 60, (int) (posy + (heigth/2) - 2) / 60);
+    }
+    public void moveRight(int dist) {
+        for(int i = 0; i<=dist; i++) {
+            Block ro = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) -2) / 60, (int) (posy - (hitboxHeight / 2) + 4) / 60);
+            Block ru = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) -2) / 60, (int) (posy + (hitboxHeight / 2)) / 60);
             if (ro == null || !ro.isSolid()) {
                 if (ru == null || !ru.isSolid()) {
-                    this.move(geschw, 0);
+                    this.move(1, 0);
                     collisionR = false;
-                }
-                else  {
+                } else {
                     collisionR = true;
                 }
             }
+        }
+    }
+    public boolean isCollisionU()
+    {
+        Block lu = Game.getWorld().getBlock((int) (posx - (hitboxWidth / 2)) / 60, (int) (posy + (hitboxHeight / 2)+4) / 60);
+        Block ru = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) - 3) / 60, (int) (posy + (hitboxHeight / 2)+4) / 60);
+        if (lu == null || !lu.isSolid()) {
+            return ru != null && ru.isSolid();
+        }
+        else {
+            return true;
         }
     }
 
@@ -111,7 +166,6 @@ public class Player extends Creature
     {
         return posx;
     }
-
     public double getYPosition()
     {
         return posy;

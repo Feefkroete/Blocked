@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener
 {
     private static boolean[] keys;
-    public static boolean up, down, right, left, sprint, set, save;
+    public static boolean up, down, right, left, sprint, save, fly = false, hitBox = false;
 
     public KeyInput()
     {
@@ -23,7 +23,6 @@ public class KeyInput implements KeyListener
         right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
         left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
         sprint = keys[KeyEvent.VK_SHIFT];
-        set = keys[KeyEvent.VK_SPACE];
         save = keys[KeyEvent.VK_P];
     }
 
@@ -51,6 +50,14 @@ public class KeyInput implements KeyListener
     @Override
     public void keyReleased(KeyEvent e)
     {
-            keys[e.getKeyCode()] = false;   //Wenn Taste nicht mehr gedrückt => Array an der Stelle der Tastenid auf fals gesetzt
+        keys[e.getKeyCode()] = false;   //Wenn Taste nicht mehr gedrückt => Array an der Stelle der Tastenid auf fals gesetzt
+        if (e.getKeyCode() == KeyEvent.VK_F)
+        {
+            fly = !fly;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_H)
+        {
+            hitBox = !hitBox;
+        }
     }
 }
