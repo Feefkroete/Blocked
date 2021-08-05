@@ -8,6 +8,8 @@ Controls:
 * s / Pfeiltaste nach unten = runter
 * a / Pfeiltaste nach links = links
 * d / Pfeiltaste nach rechts = rechts
+* f = Flugmodus
+* h = Hitboxen anzeigen
 * p = speichern
 * esc = speichern und ins Hauptmenu
 * mausrad = Blöcke auswählen
