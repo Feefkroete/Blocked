@@ -7,7 +7,7 @@ public class Assets
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
-    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, flight, air, dirt, mud_bricks, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
+    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, pig, select, inv, flight, air, dirt, mud_bricks, sand, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
 
     public static void init()
     {
@@ -42,6 +42,7 @@ public class Assets
         stone = block.pacman(WIDTH*3+4, 1, WIDTH, HEIGHT);
         dirt = block.pacman(WIDTH*4+5, 1, WIDTH, HEIGHT);
         mud_bricks = block.pacman(WIDTH*5+6, 1, WIDTH, HEIGHT);
+        sand = block.pacman(WIDTH*6+7, 1, WIDTH, HEIGHT);
 
         pig = entity.pacman(1, 1, WIDTH, HEIGHT);
 

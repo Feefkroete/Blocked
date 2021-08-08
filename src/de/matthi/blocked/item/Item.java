@@ -23,6 +23,7 @@ public abstract class Item
     public static Item dirt_wall_item = new DirtWallItem(6);
     public static Item mud_bricks_item = new MudBricksItem(7);
     public static Item mud_bricks_wall_item = new MudBricksWallItem(8);
+    public static Item sand_item = new SandItem(9);
 
     protected BufferedImage textur;
 

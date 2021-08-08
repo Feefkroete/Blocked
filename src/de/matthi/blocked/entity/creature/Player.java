@@ -57,7 +57,7 @@ public class Player extends Creature{
         if (!KeyInput.fly) {        //Wenn Flugmodus inaktiv
             if (isCollisionU()) {   //Wenn spieler auf einem Block steht
                 if (KeyInput.up) {
-                    fallSpeed = -10;    //Quasi nach oben fliegen... ja halt negative Fallgeschwindigkeit = nach-oben-flieg-geschwindigkeit
+                    fallSpeed = -11;    //Quasi nach oben fliegen... ja halt negative Fallgeschwindigkeit = nach-oben-flieg-geschwindigkeit
                 }
                 else {
                     fallSpeed = 0;      //Hier kann später dann auch falldamage rein

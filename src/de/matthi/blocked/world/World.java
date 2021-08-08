@@ -5,6 +5,7 @@ import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Overlay;
+import de.matthi.blocked.structure.Tree;
 import de.matthi.blocked.utils.FileHandler;
 import de.matthi.blocked.utils.MouseInput;
 
@@ -90,47 +91,56 @@ public class World
         }
         int[][] worldData = new int[width][height];
 
-        for (int x = 0; x<width; x++)
+        for (int x = 0; x<width; x++)       //Terraingeneration
         {
             double noise = ((0.2*Math.sin(0.3*x)+4)/3)*0.3*Math.sin(0.15*x)+Math.sin(0.2*x*3)+18-(1*Math.sin(0.65*x)+2)-(2*Math.sin(0.3*x)+7)*((2.5*Math.sin(0.25*x)+4)/100)*19;
             for (int y = 0; y< height; y++)
             {
                 if(y > noise)
                 {
-                    if (worldData[x][y-1] == 4)     //Oberfläche (=Gras) wird generiert => Sachen auf der Oberfläche gleich mit  [Wird evtl. noch verschoben auf nach der Weltgenerierung]
+                    if (worldData[x][y-1] == 4)     //Oberfläche (=Gras) wird generiert
                     {
                         worldData[x][y] = 0;
-                        /*
-                        if (Math.random() < 0.25)
-                        {
-                            int[][] tree = Tree.generate();
-                            for (int ax = 0; ax < Tree.WIDTH; ax++)
-                            {
-                                for (int ay = 0; ay < Tree.HEIGHT; ay++)
-                                {
-                                    if(tree[ax][ay] != 4 && x - (ax - (Tree.WIDTH / 2)) < width) {
-                                        worldData[x - (ax - (Tree.WIDTH / 2))][(y - 1) - (ay - (Tree.HEIGHT / 2))] = tree[ax][ay];
-                                    }
-                                }
-                            }
-                        }
-                         */
                     }
                     else {
-                        if(worldData[x][y] != 3)         //Damit die Bäume nicht abgeschnitten werden; ist ne naja-Lösung
-                        {
-                            if (worldData[x][y - 1] == 0 || worldData[x][y - 2] == 0 || worldData[x][y - 3] == 0) {
-                                worldData[x][y] = 5;
-                            } else {
-                                worldData[x][y] = 1;
-                            }
+                        if (worldData[x][y - 1] == 0 || worldData[x][y - 2] == 0 || worldData[x][y - 3] == 0) {     //Generierung von Dirt bis 4 Blöcke unter dem Gras
+                            worldData[x][y] = 5;
+                        } else {
+                            worldData[x][y] = 1;        //Rest ist Stein
                         }
                     }
                 }
                 else
                 {
-                    worldData[x][y] = 4;
+                    worldData[x][y] = 4;    //Wenn überhalb der Oberfläche => Luft
                 }
+            }
+        }
+
+        int prevx = 0;      //x-koordinate des vorherigen Baumes für Mindestabstand
+        for (int x = 0; x<width-4; x++) {
+            if (Math.random() < 0.2 && prevx+2 < x) {       //Wenn der Zufall es gut meint und der Mindestabstand eingehalten wird
+                for (int y = 0; y<height; y++) {
+                    if (worldData[x][y] == 0) {
+                        int[][] treeData = Tree.generate();     //Einen Baum generieren
+                        if (y - Tree.HEIGHT -1>= 0) {       //Darauf achten, dass die Bäume in die Welt passen
+                            System.out.println();
+                            for (int ax = 0; ax < Tree.WIDTH; ax++) {
+                                for (int ay = 0; ay < Tree.HEIGHT; ay++) {
+                                    if (treeData[ax][ay] != 4) {
+                                        prevx = x;
+                                        //FIXME Bäume zwar an der Richtigen Position ABER DAFÜR ABGESCHNITTEN -.-
+                                        worldData[x - (ax/2)+1][y - ay - 1] = treeData[ax][ay];
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println(" -> Canceled!");
+                        }
+                    }
+                }
+
             }
         }
         String[] saveData = new String[width * height + 4];
@@ -143,8 +153,6 @@ public class World
                 saveData[(x+y*width) + 4] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
             }
         }
-
-        //Arrays.fill(saveData, "1");     //TEMPORÄR!!!!!!!!
 
         saveData[0] = String.valueOf(width);                        //Wie üblich erste vier Werte schreiben
         saveData[1] = String.valueOf(height);

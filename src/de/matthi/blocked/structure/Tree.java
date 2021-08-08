@@ -7,7 +7,7 @@ public class Tree {
 
     public static int[][] generate()
     {
-        double r = (Math.random());
+        double r = (Math.random());     //Generierung einer zufälligen Breite
         if (r<0.2)
         {
             WIDTH = 3;
@@ -23,36 +23,35 @@ public class Tree {
                 WIDTH = 5;
             }
         }
-        HEIGHT = WIDTH+(int)(Math.random()*5)-1;
-        int split = (HEIGHT/2)+(int)(Math.random()*HEIGHT/2);
+        HEIGHT = WIDTH+(int)(Math.random()*5)-1;    //Höhe zwar abhängig von Breite, allerdings auch zu gewissem Grad zufällig
+        int split = (HEIGHT/2)+(int)(Math.random()*HEIGHT/3);   //Zufällige Unterteilung Stammhöhe/Blätterhöhe
+        System.out.print("Height: " + HEIGHT);
 
         int[][] treeBlocks = new int[WIDTH][HEIGHT];
 
-        for (int x = 0; x<WIDTH; x++)
+        for (int y = HEIGHT-1; y>-1; y--)
         {
-            for (int y = 0; y<HEIGHT; y++)
+            for (int x = 0; x<WIDTH; x++)
             {
-                if(y<split)
+                if(y<split)     //Wenn die Schleife gerade beim Stamm (unterhalb der Blätterlinie) ist => Generierung von Stamm und Luft um Stamm
                 {
-                    if(x == ((int)(WIDTH/2))+1)
+                    if(x == ((WIDTH/2)))
                     {
                         treeBlocks[x][y] = 2;
+                    }
+                    else {
+                        treeBlocks[x][y] = 4;
                     }
                 }
                 else
                 {
-                    treeBlocks[x][y] = 4;
+                    treeBlocks[x][y] = 3;       //Baumkrone mit Blättern gefüllt
                 }
             }
         }
-
-        return treeBlocks;
-    }
-    public static int[][] generate(int width, int height)
-    {
-        WIDTH = width;
-        HEIGHT = height;
-        int[][] treeBlocks = new int[width][height];
+        treeBlocks[0][HEIGHT-1] = 4;
+        treeBlocks[WIDTH-1][HEIGHT-1] = 4;
+        //TODO: Mehr randomisation bei den Blättern! (Also die Blöcke neben und unter den oberen Ecken)
         return treeBlocks;
     }
 }

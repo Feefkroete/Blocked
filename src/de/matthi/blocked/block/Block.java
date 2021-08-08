@@ -19,6 +19,7 @@ public abstract class Block
     public static Block dirt_wall_block = new DirtWall(6);
     public static Block mud_bricks_block = new MudBricks(7);
     public static Block mud_bricks_wall_block = new MudBricksWall(8);
+    public static Block sand_block = new Sand(9);
 
     protected BufferedImage textur;
 
