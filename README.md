@@ -34,6 +34,7 @@ Controls:
 ---
 
 * Blocked.jar aus den Releases herunterladen und in einen beliebigen Ordner verschieben (z.B. in einen eigenen Ordner auf dem Desktop)
+![Release](https://cdn.discordapp.com/attachments/851116039223509062/874771196376403988/Screenshot_20210810_233340.png)
 * -> Beim ersten Start wird ein seperater Weltenordner neben der jar-Datei erstellt!
 
 
