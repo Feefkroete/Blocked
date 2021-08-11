@@ -86,7 +86,7 @@ Controls:
 # "Installation"
 
 #### Attention: You have to have Java version 15+ installed on your device to play Blocked
-* The easyest solution would be downloading the right version from https://www.azul.com/downloads/?package=jdk and installing it!
+* The easyest solution would be downloading the correct version from https://www.azul.com/downloads/?package=jdk and installing it!
 
     - ONLY FOR LINUX USERS:
     - Because of many distros having Java preinstalled you'll have to choose the right Version after installing the new one:
