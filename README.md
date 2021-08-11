@@ -120,7 +120,7 @@ Controls:
 # Nice-to-know's:
 - World files can be renamed but MAY NOT include spaces or special characters!
 - The world folder MAY NOT be renamed due to a new one being generated afterwards!
-- If the game crashes unexpectedly just run the game with the following command in the terminal/cmd and write a new Issue in Github or write to me via discord and - post the output there. I'll have a look at it... maybe^^
+- If the game crashes unexpectedly just run the game with the following command in the terminal/cmd and write a new Issue in Github or write to me via discord and post the output there. I'll have a look at it... maybe^^
 ```
 java -jar Blocked.jar
 ```
