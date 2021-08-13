@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener
 {
     private static boolean[] keys;
-    public static boolean up, down, right, left, sprint, save, fly = false, hitBox = false;
+    public static boolean up, down, right, left, sprint, save, fly = false, hitBox = false, inv = false;
 
     public KeyInput()
     {
@@ -44,6 +44,10 @@ public class KeyInput implements KeyListener
                 (Game.getWorld()).saveWorld(Game.getPlayer());
                 System.out.println("Welt gespeichert");
             }
+            if (Game.gameState == 4) {
+                inv = false;
+                Game.gameState = 0;
+            }
         }
     }
 
@@ -58,6 +62,9 @@ public class KeyInput implements KeyListener
         if (e.getKeyCode() == KeyEvent.VK_H)
         {
             hitBox = !hitBox;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_E) {
+            inv = !inv;
         }
     }
 }

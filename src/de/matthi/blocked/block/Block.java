@@ -36,4 +36,6 @@ public abstract class Block
     public abstract void tick();
 
     public abstract boolean isSolid();
+
+    public abstract boolean isWallBlock();
 }

@@ -1,5 +1,7 @@
 package de.matthi.blocked.utils;
 
+import de.matthi.blocked.main.Game;
+
 import java.io.*;
 
 public class FileHandler
@@ -11,7 +13,7 @@ public class FileHandler
         StringBuilder stringBuilder = new StringBuilder();
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader("/home/matthi/Dokumente/Spiel/res" + path));
+            BufferedReader reader = new BufferedReader(new FileReader(Game.worldsPath + path));
             while ((line = reader.readLine()) != null)
             {
                 stringBuilder.append(line).append("\n");
@@ -43,7 +45,7 @@ public class FileHandler
         BufferedWriter bufferedWriter;
         try
         {
-            bufferedWriter = new BufferedWriter(new FileWriter("/home/matthi/Dokumente/Spiel/res" + path));
+            bufferedWriter = new BufferedWriter(new FileWriter(Game.worldsPath + path));
             for(int i = 0; i< worldData.length; i++)
             {
                 bufferedWriter.write(worldData[i] + " ");

@@ -26,4 +26,9 @@ public class Leaves extends Block
     public boolean isSolid() {
         return false;
     }
+
+    @Override
+    public boolean isWallBlock() {
+        return false;
+    }
 }

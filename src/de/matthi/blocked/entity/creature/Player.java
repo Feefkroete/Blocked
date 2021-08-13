@@ -19,23 +19,23 @@ public class Player extends Creature{
         super(posx, posy, width, heigth, hp);
         this.textur = textur;
         this.hp = hp;
-        Game.poffx = posx + (Game.getFenster().getWidth()/2);
-        Game.poffy = posy + (Game.getFenster().getHeight()/2);
+        Game.poffx = posx + (Game.getFenster().getWidth()/2.0);
+        Game.poffy = posy + (Game.getFenster().getHeight()/2.0);
     }
 
     public void move(double x, double y)
     {
         this.posx += x;
         this.posy += y;
-        Game.poffx = this.posx - (Game.getFenster().getWidth()/2);
-        Game.poffy = this.posy - (Game.getFenster().getHeight()/2);
+        Game.poffx = this.posx - (Game.getFenster().getWidth()/2.0);
+        Game.poffy = this.posy - (Game.getFenster().getHeight()/2.0);
     }
 
     public void teleport(double posx, double posy) {
         this.posx = posx;
         this.posy = posy;
-        Game.poffx = this.posx - (Game.getFenster().getWidth()/2);
-        Game.poffy = this.posy - (Game.getFenster().getHeight()/2);
+        Game.poffx = this.posx - (Game.getFenster().getWidth()/2.0);
+        Game.poffy = this.posy - (Game.getFenster().getHeight()/2.0);
     }
 
     @Override
@@ -65,11 +65,11 @@ public class Player extends Creature{
             }
             if (!isCollisionU()) {      //Wenn Spieler in der Luft
                 fallSpeed++;
-                if (fallSpeed > 0) {
+                if (fallSpeed > 0 && posy+31 < Game.getWorld().getHeight()*60) {
                     moveDown(fallSpeed);    //Fallen mit der Aktuellen fallgeschwindigkeit
                 }
             }
-            if (fallSpeed < 0) {
+            if (fallSpeed < 0 && posy-30 >= 0) {
                 moveUp(-1 * fallSpeed); //Nach oben fliegen mit der negativen Fallgeschwindigkeit
             }
         }
@@ -80,7 +80,7 @@ public class Player extends Creature{
         if (KeyInput.up && posy-30 >= 0 && KeyInput.fly) {
             moveUp(speed);
         }
-        if (KeyInput.down && posy+31 < Game.getWorld().getHeight()*60 && KeyInput.fly) {
+        if (KeyInput.down && posy+30 < Game.getWorld().getHeight()*60 && KeyInput.fly) {
             moveDown(speed);
         }
         if (KeyInput.left && posx-30 >= 0) {
@@ -103,6 +103,9 @@ public class Player extends Creature{
                     collisionO = true;
                 }
             }
+            else {
+                collisionO = true;
+            }
         }
     }
     public void moveDown(int dist) {
@@ -111,8 +114,13 @@ public class Player extends Creature{
             Block ru = Game.getWorld().getBlock((int) (posx + (hitboxWidth / 2) - 3) / 60, (int) (posy + (hitboxHeight / 2)+4) / 60);
             if (lu == null || !lu.isSolid()) {
                 if (ru == null || !ru.isSolid()) {
-                    this.move(0, 1);
-                    collisionU = false;
+                    if (posy + 31 < Game.getWorld().getHeight()*60) {
+                        this.move(0, 1);
+                        collisionU = false;
+                    }
+                    else {
+                        collisionU = true;
+                    }
                 } else {
                     collisionU = true;
                 }

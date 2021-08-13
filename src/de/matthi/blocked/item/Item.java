@@ -4,16 +4,12 @@ import de.matthi.blocked.item.items.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public abstract class Item
 {
     protected final int id;
 
-    private static File list = new File("src/de/matthi/blocked/item/items");
-    private static int itemCount = (list.listFiles()).length;
-
-    public static Item[] items = new Item[itemCount];
+    public static Item[] items = new Item[10];
     public static Item grass_item = new GrassItem(0);
     public static Item stone_item = new StoneItem(1);
     public static Item trunk_item = new TrunkItem(2);

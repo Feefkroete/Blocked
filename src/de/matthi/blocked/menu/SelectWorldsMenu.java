@@ -9,11 +9,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+//FIXME: Mauszeiger immer Finger
+
 public class SelectWorldsMenu
 {
     private static File list;
     public static String[] files;
-    //private static final int itemCount = (Objects.requireNonNull(list.listFiles())).length;
     private MenuButton back = new MenuButton();
     private static int menupos;
     List<MenuButton> menuButtonList;
@@ -23,12 +24,13 @@ public class SelectWorldsMenu
 
     public SelectWorldsMenu()
     {
-        init();
+
     }
 
     public void init()
     {
-        list = new File("res/worlds");
+        System.out.println(Game.worldsPath);
+        list = new File(Game.worldsPath);
         files = list.list();
         back.setSpecialButton();
         menuButtonList = new ArrayList<>();
@@ -64,7 +66,7 @@ public class SelectWorldsMenu
             menuButtonList.get(i).tick(mposx, mposy, fenster);
             if (menuButtonList.get(i).isclicked())
             {
-                Game.getWorld().loadWorld("/worlds/" + files[i]);
+                Game.getWorld().loadWorld("/" + files[i]);
             }
 
             }

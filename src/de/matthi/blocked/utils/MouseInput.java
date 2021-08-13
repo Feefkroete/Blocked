@@ -11,7 +11,7 @@ import java.awt.event.MouseWheelListener;
 
 public class MouseInput implements MouseListener, MouseWheelListener {
 
-    public static boolean leftMousePressed;
+    public static boolean leftMousePressed, middleMouseClicked, rightMouseClicked;
 
     public MouseInput()
     {
@@ -28,7 +28,13 @@ public class MouseInput implements MouseListener, MouseWheelListener {
     {
         if(e.getButton() == MouseEvent.BUTTON1)
         {
-                leftMousePressed = true;
+            leftMousePressed = true;
+        }
+        if (e.getButton() == MouseEvent.BUTTON2) {
+            middleMouseClicked = true;
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            rightMouseClicked = true;
         }
     }
 
@@ -38,6 +44,12 @@ public class MouseInput implements MouseListener, MouseWheelListener {
         if(e.getButton() == MouseEvent.BUTTON1)
         {
             leftMousePressed = false;
+        }
+        if (e.getButton() == MouseEvent.BUTTON2) {
+            middleMouseClicked = false;
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            rightMouseClicked = false;
         }
     }
 

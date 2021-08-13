@@ -12,6 +12,11 @@ import de.matthi.blocked.world.World;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
 
 public class Game extends Canvas implements Runnable
 {
@@ -22,6 +27,7 @@ public class Game extends Canvas implements Runnable
     public static final int fps = 90;
     public static final int tps = 40;
     public static JFrame fenster;
+    public static String worldsPath;
 
     public static double poffx, poffy;
 
@@ -39,12 +45,24 @@ public class Game extends Canvas implements Runnable
     private static Font font;
     private static Graphics graphics;
 
-    public void init()
-    {
+    public void init() throws URISyntaxException {
         new Thread(this).start();
         font = new Font("Serif", Font.BOLD, 21);
         player = new Player(World.pposx, World.pposy, 60, 60, 20, Assets.spieler2);
         world = new World();
+        CodeSource path = Game.class.getProtectionDomain().getCodeSource();
+        File thisFile = new File(path.getLocation().toURI().getPath());
+        String parentDir = thisFile.getParentFile().getPath();
+        String decodedPath = URLDecoder.decode(parentDir, StandardCharsets.UTF_8);
+        worldsPath = decodedPath + "/BLOCKED_WELTEN";
+        File worlds = new File(worldsPath);
+        if (worlds.mkdir()) {
+            System.out.println("Weltenordner bei " + worldsPath + " erstellt!");
+        }
+        else {
+            System.out.println("Existierenden Weltenordner gefunden!");
+        }
+        worldsMenu.init();
     }
 
     public Game()
@@ -116,6 +134,9 @@ public class Game extends Canvas implements Runnable
                 world.saveWorld(player);
                 System.out.println("Welt gespeichert");
             }
+            if (KeyInput.inv) {
+                gameState = 4;
+            }
         }
         if(gameState == 1)  //MainMenu tick
         {
@@ -129,7 +150,11 @@ public class Game extends Canvas implements Runnable
         {
             newWorldMenu.tick();
         }
-        //System.out.println(poffx + "  " + poffy);
+        if (gameState == 4) {
+            if (!KeyInput.inv) {
+                gameState = 0;
+            }
+        }
     }
 
     public void render()
@@ -144,7 +169,7 @@ public class Game extends Canvas implements Runnable
         graphics.setFont(font);
         graphics.clearRect(0,0,getWidth(), getHeight());
 
-        if(gameState == 0)  //Welt rendern
+        if(gameState == 0 || gameState == 4)  //Welt rendern
         {
             world.render(graphics);
             player.render(graphics);

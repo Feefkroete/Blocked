@@ -26,4 +26,9 @@ public class MudBricks extends Block {
     public boolean isSolid() {
         return true;
     }
+
+    @Override
+    public boolean isWallBlock() {
+        return false;
+    }
 }

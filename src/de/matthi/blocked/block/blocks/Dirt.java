@@ -27,4 +27,9 @@ public class Dirt extends Block {
     public boolean isSolid() {
         return true;
     }
+
+    @Override
+    public boolean isWallBlock() {
+        return false;
+    }
 }

@@ -74,7 +74,7 @@ public class World
         {
             while (true)
             {
-                File worldFile = new File("res/worlds/world" + nummer + ".txt");
+                File worldFile = new File(Game.worldsPath + "/world" + nummer + ".txt");
                 if (!worldFile.createNewFile()) {                   //Versucht, eine Datei mit diesem Namen zu erstellen; wenns nicht geht, wird die Zahl im Weltnamen erhöht
                     nummer++;
                 }
@@ -127,10 +127,9 @@ public class World
                             System.out.println();
                             for (int ax = 0; ax < Tree.WIDTH; ax++) {
                                 for (int ay = 0; ay < Tree.HEIGHT; ay++) {
-                                    if (treeData[ax][ay] != 4) {
+                                    if (treeData[ax][ay] != 4 && worldData[(x - ax)+(Tree.WIDTH/2)][y - ay - 1] == 4) {
                                         prevx = x;
-                                        //FIXME Bäume zwar an der Richtigen Position ABER DAFÜR ABGESCHNITTEN -.-
-                                        worldData[x - (ax/2)+1][y - ay - 1] = treeData[ax][ay];
+                                        worldData[(x - ax)+(Tree.WIDTH/2)][y - ay - 1] = treeData[ax][ay];
                                     }
                                 }
                             }
@@ -159,10 +158,10 @@ public class World
         saveData[2] = String.valueOf(0);
         saveData[3] = String.valueOf(0);
 
-        FileHandler.writeWorldAsFile("/worlds/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
+        FileHandler.writeWorldAsFile("/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
-        loadWorld("/worlds/world" + nummer + ".txt");
+        loadWorld("/world" + nummer + ".txt");
     }
 
     public void tick(JFrame fenster)
@@ -174,9 +173,16 @@ public class World
             mposx = p.getX();           //Holt sich x und y der Mausposition
             mposy = p.getY();
         }
-        if(MouseInput.leftMousePressed && (int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0)
-        {
-            worldData[(int)((mposx+Game.poffx)/60)][(int)((mposy-28+Game.poffy)/60)] = Overlay.pos;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
+        if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
+            if (MouseInput.leftMousePressed) {
+                worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
+            }
+            if (MouseInput.middleMouseClicked) {
+                Overlay.selectedBlock = worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)];
+            }
+            if (MouseInput.rightMouseClicked) {
+                worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = 4;
+            }
         }
     }
 
@@ -193,6 +199,9 @@ public class World
             for (int x = XStart; x < XEnd; x++)
             {
                 getBlock(x, y).render(graphics, (int) (x*60 - (Game.poffx)), (int) (y*60 - (Game.poffy)));      //NUR Blöcke im Bild rendern => Weniger CPU-Auslastung
+                if (getBlock(x, y).isWallBlock()) {
+                    graphics.drawImage(Assets.wallBlockOverlay, (int) (x*60 - (Game.poffx)), (int) (y*60 - (Game.poffy)), 60, 60, null);
+                }
             }
         }
         //Select-Box bei der Maus abbilden

@@ -28,4 +28,9 @@ public class Trunk extends Block
     public boolean isSolid() {
         return false;
     }
+
+    @Override
+    public boolean isWallBlock() {
+        return false;
+    }
 }
