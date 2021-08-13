@@ -5,16 +5,15 @@ import de.matthi.blocked.item.Item;
 
 import java.awt.*;
 
-public class MudBricksItem extends Item
-{
-    public MudBricksItem(int id)
-    {
-        super(Assets.mud_bricks, id);
+public class PigSpawner extends Item {
+
+    public PigSpawner(int id) {
+        super(Assets.pigSpawner, id);
     }
 
     @Override
     public void render(Graphics graphics, int posx, int posy, int width, int height) {
-        graphics.drawImage(textur, posx, posy, width, height, null);
+        graphics.drawImage(Assets.pigSpawner, posx, posy, width, height, null);
     }
 
     @Override
@@ -29,6 +28,6 @@ public class MudBricksItem extends Item
 
     @Override
     public short itemType() {
-        return 0;
+        return 1;
     }
 }

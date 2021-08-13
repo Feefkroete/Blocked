@@ -20,6 +20,8 @@ public abstract class Block
     public static Block mud_bricks_block = new MudBricks(7);
     public static Block mud_bricks_wall_block = new MudBricksWall(8);
     public static Block sand_block = new Sand(9);
+    public static Block glass_block = new Glass(10);
+    public static Block glass_wall_block = new GlassWall(11);
 
     protected BufferedImage textur;
 

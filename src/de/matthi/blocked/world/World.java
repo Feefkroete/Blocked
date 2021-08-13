@@ -1,8 +1,11 @@
 package de.matthi.blocked.world;
 
 import de.matthi.blocked.block.Block;
+import de.matthi.blocked.entity.Entity;
+import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
+import de.matthi.blocked.item.Item;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Overlay;
 import de.matthi.blocked.structure.Tree;
@@ -13,11 +16,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class World
 {
     private int width, height;
     private int[][] worldData;
+    private List<Entity> entityData = new ArrayList<>();
     private double mposx, mposy;
     public static double pposx, pposy;
     private String path;
@@ -45,6 +51,14 @@ public class World
                     worldData[x][y] = FileHandler.parseInt(data[(x + y * width) + 4]);      //Weltdaten werden gelesen und ins multidimensionale Array geschrieben
             }
         }
+        for (int i = height*width+4; i < data.length - (height*width+4); i++) {
+            String[] entitySplit = data[i].split(":");
+            for (int x = 0; x<4; x++) {
+                if (entitySplit[0].equals("0")) {
+                    entityData.add(new Pig(FileHandler.parseInt(entitySplit[1]), FileHandler.parseInt(entitySplit[2]), FileHandler.parseInt(entitySplit[3])));
+                }
+            }
+        }
         Game.getPlayer().teleport(pposx, pposy);                 //Spieler wird an die gespeicherte Position teleportiert
         Game.gameState = 0;                                      //GameState auf 0 gesetzt => Spiel wird angezeigt & läuft
     }
@@ -64,11 +78,12 @@ public class World
             }
         }
         FileHandler.writeWorldAsFile(path, saveData);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
+        //TODO: Speicherung für Entities schreiben!
+        entityData.clear();
     }
 
-    public void createWorld(int width)
+    public void createWorld(int width, int height)
     {
-        final int height = 60;
         int nummer = 0;
         try
         {
@@ -175,7 +190,12 @@ public class World
         }
         if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
             if (MouseInput.leftMousePressed) {
-                worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
+                if (Item.items[Overlay.selectedBlock].itemType() == 0) {
+                    worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
+                }
+                if (Item.items[Overlay.selectedBlock].itemType() == 1) {
+                    entityData.add(new Pig(mposx + Game.poffx, mposy - 28 + Game.poffy, 10));
+                }
             }
             if (MouseInput.middleMouseClicked) {
                 Overlay.selectedBlock = worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)];
@@ -184,6 +204,10 @@ public class World
                 worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = 4;
             }
         }
+        for (int i = 0; i < entityData.size(); i++) {
+            entityData.get(i).tick();
+        }
+        System.out.println(entityData.size());
     }
 
     public void render(Graphics graphics)
@@ -203,6 +227,9 @@ public class World
                     graphics.drawImage(Assets.wallBlockOverlay, (int) (x*60 - (Game.poffx)), (int) (y*60 - (Game.poffy)), 60, 60, null);
                 }
             }
+        }
+        for (int i = 0; i < entityData.size(); i++) {
+            entityData.get(i).render(graphics);
         }
         //Select-Box bei der Maus abbilden
         graphics.drawImage(Assets.select, (int)(((mposx+Game.poffx)/60))*60-(int)Game.poffx, (int)(((mposy-28+Game.poffy)/60))*60-(int)Game.poffy, 60, 60, null);

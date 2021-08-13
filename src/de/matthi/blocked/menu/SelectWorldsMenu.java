@@ -15,7 +15,7 @@ public class SelectWorldsMenu
 {
     private static File list;
     public static String[] files;
-    private MenuButton back = new MenuButton();
+    private final MenuButton back = new MenuButton();
     private static int menupos;
     List<MenuButton> menuButtonList;
 
@@ -73,6 +73,7 @@ public class SelectWorldsMenu
             if (back.isclicked())
             {
                 Game.gameState = 1;
+                menupos = 0;
             }
         }
 

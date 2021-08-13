@@ -11,4 +11,7 @@ public abstract class Creature extends Entity
         super(posx, posy, width, heigth);
         health = hp;
     }
+
+    public abstract void move(double x, double y);
+    public abstract void teleport(double posx, double posy);
 }

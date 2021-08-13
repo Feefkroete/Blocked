@@ -9,12 +9,15 @@ public class NewWorldMenu
 {
     private final int buttonWidth = 310;
     private final int buttonHeight = 150;
-    private int posx, size = 0;
+    private int XButtonsPosx, YButtonsPosx, Xsize = 10, Ysize = 10;
     private double mposx, mposy;
     private final MenuButton back = new MenuButton();
-    private final MenuButton up = new MenuButton(Assets.button5, Assets.button6);
-    private final MenuButton value = new MenuButton();
-    private final MenuButton down = new MenuButton(Assets.button7, Assets.button8);
+    private final MenuButton Xup = new MenuButton(Assets.button5, Assets.button6);
+    private final MenuButton Xvalue = new MenuButton();
+    private final MenuButton Xdown = new MenuButton(Assets.button7, Assets.button8);
+    private final MenuButton Yup = new MenuButton(Assets.button5, Assets.button6);
+    private final MenuButton Yvalue = new MenuButton();
+    private final MenuButton Ydown = new MenuButton(Assets.button7, Assets.button8);
     private final MenuButton confirm = new MenuButton();
 
     public NewWorldMenu()
@@ -24,7 +27,9 @@ public class NewWorldMenu
 
     public void init()
     {
-        posx = (int) ((Game.WIDTH/2)-(0.5* buttonWidth));
+        //posx = (int) ((Game.WIDTH/2)-(0.5* buttonWidth));
+        XButtonsPosx = buttonWidth + 60;
+        YButtonsPosx = Game.WIDTH - 2*buttonWidth - 60;
         back.setSpecialButton();
         confirm.setSpecialButton();
     }
@@ -41,25 +46,38 @@ public class NewWorldMenu
         if (back.isclicked())
         {
             Game.gameState = 1;
-            size = 0;
+            Xsize = 10;
         }
-        up.tick(mposx, mposy, Game.getFenster());
-        if (up.isclicked())
+        Xup.tick(mposx, mposy, Game.getFenster());
+        if (Xup.isclicked())
         {
-            size += 10;
+            Xsize += 10;
         }
-        down.tick(mposx, mposy, Game.getFenster());
-        if (down.isclicked())
+        Xdown.tick(mposx, mposy, Game.getFenster());
+        if (Xdown.isclicked())
         {
-            if (size>=10)
+            if (Xsize >10)
             {
-                size -= 10;
+                Xsize -= 10;
+            }
+        }
+        Yup.tick(mposx, mposy, Game.getFenster());
+        if (Yup.isclicked())
+        {
+            Ysize += 10;
+        }
+        Ydown.tick(mposx, mposy, Game.getFenster());
+        if (Ydown.isclicked())
+        {
+            if (Ysize >10)
+            {
+                Ysize -= 10;
             }
         }
         confirm.tick(mposx, mposy, Game.getFenster());
         if (confirm.isclicked())
         {
-            Game.getWorld().createWorld(size);
+            Game.getWorld().createWorld(Xsize, Ysize);
         }
     }
 
@@ -68,9 +86,12 @@ public class NewWorldMenu
         graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
         graphics.drawString("Weltgröße auswählen", Game.getFenster().getWidth()/2-120, 100);
         back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, "<- Zurück");
-        up.render(graphics, posx, 180, buttonWidth, buttonHeight, "");
-        value.render(graphics, posx, 330, buttonWidth, buttonHeight, String.valueOf(size));
-        down.render(graphics, posx, 480, buttonWidth, buttonHeight, "");
+        Xup.render(graphics, XButtonsPosx, 180, buttonWidth, buttonHeight, "");
+        Xvalue.render(graphics, XButtonsPosx, 330, buttonWidth, buttonHeight, "X: " + Xsize);
+        Xdown.render(graphics, XButtonsPosx, 480, buttonWidth, buttonHeight, "");
+        Yup.render(graphics, YButtonsPosx, 180, buttonWidth, buttonHeight, "");
+        Yvalue.render(graphics, YButtonsPosx, 330, buttonWidth, buttonHeight, "Y: " + Ysize);
+        Ydown.render(graphics, YButtonsPosx, 480, buttonWidth, buttonHeight, "");
         confirm.render(graphics, Game.getFenster().getWidth() - 340, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, "Welt erstellen");
     }
 }

@@ -28,4 +28,9 @@ public class DirtWallItem extends Item
     public boolean isWallItem() {
         return true;
     }
+
+    @Override
+    public short itemType() {
+        return 0;
+    }
 }

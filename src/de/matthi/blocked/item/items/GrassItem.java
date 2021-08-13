@@ -28,4 +28,9 @@ public class GrassItem extends Item
     public boolean isWallItem() {
         return false;
     }
+
+    @Override
+    public short itemType() {
+        return 0;
+    }
 }

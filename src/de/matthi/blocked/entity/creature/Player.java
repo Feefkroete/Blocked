@@ -23,6 +23,7 @@ public class Player extends Creature{
         Game.poffy = posy + (Game.getFenster().getHeight()/2.0);
     }
 
+    @Override
     public void move(double x, double y)
     {
         this.posx += x;
@@ -45,6 +46,7 @@ public class Player extends Creature{
             graphics.fillRect(Game.getFenster().getWidth()/2 - 26, Game.getFenster().getHeight()/2 -22, hitboxWidth, hitboxHeight);
         }
         graphics.drawImage(textur, Game.getFenster().getWidth()/2 - 30, Game.getFenster().getHeight()/2 -30, width, heigth, null);
+        //Item.items[Overlay.selectedBlock].render(graphics, Game.getFenster().getWidth()/2 + 12, Game.getFenster().getHeight()/2 -24, 15, 15);
     }
 
     @Override
@@ -178,4 +180,5 @@ public class Player extends Creature{
     {
         return posy;
     }
+
 }
