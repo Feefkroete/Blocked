@@ -1,7 +1,7 @@
 package de.matthi.blocked.world;
 
 import de.matthi.blocked.block.Block;
-import de.matthi.blocked.entity.Entity;
+import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
@@ -23,7 +23,7 @@ public class World
 {
     private int width, height;
     private int[][] worldData;
-    private List<Entity> entityData = new ArrayList<>();
+    private List<Creature> creatureData = new ArrayList<>();
     private double mposx, mposy;
     public static double pposx, pposy;
     private String path;
@@ -51,21 +51,20 @@ public class World
                     worldData[x][y] = FileHandler.parseInt(data[(x + y * width) + 4]);      //Weltdaten werden gelesen und ins multidimensionale Array geschrieben
             }
         }
-        for (int i = height*width+4; i < data.length - (height*width+4); i++) {
+        for (int i = height*width+4; i < data.length; i++) {
             String[] entitySplit = data[i].split(":");
-            for (int x = 0; x<4; x++) {
-                if (entitySplit[0].equals("0")) {
-                    entityData.add(new Pig(FileHandler.parseInt(entitySplit[1]), FileHandler.parseInt(entitySplit[2]), FileHandler.parseInt(entitySplit[3])));
-                }
+            if (entitySplit[0].equals("0")) {
+                creatureData.add(new Pig(FileHandler.parseInt(entitySplit[1]), FileHandler.parseInt(entitySplit[2]), FileHandler.parseInt(entitySplit[3])));
             }
         }
+        System.out.println("Anzahl Viecher: " + creatureData.size());
         Game.getPlayer().teleport(pposx, pposy);                 //Spieler wird an die gespeicherte Position teleportiert
         Game.gameState = 0;                                      //GameState auf 0 gesetzt => Spiel wird angezeigt & läuft
     }
 
     public void saveWorld(Player player)
     {
-        String[] saveData = new String[width*height + 4];         //Neues Stringarray mit der Länge breite*höhe+4 für weltdata + 4 Werte für Spielerpos und Weltgröße
+        String[] saveData = new String[width*height + 4 + creatureData.size()];         //Neues Stringarray mit der Länge breite*höhe+4 für weltdata + 4 Werte für Spielerpos und Weltgröße
         saveData[0] = String.valueOf(width);                      //Setzen der ersten vier Werte
         saveData[1] = String.valueOf(height);
         saveData[2] = String.valueOf((int)(player.getXPosition()));
@@ -77,9 +76,11 @@ public class World
                 saveData[(x+y*width) + 4] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
             }
         }
+        for (int i = 0; i< creatureData.size(); i++) {
+            saveData[(height*width) + 4 + i] = creatureData.get(i).getType() + ":" + (int)creatureData.get(i).getPosX() + ":" + (int)creatureData.get(i).getPosY() + ":" + creatureData.get(i).getHp();
+        }
         FileHandler.writeWorldAsFile(path, saveData);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
-        //TODO: Speicherung für Entities schreiben!
-        entityData.clear();
+        creatureData.clear();
     }
 
     public void createWorld(int width, int height)
@@ -194,7 +195,10 @@ public class World
                     worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
                 }
                 if (Item.items[Overlay.selectedBlock].itemType() == 1) {
-                    entityData.add(new Pig(mposx + Game.poffx, mposy - 28 + Game.poffy, 10));
+                    switch (Overlay.selectedBlock) {
+                        case 12 -> creatureData.add(new Pig(mposx + Game.poffx - 30, mposy - 28 + Game.poffy - 30, 10));
+                    }
+                    MouseInput.leftMousePressed = false;
                 }
             }
             if (MouseInput.middleMouseClicked) {
@@ -204,10 +208,9 @@ public class World
                 worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = 4;
             }
         }
-        for (int i = 0; i < entityData.size(); i++) {
-            entityData.get(i).tick();
+        for (int i = 0; i < creatureData.size(); i++) {
+            creatureData.get(i).tick();
         }
-        System.out.println(entityData.size());
     }
 
     public void render(Graphics graphics)
@@ -228,11 +231,13 @@ public class World
                 }
             }
         }
-        for (int i = 0; i < entityData.size(); i++) {
-            entityData.get(i).render(graphics);
+        for (int i = 0; i < creatureData.size(); i++) {
+            creatureData.get(i).render(graphics);
         }
         //Select-Box bei der Maus abbilden
-        graphics.drawImage(Assets.select, (int)(((mposx+Game.poffx)/60))*60-(int)Game.poffx, (int)(((mposy-28+Game.poffy)/60))*60-(int)Game.poffy, 60, 60, null);
+        if (Item.items[Overlay.selectedBlock].itemType() == 0) {
+            graphics.drawImage(Assets.select, (int) (((mposx + Game.poffx) / 60)) * 60 - (int) Game.poffx, (int) (((mposy - 28 + Game.poffy) / 60)) * 60 - (int) Game.poffy, 60, 60, null);
+        }
     }
 
     public Block getBlock(int posx, int posy)
