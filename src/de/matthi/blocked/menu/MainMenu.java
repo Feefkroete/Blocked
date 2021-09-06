@@ -3,6 +3,7 @@ package de.matthi.blocked.menu;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Language;
+import de.matthi.blocked.utils.ConfigHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +47,7 @@ public class MainMenu
 
         if (quitGameButton.isclicked())
         {
+            ConfigHandler.write();
             System.exit(0);
         }
         if (selectWorldButton.isclicked())

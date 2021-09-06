@@ -14,6 +14,7 @@ public class ConfigHandler {
         try {
             if (configFile.createNewFile()) {
                 System.out.println("Config bei " + configPath + " erstellt!");
+                write();
             } else {
                 System.out.println("Config bei " + configPath + " gefunden!");
                 read();
