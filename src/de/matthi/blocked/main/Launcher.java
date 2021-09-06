@@ -36,10 +36,14 @@ public class Launcher
         }
         catch (IOException e)
         {
+            System.out.println("Something didn't work :( Try again later!");
             e.printStackTrace();
         }
-        if (newVersion >= Game.VERSION) {
+        if (newVersion > Game.VERSION) {
             Game.gameState = 6;
+        }
+        if (newVersion < Game.VERSION && newVersion != 0) {
+            System.out.println("The game is up to date! Version " + Game.VERSION);
         }
     }
 }
