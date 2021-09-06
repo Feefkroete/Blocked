@@ -2,10 +2,7 @@ package de.matthi.blocked.main;
 
 import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.menu.MainMenu;
-import de.matthi.blocked.menu.NewWorldMenu;
-import de.matthi.blocked.menu.OptionsMenu;
-import de.matthi.blocked.menu.SelectWorldsMenu;
+import de.matthi.blocked.menu.*;
 import de.matthi.blocked.utils.ConfigHandler;
 import de.matthi.blocked.utils.KeyInput;
 import de.matthi.blocked.utils.MouseInput;
@@ -22,6 +19,7 @@ import java.security.CodeSource;
 
 public class Game extends Canvas implements Runnable
 {
+    public static final double VERSION = 1.4;
 
     public static final String name = "Blocked";
     public static final int WIDTH = 1400;
@@ -31,6 +29,7 @@ public class Game extends Canvas implements Runnable
     public static JFrame fenster;
     public static String worldsPath;
     public static String decodedPath;
+    public static File thisFile;
 
     public static double poffx, poffy;
 
@@ -46,6 +45,7 @@ public class Game extends Canvas implements Runnable
     private static final SelectWorldsMenu worldsMenu = new SelectWorldsMenu();
     private static final NewWorldMenu newWorldMenu = new NewWorldMenu();
     private static final OptionsMenu optionsMenu = new OptionsMenu();
+    private static final UpdateMenu updateMenu = new UpdateMenu();
     private static Font font;
     private static Graphics graphics;
 
@@ -55,16 +55,16 @@ public class Game extends Canvas implements Runnable
         player = new Player(World.pposx, World.pposy, 60, 60, 20, Assets.spieler2);
         world = new World();
         CodeSource path = Game.class.getProtectionDomain().getCodeSource();
-        File thisFile = new File(path.getLocation().toURI().getPath());
+        thisFile = new File(path.getLocation().toURI().getPath());
         String parentDir = thisFile.getParentFile().getPath();
         decodedPath = URLDecoder.decode(parentDir, StandardCharsets.UTF_8);
         worldsPath = decodedPath + "/BLOCKED_WELTEN";
         File worlds = new File(worldsPath);
         if (worlds.mkdir()) {
-            System.out.println("Weltenordner bei " + worldsPath + " erstellt!");
+            System.out.println("Created World Folder at: " + worldsPath);
         }
         else {
-            System.out.println("Existierenden Weltenordner gefunden!");
+            System.out.println("Found existing World Folder at: " + worldsPath);
         }
         worldsMenu.init();
         ConfigHandler.init();
@@ -83,6 +83,7 @@ public class Game extends Canvas implements Runnable
         fenster = new JFrame(name);
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenster.setLayout(new BorderLayout());
+        fenster.setIconImage(Assets.spieler3);
         fenster.add(this, BorderLayout.CENTER);
 
         fenster.addKeyListener(keyInput);
@@ -129,39 +130,40 @@ public class Game extends Canvas implements Runnable
 
     public void tick()
     {
-        if(gameState == 0)  //Welt tick
-        {
-            world.tick(fenster);
-            player.tick();
-            KeyInput.tick();
-            if (KeyInput.save)
-            {
-                world.saveWorld(player);
-                System.out.println("Welt gespeichert");
-            }
-            if (KeyInput.inv) {
-                gameState = 4;
-            }
-        }
-        if(gameState == 1)  //MainMenu tick
-        {
-            mainMenu.tick(fenster);
-        }
-        if(gameState == 2) //WorldSelectMenu tick
-        {
-            worldsMenu.tick(fenster);
-        }
-        if(gameState == 3)
-        {
-            newWorldMenu.tick();
-        }
-        if (gameState == 4) {
-            if (!KeyInput.inv) {
-                gameState = 0;
-            }
-        }
-        if (gameState == 5) {
-            optionsMenu.tick(fenster);
+        switch (gameState) {
+            case 0 :
+                world.tick(fenster);
+                player.tick();
+                KeyInput.tick();
+                if (KeyInput.save)
+                {
+                    world.saveWorld(player);
+                    System.out.println("Welt gespeichert");
+                }
+                if (KeyInput.inv) {
+                    gameState = 4;
+                }
+                break;
+            case 1 :
+                mainMenu.tick(fenster);
+                break;
+            case 2 :
+                worldsMenu.tick(fenster);
+                break;
+            case 3 :
+                newWorldMenu.tick();
+                break;
+            case 4 :
+                if (!KeyInput.inv) {
+                    gameState = 0;
+                }
+                break;
+            case 5 :
+                optionsMenu.tick(fenster);
+                break;
+            case 6 :
+                updateMenu.tick(fenster);
+                break;
         }
     }
 
@@ -197,6 +199,9 @@ public class Game extends Canvas implements Runnable
         }
         if (gameState == 5) {
             optionsMenu.render(graphics);
+        }
+        if (gameState == 6) {
+            updateMenu.render(graphics);
         }
 
         graphics.dispose();         //Leert den cache?

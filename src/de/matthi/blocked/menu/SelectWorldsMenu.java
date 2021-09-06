@@ -10,8 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-//FIXME: Mauszeiger immer Finger
-
 public class SelectWorldsMenu
 {
     private static File list;
@@ -32,7 +30,6 @@ public class SelectWorldsMenu
 
     public void init()
     {
-        System.out.println(Game.worldsPath);
         list = new File(Game.worldsPath);
         files = list.list();
         back.setSpecialButton();
@@ -46,12 +43,12 @@ public class SelectWorldsMenu
 
     public void render(Graphics graphics)
     {
-            graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-            back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
-            for (int i = 0; i < files.length; i++) {
-                int posy = buttonHeight * i + 30 * i + menupos + 30;
-                menuButtonList.get(i).render(graphics, posx, posy, buttonWidth, buttonHeight, (files[i].substring(0, files[i].length() - 4)));
-            }
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
+        back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
+        for (int i = 0; i < files.length; i++) {
+            int posy = buttonHeight * i + 30 * i + menupos + 30;
+            menuButtonList.get(i).render(graphics, posx, posy, buttonWidth, buttonHeight, (files[i].substring(0, files[i].length() - 4)));
+        }
     }
 
     public void tick(JFrame fenster) {

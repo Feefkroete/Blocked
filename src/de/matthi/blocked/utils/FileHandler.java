@@ -38,6 +38,18 @@ public class FileHandler
         }
     }
 
+    public static double parseDouble(String nummer) {
+        try
+        {
+            return Double.parseDouble(nummer);
+        }
+        catch (NumberFormatException n)
+        {
+            n.printStackTrace();
+            return 0;
+        }
+    }
+
     public static void writeStringAsFile(String path, String[] stringData)
     {
         BufferedWriter bufferedWriter;

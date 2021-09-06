@@ -13,10 +13,10 @@ public class ConfigHandler {
         File configFile = new File(configPath);
         try {
             if (configFile.createNewFile()) {
-                System.out.println("Config bei " + configPath + " erstellt!");
+                System.out.println("Created Config at: " + configPath);
                 write();
             } else {
-                System.out.println("Config bei " + configPath + " gefunden!");
+                System.out.println("Found Config at: " + configPath);
                 read();
             }
         } catch (IOException e) {
