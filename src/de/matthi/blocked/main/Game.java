@@ -4,7 +4,9 @@ import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.menu.MainMenu;
 import de.matthi.blocked.menu.NewWorldMenu;
+import de.matthi.blocked.menu.OptionsMenu;
 import de.matthi.blocked.menu.SelectWorldsMenu;
+import de.matthi.blocked.utils.ConfigHandler;
 import de.matthi.blocked.utils.KeyInput;
 import de.matthi.blocked.utils.MouseInput;
 import de.matthi.blocked.world.World;
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable
     public static final int tps = 40;
     public static JFrame fenster;
     public static String worldsPath;
+    public static String decodedPath;
 
     public static double poffx, poffy;
 
@@ -42,6 +45,7 @@ public class Game extends Canvas implements Runnable
     private static final MainMenu mainMenu = new MainMenu();
     private static final SelectWorldsMenu worldsMenu = new SelectWorldsMenu();
     private static final NewWorldMenu newWorldMenu = new NewWorldMenu();
+    private static final OptionsMenu optionsMenu = new OptionsMenu();
     private static Font font;
     private static Graphics graphics;
 
@@ -53,7 +57,7 @@ public class Game extends Canvas implements Runnable
         CodeSource path = Game.class.getProtectionDomain().getCodeSource();
         File thisFile = new File(path.getLocation().toURI().getPath());
         String parentDir = thisFile.getParentFile().getPath();
-        String decodedPath = URLDecoder.decode(parentDir, StandardCharsets.UTF_8);
+        decodedPath = URLDecoder.decode(parentDir, StandardCharsets.UTF_8);
         worldsPath = decodedPath + "/BLOCKED_WELTEN";
         File worlds = new File(worldsPath);
         if (worlds.mkdir()) {
@@ -63,6 +67,7 @@ public class Game extends Canvas implements Runnable
             System.out.println("Existierenden Weltenordner gefunden!");
         }
         worldsMenu.init();
+        ConfigHandler.init();
     }
 
     public Game()
@@ -155,6 +160,9 @@ public class Game extends Canvas implements Runnable
                 gameState = 0;
             }
         }
+        if (gameState == 5) {
+            optionsMenu.tick(fenster);
+        }
     }
 
     public void render()
@@ -186,6 +194,9 @@ public class Game extends Canvas implements Runnable
         if(gameState == 3)
         {
             newWorldMenu.render(graphics);
+        }
+        if (gameState == 5) {
+            optionsMenu.render(graphics);
         }
 
         graphics.dispose();         //Leert den cache?

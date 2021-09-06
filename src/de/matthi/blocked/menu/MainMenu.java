@@ -2,32 +2,31 @@ package de.matthi.blocked.menu;
 
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
+import de.matthi.blocked.main.Language;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainMenu
 {
-    MenuButton menuButton1 = new MenuButton();
-    MenuButton menuButton2 = new MenuButton();
-    MenuButton menuButton3 = new MenuButton();
+    MenuButton newWorldButton = new MenuButton();
+    MenuButton selectWorldButton = new MenuButton();
+    MenuButton optionsButton = new MenuButton();
+    MenuButton quitGameButton = new MenuButton();
     private final int buttonWidth = 310;
     private final int buttonHeight = 150;
     private int posx;
     private double mposx, mposy;
 
-    public MainMenu()
-    {
+    public MainMenu() {
         init();
     }
 
-    public void init()
-    {
+    public void init() {
         posx = (int) ((Game.WIDTH/2)-(0.5* buttonWidth));
     }
 
-    public void tick(JFrame fenster)
-    {
+    public void tick(JFrame fenster) {
         Point p = fenster.getMousePosition();
         if (p != null)
         {
@@ -35,35 +34,39 @@ public class MainMenu
             mposy = p.getY();
         }
 
-        menuButton1.tick(mposx, mposy, fenster);
-        menuButton2.tick(mposx, mposy, fenster);
-        menuButton3.tick(mposx, mposy, fenster);
+        newWorldButton.tick(mposx, mposy, fenster);
+        selectWorldButton.tick(mposx, mposy, fenster);
+        optionsButton.tick(mposx, mposy, fenster);
+        quitGameButton.tick(mposx, mposy, fenster);
 
-        if (!MenuButton.hover)
+        if (!newWorldButton.hover && !selectWorldButton.hover && !quitGameButton.hover && !optionsButton.hover)
         {
             fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
-        MenuButton.hover = false;
 
-        if (menuButton3.isclicked())
+        if (quitGameButton.isclicked())
         {
             System.exit(0);
         }
-        if (menuButton2.isclicked())
+        if (selectWorldButton.isclicked())
         {
             Game.gameState = 2;
         }
-        if (menuButton1.isclicked())
+        if (newWorldButton.isclicked())
         {
             Game.gameState = 3;
+        }
+        if (optionsButton.isclicked()) {
+            Game.gameState = 5;
         }
     }
 
     public void render(Graphics graphics)
     {
         graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-        menuButton1.render(graphics, posx, 60, buttonWidth, buttonHeight, "Neue Welt erstellen");
-        menuButton2.render(graphics, posx, 250, buttonWidth, buttonHeight, "Welt laden");
-        menuButton3.render(graphics, posx, 440, buttonWidth, buttonHeight, "Spiel beenden");
+        newWorldButton.render(graphics, posx, 50, buttonWidth, buttonHeight, Language.createNewWorld);
+        selectWorldButton.render(graphics, posx, 230, buttonWidth, buttonHeight, Language.selectWorld);
+        optionsButton.render(graphics, posx, 410, buttonWidth, buttonHeight, Language.options);
+        quitGameButton.render(graphics, posx, 590, buttonWidth, buttonHeight, Language.quitGame);
     }
 }

@@ -35,8 +35,8 @@ public class World
 
     public void loadWorld(String path)
     {
-        this.path = path;
-        String welt = FileHandler.loadFileAsString(path);       //ruft die Methode "loadFileAsString" im filehandler auf => returnt einen String (ach nee)
+        this.path = Game.worldsPath + path;
+        String welt = FileHandler.loadFileAsString(this.path);       //ruft die Methode "loadFileAsString" im filehandler auf => returnt einen String (ach nee)
         String[] data = welt.split("\\s+");               //Spaltet den String bei jedem Leerzeichen und packt die Bruchstücke in ein Stringarray
         width = FileHandler.parseInt(data[0]);                  //ließt die ersten vier Daten aus der Weltdatei (erste vier Werte im Array)
         height = FileHandler.parseInt(data[1]);
@@ -79,7 +79,7 @@ public class World
         for (int i = 0; i< creatureData.size(); i++) {
             saveData[(height*width) + 4 + i] = creatureData.get(i).getType() + ":" + (int)creatureData.get(i).getPosX() + ":" + (int)creatureData.get(i).getPosY() + ":" + creatureData.get(i).getHp();
         }
-        FileHandler.writeWorldAsFile(path, saveData);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
+        FileHandler.writeStringAsFile(path, saveData);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
         creatureData.clear();
     }
 
@@ -174,7 +174,7 @@ public class World
         saveData[2] = String.valueOf(0);
         saveData[3] = String.valueOf(0);
 
-        FileHandler.writeWorldAsFile("/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
+        FileHandler.writeStringAsFile("/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
         loadWorld("/world" + nummer + ".txt");

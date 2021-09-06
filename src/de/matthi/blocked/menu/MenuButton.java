@@ -12,7 +12,7 @@ public class MenuButton
     BufferedImage bufferedImage;
 
     int posx, posy, width, height;
-    public static boolean hover = false;
+    public boolean hover = false;
     private boolean pressed, hasCustomTexture;
     private boolean isSpecial = false;
     private BufferedImage textur, texturA;
@@ -62,11 +62,13 @@ public class MenuButton
             else
             {
                 setMenuButtonActive(false);
+                hover = false;
             }
         }
         else
         {
             setMenuButtonActive(false);
+            hover = false;
         }
     }
 

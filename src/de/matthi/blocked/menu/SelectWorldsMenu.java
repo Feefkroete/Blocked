@@ -2,6 +2,7 @@ package de.matthi.blocked.menu;
 
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
+import de.matthi.blocked.main.Language;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,9 @@ public class SelectWorldsMenu
     List<MenuButton> menuButtonList;
 
     private double mposx, mposy;
-    private int buttonWidth = 310, buttonHeight = 150, posx;
+    private final int buttonWidth = 310;
+    private final int buttonHeight = 150;
+    private int posx;
 
     public SelectWorldsMenu()
     {
@@ -44,38 +47,39 @@ public class SelectWorldsMenu
     public void render(Graphics graphics)
     {
             graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-            back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, "<- Zurück");
+            back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
             for (int i = 0; i < files.length; i++) {
                 int posy = buttonHeight * i + 30 * i + menupos + 30;
                 menuButtonList.get(i).render(graphics, posx, posy, buttonWidth, buttonHeight, (files[i].substring(0, files[i].length() - 4)));
             }
     }
 
-    public void tick(JFrame fenster)
-    {
+    public void tick(JFrame fenster) {
         Point p = fenster.getMousePosition();
-        if (p != null)
-        {
+        if (p != null) {
             mposx = p.getX();
             mposy = p.getY();
         }
 
         back.tick(mposx, mposy, fenster);
-        for (int i = 0; i < files.length; i++)
-        {
+        boolean hover = false;
+        for (int i = 0; i < files.length; i++) {
             menuButtonList.get(i).tick(mposx, mposy, fenster);
-            if (menuButtonList.get(i).isclicked())
-            {
+            if (menuButtonList.get(i).isclicked()) {
                 Game.getWorld().loadWorld("/" + files[i]);
             }
-
-            }
-            if (back.isclicked())
-            {
+            if (back.isclicked()) {
                 Game.gameState = 1;
                 menupos = 0;
             }
+            if (menuButtonList.get(i).hover || back.hover) {
+                hover = true;
+            }
         }
+        if (!hover) {
+            fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
 
     public static void up()
     {
