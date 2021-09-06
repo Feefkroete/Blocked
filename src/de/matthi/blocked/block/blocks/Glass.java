@@ -30,4 +30,9 @@ public class Glass extends Block {
     public boolean isWallBlock() {
         return false;
     }
+
+    @Override
+    public String getName() {
+        return "Glass";
+    }
 }

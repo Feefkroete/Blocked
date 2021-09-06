@@ -32,4 +32,9 @@ public class DirtWall extends Block {
     public boolean isWallBlock() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return "DirtWall";
+    }
 }

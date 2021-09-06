@@ -5,37 +5,34 @@ import de.matthi.blocked.gfx.Assets;
 
 import java.awt.*;
 
-public class Grass extends Block
-{
-    public Grass(int id)
-    {
-        super(Assets.grass, id);
+public class StoneBricksWall extends Block {
+
+    public StoneBricksWall(int id) {
+        super(Assets.stone_bricks, id);
     }
 
     @Override
-    public void render(Graphics graphics, int posx, int posy)
-    {
+    public void render(Graphics graphics, int posx, int posy) {
         graphics.drawImage(textur, posx, posy, 60, 60, null);
     }
 
     @Override
-    public void tick()
-    {
+    public void tick() {
 
     }
 
     @Override
     public boolean isSolid() {
-        return true;
-    }
-
-    @Override
-    public boolean isWallBlock() {
         return false;
     }
 
     @Override
+    public boolean isWallBlock() {
+        return true;
+    }
+
+    @Override
     public String getName() {
-        return "Grass";
+        return "StoneBricksWall";
     }
 }

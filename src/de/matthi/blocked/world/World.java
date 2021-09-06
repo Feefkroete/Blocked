@@ -196,9 +196,17 @@ public class World
                 }
                 if (Item.items[Overlay.selectedBlock].itemType() == 1) {
                     switch (Overlay.selectedBlock) {
-                        case 12 -> creatureData.add(new Pig(mposx + Game.poffx - 30, mposy - 28 + Game.poffy - 30, 10));
+                        case 14 -> creatureData.add(new Pig(mposx + Game.poffx - 30, mposy - 28 + Game.poffy - 30, 10));
                     }
                     MouseInput.leftMousePressed = false;
+                }
+                if (Item.items[Overlay.selectedBlock].itemType() == 2) {
+                    for (int i = 0; i < creatureData.size(); i++) {
+                        if (mposx+Game.poffx>creatureData.get(i).getPosX() && mposx+Game.poffx<creatureData.get(i).getPosX()+creatureData.get(i).getWidth() && mposy-28+Game.poffy>creatureData.get(i).getPosY() && mposy-28+Game.poffy<creatureData.get(i).getPosY()+creatureData.get(i).getHeight()) {
+                            creatureData.remove(i);
+                            break;
+                        }
+                    }
                 }
             }
             if (MouseInput.middleMouseClicked) {

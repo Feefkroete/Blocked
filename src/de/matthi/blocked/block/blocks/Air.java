@@ -32,4 +32,9 @@ public class Air extends Block {
     public boolean isWallBlock() {
         return false;
     }
+
+    @Override
+    public String getName() {
+        return "Air";
+    }
 }

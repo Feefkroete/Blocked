@@ -9,7 +9,7 @@ public abstract class Item
 {
     protected final int id;
 
-    public static Item[] items = new Item[13];
+    public static Item[] items = new Item[16];
     public static Item grass_item = new GrassItem(0);
     public static Item stone_item = new StoneItem(1);
     public static Item trunk_item = new TrunkItem(2);
@@ -22,7 +22,10 @@ public abstract class Item
     public static Item sand_item = new SandItem(9);
     public static Item glass_item = new GlassItem(10);
     public static Item glass_wall_item = new GlassWallItem(11);
-    public static Item pig_spawner_item = new PigSpawner(12);
+    public static Item stone_bricks_item = new StoneBricksItem(12);
+    public static Item stone_bricks_wall_item = new StoneBricksWallItem(13);
+    public static Item pig_spawner_item = new PigSpawner(14);
+    public static Item entity_remover_item = new EntityRemover(15);
 
     protected BufferedImage textur;
 

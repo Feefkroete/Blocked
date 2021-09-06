@@ -45,7 +45,7 @@ public class Player extends Creature{
             graphics.setColor(Color.red);
             graphics.fillRect(Game.getFenster().getWidth()/2 - 26, Game.getFenster().getHeight()/2 -22, hitboxWidth, hitboxHeight);
         }
-        graphics.drawImage(textur, Game.getFenster().getWidth()/2 - 30, Game.getFenster().getHeight()/2 -30, width, heigth, null);
+        graphics.drawImage(textur, Game.getFenster().getWidth()/2 - 30, Game.getFenster().getHeight()/2 -30, width, height, null);
         //Item.items[Overlay.selectedBlock].render(graphics, Game.getFenster().getWidth()/2 + 12, Game.getFenster().getHeight()/2 -24, 15, 15);
     }
 

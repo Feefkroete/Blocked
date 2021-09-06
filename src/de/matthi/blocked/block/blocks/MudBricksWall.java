@@ -31,4 +31,9 @@ public class MudBricksWall extends Block {
     public boolean isWallBlock() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return "MudBricksWall";
+    }
 }

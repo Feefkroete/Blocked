@@ -22,6 +22,8 @@ public abstract class Block
     public static Block sand_block = new Sand(9);
     public static Block glass_block = new Glass(10);
     public static Block glass_wall_block = new GlassWall(11);
+    public static Block stone_bricks_block = new StoneBricks(12);
+    public static Block stone_bricks_wall_block = new StoneBricksWall(13);
 
     protected BufferedImage textur;
 
@@ -40,4 +42,6 @@ public abstract class Block
     public abstract boolean isSolid();
 
     public abstract boolean isWallBlock();
+
+    public abstract String getName();
 }

@@ -33,4 +33,9 @@ public class Trunk extends Block
     public boolean isWallBlock() {
         return false;
     }
+
+    @Override
+    public String getName() {
+        return "Trunk";
+    }
 }

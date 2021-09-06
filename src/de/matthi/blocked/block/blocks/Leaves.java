@@ -31,4 +31,9 @@ public class Leaves extends Block
     public boolean isWallBlock() {
         return false;
     }
+
+    @Override
+    public String getName() {
+        return "Leaves";
+    }
 }

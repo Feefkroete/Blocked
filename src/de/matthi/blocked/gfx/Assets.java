@@ -7,7 +7,7 @@ public class Assets
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
-    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, glass, pig, select, inv, selInv, flight, air, pigSpawner, dirt, mud_bricks, sand, wallBlockOverlay, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
+    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, glass, stone_bricks, pig, select, inv, selInv, flight, air, pigSpawner, entityRemover, dirt, mud_bricks, sand, wallBlockOverlay, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
 
     public static void init()
     {
@@ -44,10 +44,11 @@ public class Assets
         mud_bricks = block.pacman(WIDTH*5+6, 1, WIDTH, HEIGHT);
         sand = block.pacman(WIDTH*6+7, 1, WIDTH, HEIGHT);
         glass = block.pacman(1, HEIGHT+2, WIDTH, HEIGHT);
+        stone_bricks = block.pacman(WIDTH+2, HEIGHT+2, WIDTH, HEIGHT);
 
         wallBlockOverlay = block.pacman(WIDTH*7+8, 1, WIDTH, HEIGHT);
 
-        pig = entity.pacman(1, 1, WIDTH, HEIGHT);
+        pig = entity.pacman(1, 7, WIDTH, 9);
 
         select = ui.pacman(1, 1, WIDTH, HEIGHT);
         inv = ui.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
@@ -57,5 +58,6 @@ public class Assets
         air = item.pacman(1, 1, WIDTH, HEIGHT);
         wallOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
         pigSpawner = item.pacman(WIDTH*2+3, 1, WIDTH, HEIGHT);
+        entityRemover = item.pacman(WIDTH*3+4, 1, WIDTH, HEIGHT);
     }
 }

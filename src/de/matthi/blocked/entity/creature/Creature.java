@@ -27,4 +27,10 @@ public abstract class Creature extends Entity
     public int getHp() {
         return health;
     }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
 }

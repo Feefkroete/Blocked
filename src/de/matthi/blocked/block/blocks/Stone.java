@@ -34,4 +34,9 @@ public class Stone extends Block
     public boolean isWallBlock() {
         return false;
     }
+
+    @Override
+    public String getName() {
+        return "Stone";
+    }
 }
