@@ -42,7 +42,7 @@ public class Launcher
         if (newVersion > Game.VERSION) {
             Game.gameState = 6;
         }
-        if (newVersion < Game.VERSION && newVersion != 0) {
+        if (newVersion == Game.VERSION) {
             System.out.println("The game is up to date! Version " + Game.VERSION);
         }
     }
