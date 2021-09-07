@@ -46,7 +46,7 @@ public class SelectWorldsMenu
         graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
         back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         for (int i = 0; i < files.length; i++) {
-            int posy = buttonHeight * i + 30 * i + menupos + 30;
+            int posy = buttonHeight * i + 60 * i + menupos;
             menuButtonList.get(i).render(graphics, posx, posy, buttonWidth, buttonHeight, (files[i].substring(0, files[i].length() - 4)));
         }
     }

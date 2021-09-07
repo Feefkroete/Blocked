@@ -27,6 +27,9 @@ public class ConfigHandler {
     public static void read() {
         String configRawData = FileHandler.loadFileAsString(configPath);
         String[] data = configRawData.split("\\s+");
+        if (data.length != 2) {
+            write();
+        }
 
         String lang = data[0].substring(9);
         if (lang.equals("DE")) {
@@ -36,10 +39,12 @@ public class ConfigHandler {
             Language.activeLanguage = 0;
         }
         Language.langInit();
+        String fps = data[1].substring(4);
+        Game.fps = FileHandler.parseInt(fps);
     }
 
     public static void write() {
-        String[] data = new String[1];
+        String[] data = new String[2];
         String langidentify = "";
         if (Language.activeLanguage == 0) {
             langidentify = "EN";
@@ -48,6 +53,7 @@ public class ConfigHandler {
             langidentify = "DE";
         }
         data[0] = "language:" + langidentify;
-        FileHandler.writeStringAsFile(configPath, data);
+        data[1] = "fps:" + Game.fps;
+        FileHandler.writeStringAsFile(configPath, data, 1);
     }
 }

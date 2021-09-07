@@ -16,20 +16,24 @@ public class OptionsMenu {
     double mposx, mposy;
     private final MenuButton lang = new MenuButton();
     private final MenuButton back = new MenuButton();
+    private MenuSlider fpsSlider;
 
     public OptionsMenu() {
-        init();
+
     }
 
     public void init() {
         posx = (int) ((Game.WIDTH/2)-(0.5* buttonWidth));
         back.setSpecialButton();
+        fpsSlider = new MenuSlider(10, 140, 1, posx, 230);
+        fpsSlider.setDefaultValue(Game.fps);
     }
 
     public void render(Graphics graphics) {
         graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
         back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         lang.render(graphics, posx, 30, buttonWidth, buttonHeight, Language.langSelect);
+        fpsSlider.render(graphics, "FPS");
     }
 
     public void tick(JFrame fenster) {
@@ -42,6 +46,7 @@ public class OptionsMenu {
 
         lang.tick(mposx, mposy, fenster);
         back.tick(mposx, mposy, fenster);
+        fpsSlider.tick(mposx, mposy, fenster);
         if (lang.isclicked()) {
             Language.setLanguage();
         }
@@ -49,8 +54,9 @@ public class OptionsMenu {
             Game.gameState = 1;
             ConfigHandler.write();
         }
-        if (!back.hover && !lang.hover) {
+        if (!back.hover && !lang.hover && !fpsSlider.hover) {
             fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
+        Game.fps = (int) fpsSlider.getCurrentValue();
     }
 }

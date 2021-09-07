@@ -50,7 +50,7 @@ public class FileHandler
         }
     }
 
-    public static void writeStringAsFile(String path, String[] stringData)
+    public static void writeStringAsFile(String path, String[] stringData, int type)
     {
         BufferedWriter bufferedWriter;
         try
@@ -59,8 +59,12 @@ public class FileHandler
             for(int i = 0; i< stringData.length; i++)
             {
                 bufferedWriter.write(stringData[i] + " ");
-                if (i == 1 || i == 3)
-                {
+                if (type == 0) {
+                    if (i == 1 || i == 3) {
+                        bufferedWriter.newLine();
+                    }
+                }
+                if (type == 1) {
                     bufferedWriter.newLine();
                 }
             }

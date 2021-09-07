@@ -2,6 +2,7 @@ package de.matthi.blocked.block.blocks;
 
 import de.matthi.blocked.block.Block;
 import de.matthi.blocked.gfx.Assets;
+import de.matthi.blocked.main.Game;
 
 import java.awt.*;
 

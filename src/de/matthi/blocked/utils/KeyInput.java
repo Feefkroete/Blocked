@@ -66,5 +66,8 @@ public class KeyInput implements KeyListener
         if (e.getKeyCode() == KeyEvent.VK_E) {
             inv = !inv;
         }
+        if (e.getKeyCode() == KeyEvent.VK_F3) {
+            Game.showTPSFPS = !Game.showTPSFPS;
+        }
     }
 }

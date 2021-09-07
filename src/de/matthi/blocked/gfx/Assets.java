@@ -7,12 +7,19 @@ public class Assets
     private static final int WIDTH = 15;
     private static final int HEIGHT = 15;
 
-    public static BufferedImage spieler1, spieler2, spieler3, spieler4, grass, trunk, leaves, stone, glass, stone_bricks, pig, select, inv, selInv, flight, air, pigSpawner, entityRemover, dirt, mud_bricks, sand, wallBlockOverlay, worldBackground, menuBackground, button1, button2, button3, button4, button5, button6, button7, button8, wallOverlay;
+    public static BufferedImage
+            spieler1, spieler2, spieler3, spieler4,
+            grass, trunk, leaves, stone, glass, stone_bricks, pig, select, inv, selInv, flight, air, dirt, mud_bricks, sand,
+            pigSpawner, wallOverlay, entityRemover,
+            worldBackground, menuBackground, wallBlockOverlay,
+            button1, button2, button3, button4, button5, button6, button7, button8,
+            sliderBox, sliderHandleOff, sliderHandleOn, sliderName;
 
     public static void init()
     {
         SpriteSheet background = new SpriteSheet(Texture.load("/textures/sprite_background.png"));
         SpriteSheet button = new SpriteSheet(Texture.load("/textures/sprite_button.png"));
+        SpriteSheet slider = new SpriteSheet(Texture.load("/textures/sprite_slider.png"));
         SpriteSheet block = new SpriteSheet(Texture.load("/textures/sprite_block.png"));
         SpriteSheet entity = new SpriteSheet(Texture.load("/textures/sprite_entity.png"));
         SpriteSheet item = new SpriteSheet(Texture.load("/textures/sprite_item.png"));
@@ -30,6 +37,11 @@ public class Assets
         button6 = button.pacman(65, 41, 31, 15);
         button7 = button.pacman(97, 9, 31, 15);
         button8 = button.pacman(97, 41, 31, 15);
+
+        sliderBox = slider.pacman(1,7,31, 17);
+        sliderHandleOff = slider.pacman(16, 1, 3, 5);
+        sliderHandleOn = slider.pacman(20, 1, 3, 5);
+        sliderName = slider.pacman(33, 1, 31, 7);
 
         spieler1 = player.pacman(1,1,WIDTH, HEIGHT);
         spieler2 = player.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);

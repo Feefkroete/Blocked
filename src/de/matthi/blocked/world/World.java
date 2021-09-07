@@ -57,7 +57,6 @@ public class World
                 creatureData.add(new Pig(FileHandler.parseInt(entitySplit[1]), FileHandler.parseInt(entitySplit[2]), FileHandler.parseInt(entitySplit[3])));
             }
         }
-        System.out.println("Anzahl Viecher: " + creatureData.size());
         Game.getPlayer().teleport(pposx, pposy);                 //Spieler wird an die gespeicherte Position teleportiert
         Game.gameState = 0;                                      //GameState auf 0 gesetzt => Spiel wird angezeigt & läuft
     }
@@ -79,7 +78,7 @@ public class World
         for (int i = 0; i< creatureData.size(); i++) {
             saveData[(height*width) + 4 + i] = creatureData.get(i).getType() + ":" + (int)creatureData.get(i).getPosX() + ":" + (int)creatureData.get(i).getPosY() + ":" + creatureData.get(i).getHp();
         }
-        FileHandler.writeStringAsFile(path, saveData);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
+        FileHandler.writeStringAsFile(path, saveData, 0);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
         creatureData.clear();
     }
 
@@ -174,7 +173,7 @@ public class World
         saveData[2] = String.valueOf(0);
         saveData[3] = String.valueOf(0);
 
-        FileHandler.writeStringAsFile("/world" + nummer + ".txt", saveData);       //saveData wird in die Textdatei geschrieben
+        FileHandler.writeStringAsFile("/world" + nummer + ".txt", saveData, 0);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
         loadWorld("/world" + nummer + ".txt");
@@ -214,6 +213,17 @@ public class World
             }
             if (MouseInput.rightMouseClicked) {
                 worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = 4;
+            }
+        }
+        if (Math.random() < 0.05) {
+            for (int y = 1; y < height-1; y++) {
+                for (int x = 0; x < width-1; x++) {
+                    if (Math.random() < 0.5) {
+                        if (worldData[x][y] == 0 && worldData[x][y - 1] != 4 && worldData[x][y - 1] != 2 && Math.random() < 0.05) {
+                            worldData[x][y] = 5;
+                        }
+                    }
+                }
             }
         }
         for (int i = 0; i < creatureData.size(); i++) {

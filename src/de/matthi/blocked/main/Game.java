@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
     public static final String name = "Blocked";
     public static final int WIDTH = 1400;
     public static final int HEIGHT = WIDTH/16*9;
-    public static final int fps = 90;
+    public static int fps = 70;
     public static final int tps = 40;
     public static JFrame fenster;
     public static String worldsPath;
@@ -34,6 +34,8 @@ public class Game extends Canvas implements Runnable
     public static double poffx, poffy;
 
     public static int gameState;
+    public static long currentFPS, currentTPS;
+    public static boolean showTPSFPS = false;
 
     private final KeyInput keyInput = new KeyInput();
     private final MouseInput mouseInput = new MouseInput();
@@ -68,6 +70,7 @@ public class Game extends Canvas implements Runnable
         }
         worldsMenu.init();
         ConfigHandler.init();
+        optionsMenu.init();
     }
 
     public Game()
@@ -101,8 +104,12 @@ public class Game extends Canvas implements Runnable
         long lasttimeTick = System.nanoTime();      //  <-  müssen 2 verschiedene Variablen sein,
         long lasttimeFrame = System.nanoTime();     //  <-  weil sie unten jeweils um 1 reduziert werden und ticks und frames unterschiedlich schnell sind
 
+        long lastSecond = 0;
+        long tick = 0;
+        long frame = 0;
+
         int nspertick = 1000000000/tps;     //umrechnung tps und fps in nanosekunden pro tick/frame
-        int nsperframe = 1000000000/fps;
+        int nsperframe;
 
         double deltaTick = 0;       //zeitliche Differenz zwischen dem letzten run-loop und dem jetzigen
         double deltaFrame = 0;
@@ -115,15 +122,27 @@ public class Game extends Canvas implements Runnable
             if (deltaTick >= 1)
             {
                 tick();
+                tick++;
                 deltaTick = deltaTick - 1;
             }
 
+            nsperframe = 1000000000/fps;
             deltaFrame += (double) (now-lasttimeFrame) / nsperframe;
             lasttimeFrame = now;
             if (deltaFrame >=1)
             {
                 render();
+                frame++;
                 deltaFrame = deltaFrame - 1;
+            }
+
+            if (System.currentTimeMillis()-lastSecond >= 1000) {
+                lastSecond=System.currentTimeMillis();
+                System.out.println(currentFPS + "  " + currentTPS);
+                currentTPS = tick;
+                currentFPS = frame;
+                tick = 0;
+                frame = 0;
             }
         }
     }

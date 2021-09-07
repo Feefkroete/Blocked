@@ -42,6 +42,9 @@ public class Overlay
 
     public void render(Graphics graphics)
     {
+        if (Game.showTPSFPS) {
+            graphics.drawString("TPS: " + Game.currentTPS + " | FPS: " + Game.currentFPS, 3, 21);
+        }
         if (KeyInput.fly) {
             graphics.drawImage(Assets.flight, Game.WIDTH - 70, -7, 65, 65, null);
         }
