@@ -1,8 +1,8 @@
 package de.matthi.blocked.main;
 
-import de.matthi.blocked.entity.creature.Player;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.menu.*;
+import de.matthi.blocked.player.Player;
 import de.matthi.blocked.utils.ConfigHandler;
 import de.matthi.blocked.utils.KeyInput;
 import de.matthi.blocked.utils.MouseInput;
@@ -138,7 +138,7 @@ public class Game extends Canvas implements Runnable
 
             if (System.currentTimeMillis()-lastSecond >= 1000) {
                 lastSecond=System.currentTimeMillis();
-                System.out.println(currentFPS + "  " + currentTPS);
+                //System.out.println(currentFPS + "  " + currentTPS);
                 currentTPS = tick;
                 currentFPS = frame;
                 tick = 0;

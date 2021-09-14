@@ -1,4 +1,4 @@
-package de.matthi.blocked.entity.creature;
+package de.matthi.blocked.player;
 
 import de.matthi.blocked.block.Block;
 import de.matthi.blocked.main.Game;
@@ -7,23 +7,25 @@ import de.matthi.blocked.utils.KeyInput;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends Creature{
+public class Player{
 
     BufferedImage textur;
+    double posx, posy;
+    int width, height;
     int hitboxWidth = 48, hitboxHeight = 52;    //Hitboxen - WOW!
     int hp;
     boolean collisionU, collisionO, collisionL, collisionR;
     int fallSpeed = 0;
 
     public Player(double posx, double posy, int width, int heigth, int hp, BufferedImage textur) {
-        super(posx, posy, width, heigth, hp);
+        this.width = width;
+        this.height = heigth;
         this.textur = textur;
         this.hp = hp;
         Game.poffx = posx + (Game.getFenster().getWidth()/2.0);
         Game.poffy = posy + (Game.getFenster().getHeight()/2.0);
     }
 
-    @Override
     public void move(double x, double y)
     {
         this.posx += x;
@@ -39,7 +41,6 @@ public class Player extends Creature{
         Game.poffy = this.posy - (Game.getFenster().getHeight()/2.0);
     }
 
-    @Override
     public void render(Graphics graphics) {
         if (KeyInput.hitBox) {                  //Hitbox nur auf Tastendruck togglen
             graphics.setColor(Color.red);
@@ -49,7 +50,6 @@ public class Player extends Creature{
         //Item.items[Overlay.selectedBlock].render(graphics, Game.getFenster().getWidth()/2 + 12, Game.getFenster().getHeight()/2 -24, 15, 15);
     }
 
-    @Override
     public void tick() {
         int speed = 5;
         if (KeyInput.sprint) {
