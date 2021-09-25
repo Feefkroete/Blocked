@@ -173,7 +173,7 @@ public class World
         saveData[2] = String.valueOf(0);
         saveData[3] = String.valueOf(0);
 
-        FileHandler.writeStringAsFile("/world" + nummer + ".txt", saveData, 0);       //saveData wird in die Textdatei geschrieben
+        FileHandler.writeStringAsFile(Game.worldsPath + "/world" + nummer + ".txt", saveData, 0);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
         loadWorld("/world" + nummer + ".txt");

@@ -65,13 +65,16 @@ public class SelectWorldsMenu
             if (menuButtonList.get(i).isclicked()) {
                 Game.getWorld().loadWorld("/" + files[i]);
             }
-            if (back.isclicked()) {
-                Game.gameState = 1;
-                menupos = 0;
-            }
-            if (menuButtonList.get(i).hover || back.hover) {
+            if (menuButtonList.get(i).hover) {
                 hover = true;
             }
+        }
+        if (back.isclicked()) {
+            Game.gameState = 1;
+            menupos = 0;
+        }
+        if (back.hover) {
+            hover = true;
         }
         if (!hover) {
             fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
