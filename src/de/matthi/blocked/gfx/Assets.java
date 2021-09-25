@@ -9,7 +9,8 @@ public class Assets
 
     public static BufferedImage
             spieler1, spieler2, spieler3, spieler4,
-            grass, trunk, leaves, stone, glass, stone_bricks, pig, select, inv, selInv, flight, air, dirt, mud_bricks, sand,
+            grass, trunk, leaves, stone, glass, stone_bricks, select, inv, selInv, flight, air, dirt, mud_bricks, sand,
+            pig, pig2,
             pigSpawner, wallOverlay, entityRemover,
             worldBackground, menuBackground, wallBlockOverlay,
             button1, button2, button3, button4, button5, button6, button7, button8,
@@ -61,6 +62,7 @@ public class Assets
         wallBlockOverlay = block.pacman(WIDTH*7+8, 1, WIDTH, HEIGHT);
 
         pig = entity.pacman(1, 7, WIDTH, 9);
+        pig2 = entity.pacman(WIDTH+2, 7, WIDTH, 9);
 
         select = ui.pacman(1, 1, WIDTH, HEIGHT);
         inv = ui.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);

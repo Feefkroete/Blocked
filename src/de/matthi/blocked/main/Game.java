@@ -138,7 +138,6 @@ public class Game extends Canvas implements Runnable
 
             if (System.currentTimeMillis()-lastSecond >= 1000) {
                 lastSecond=System.currentTimeMillis();
-                //System.out.println(currentFPS + "  " + currentTPS);
                 currentTPS = tick;
                 currentFPS = frame;
                 tick = 0;
@@ -173,6 +172,8 @@ public class Game extends Canvas implements Runnable
                 newWorldMenu.tick();
                 break;
             case 4 :
+                world.tick(fenster);
+                player.tick();
                 if (!KeyInput.inv) {
                     gameState = 0;
                 }

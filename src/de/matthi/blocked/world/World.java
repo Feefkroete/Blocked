@@ -190,10 +190,10 @@ public class World
         }
         if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
             if (MouseInput.leftMousePressed) {
-                if (Item.items[Overlay.selectedBlock].itemType() == 0) {
+                if (Item.items[Overlay.selectedBlock].itemType() == 0 && Game.gameState != 4) {
                     worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
                 }
-                if (Item.items[Overlay.selectedBlock].itemType() == 1) {
+                if (Item.items[Overlay.selectedBlock].itemType() == 1 && Game.gameState != 4) {
                     switch (Overlay.selectedBlock) {
                         case 14 -> creatureData.add(new Pig(mposx + Game.poffx - 30, mposy - 28 + Game.poffy - 30, 10));
                     }
@@ -253,7 +253,7 @@ public class World
             creatureData.get(i).render(graphics);
         }
         //Select-Box bei der Maus abbilden
-        if (Item.items[Overlay.selectedBlock].itemType() == 0) {
+        if (Item.items[Overlay.selectedBlock].itemType() == 0 && Game.gameState != 4) {
             graphics.drawImage(Assets.select, (int) (((mposx + Game.poffx) / 60)) * 60 - (int) Game.poffx, (int) (((mposy - 28 + Game.poffy) / 60)) * 60 - (int) Game.poffy, 60, 60, null);
         }
     }

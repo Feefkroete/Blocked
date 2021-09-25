@@ -10,24 +10,93 @@ public abstract class Creature extends Entity
 {
     protected int health;
     protected int type;
+    protected int speed;
     protected int fallSpeed = 0;
+    protected BufferedImage textur1, textur2;
 
-    public Creature(double posx, double posy, int width, int heigth, int hp, int type, BufferedImage textur)
+    private int runningStatus;
+    private int runningStatusDuration;
+
+    public Creature(double posx, double posy, int width, int heigth, int hp, int type, int speed, BufferedImage textur1, BufferedImage textur2)
     {
-        super(posx, posy, width, heigth, textur);
+        super(posx, posy, width, heigth, textur1);
         health = hp;
+        this.speed = speed;
         this.type=type;
+        this.textur1 = textur1;
+        this.textur2 = textur2;
     }
 
     @Override
     public void tick() {
-            if (!isCollisionU()) {
-                fallSpeed +=1;
-                move(0, fallSpeed);
+
+        /*++COLLISION DETECTION++*/
+
+        if (!isCollisionU() || fallSpeed<0) {
+            fallSpeed +=1;
+            move(0, fallSpeed);
+        }
+        else {
+            fallSpeed = 0;
+        }
+
+        /*++PATHFINDING SYSTEM++*/
+
+        // Zufallsgenerator
+        double r = Math.random();
+        if (r<0.2 && runningStatus == 0) {
+            if (r<0.02) {
+                runningStatus = -1;
+                runningStatusDuration = (int) (Math.random()*120 + 30);
+                textur = textur2;
+            }
+            if (r<0.18 && r>0.02) {
+                runningStatusDuration = (int) (Math.random()*500 + 350);
+            }
+            if (r>0.18) {
+                runningStatus = 1;
+                runningStatusDuration = (int) (Math.random()*120 + 30);
+                textur = textur1;
+            }
+        }
+
+        // Blocküberprüfungen
+
+        if (runningStatusDuration!=0) {
+            Block checku1, checku2, checku3, checkv1, checkv2;
+            int blockx = (int) (posx + (width / 2) + runningStatus) / 60;
+
+            if ((int) (posy + height + 123) / 60< Game.getWorld().getHeight()) {
+                checku1 = Game.getWorld().getBlock(blockx, (int) (posy + height + 3) / 60);
+                checku2 = Game.getWorld().getBlock(blockx, (int) (posy + height + 63) / 60);
+                checku3 = Game.getWorld().getBlock(blockx, (int) (posy + height + 123) / 60);
             }
             else {
-                fallSpeed = 0;
+                checku1 = Block.dirt_block;
+                checku2 = Block.dirt_block;
+                checku3 = Block.dirt_block;
             }
+            if ((posx + (width/2D) + (runningStatus*width)/2D) / 60 > 0 && (posx + (width/2D) + (runningStatus*width)/2D) / 60 < Game.getWorld().getWidth() && posy-7>0) {
+                checkv1 = Game.getWorld().getBlock((int) (posx + (width/2) + (runningStatus*(width+2))/2) / 60, (int) (posy+7)/60);
+                checkv2 = Game.getWorld().getBlock((int) (posx + (width/2) + (runningStatus*(width+2))/2) / 60, (int) (posy-67)/60);
+            }
+            else {
+                checkv1 = Block.dirt_block;
+                checkv2 = Block.dirt_block;
+            }
+
+            if (checkv1.isSolid() && !checkv2.isSolid()) {  //Jump wenn sich vor und vor/über der Creature die Möglichkeit anbietet
+                fallSpeed = -10;
+            }
+            if (checku1.isSolid() || checku2.isSolid() || checku3.isSolid()) {  //Laufen, wenn kein 3+ Block tiefes Loch vor Creature
+                move(runningStatus * speed, 0);
+            }
+            runningStatusDuration--;
+        }
+        else {
+            runningStatus = 0;
+        }
+
     }
 
     public void move(double x, double y) {
@@ -93,7 +162,6 @@ public abstract class Creature extends Entity
         }
         return true;
     }
-
 
 
     /*******GETTERS*******/
