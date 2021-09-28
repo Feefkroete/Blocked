@@ -19,7 +19,7 @@ import java.security.CodeSource;
 
 public class Game extends Canvas implements Runnable
 {
-    public static final double VERSION = 1.5;
+    public static final double VERSION = 1.51;
 
     public static final String name = "Blocked";
     public static final int WIDTH = 1400;
