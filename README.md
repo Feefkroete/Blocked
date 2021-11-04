@@ -27,4 +27,3 @@
 - [ ] Entity colision System
 - [ ] Swords, Magic, Tools
 - [ ] Armour, magic Items
-- [ ] Split Items into Tools/Blocks/Other Items
