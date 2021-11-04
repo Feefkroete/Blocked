@@ -6,6 +6,6 @@ import de.matthi.blocked.item.BlockItem;
 public class SandItem extends BlockItem {
 
     public SandItem() {
-        super(Assets.sand, false, 9);
+        super(Assets.sand, false, 7);
     }
 }

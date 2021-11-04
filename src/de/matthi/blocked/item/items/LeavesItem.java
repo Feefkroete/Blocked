@@ -5,6 +5,6 @@ import de.matthi.blocked.item.BlockItem;
 
 public class LeavesItem extends BlockItem {
     public LeavesItem() {
-        super(Assets.leaves, false, 3);
+        super(Assets.leaves, false, 11);
     }
 }

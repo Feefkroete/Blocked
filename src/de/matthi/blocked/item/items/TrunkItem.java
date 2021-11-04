@@ -6,6 +6,6 @@ import de.matthi.blocked.item.BlockItem;
 public class TrunkItem extends BlockItem {
 
     public TrunkItem() {
-        super(Assets.trunk, false, 2);
+        super(Assets.trunk, false, 10);
     }
 }

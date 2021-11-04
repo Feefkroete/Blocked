@@ -25,8 +25,6 @@ public class Tree {
         }
         HEIGHT = WIDTH+(int)(Math.random()*5)-1;    //Höhe zwar abhängig von Breite, allerdings auch zu gewissem Grad zufällig
         int split = (HEIGHT/2)+(int)(Math.random()*HEIGHT/3);   //Zufällige Unterteilung Stammhöhe/Blätterhöhe
-        System.out.print("Height: " + HEIGHT);
-
         int[][] treeBlocks = new int[WIDTH][HEIGHT];
 
         for (int y = HEIGHT-1; y>-1; y--)
@@ -37,20 +35,20 @@ public class Tree {
                 {
                     if(x == ((WIDTH/2)))
                     {
-                        treeBlocks[x][y] = 2;
+                        treeBlocks[x][y] = 10;
                     }
                     else {
-                        treeBlocks[x][y] = 4;
+                        treeBlocks[x][y] = 0;
                     }
                 }
                 else
                 {
-                    treeBlocks[x][y] = 3;       //Baumkrone mit Blättern gefüllt
+                    treeBlocks[x][y] = 11;       //Baumkrone mit Blättern gefüllt
                 }
             }
         }
-        treeBlocks[0][HEIGHT-1] = 4;
-        treeBlocks[WIDTH-1][HEIGHT-1] = 4;
+        treeBlocks[0][HEIGHT-1] = 0;
+        treeBlocks[WIDTH-1][HEIGHT-1] = 0;
         //TODO: Mehr randomisation bei den Blättern! (Also die Blöcke neben und unter den oberen Ecken)
         return treeBlocks;
     }

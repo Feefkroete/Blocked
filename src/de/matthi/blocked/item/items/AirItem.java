@@ -5,6 +5,6 @@ import de.matthi.blocked.item.BlockItem;
 
 public class AirItem extends BlockItem {
     public AirItem() {
-        super(Assets.air, false, 4);
+        super(Assets.air, false, 0);
     }
 }

@@ -17,11 +17,6 @@ public class StoneBricks extends Block {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public boolean isSolid() {
         return true;
     }

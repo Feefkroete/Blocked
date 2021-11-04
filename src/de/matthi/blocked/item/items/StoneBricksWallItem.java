@@ -6,6 +6,6 @@ import de.matthi.blocked.item.BlockItem;
 public class StoneBricksWallItem extends BlockItem
 {
     public StoneBricksWallItem() {
-        super(Assets.stone_bricks, true, 13);
+        super(Assets.stone_bricks, true, 6);
     }
 }

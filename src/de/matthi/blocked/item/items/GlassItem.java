@@ -5,6 +5,6 @@ import de.matthi.blocked.item.BlockItem;
 
 public class GlassItem extends BlockItem {
     public GlassItem() {
-        super(Assets.glass, false, 10);
+        super(Assets.glass, false, 12);
     }
 }

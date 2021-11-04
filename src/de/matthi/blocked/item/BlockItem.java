@@ -1,6 +1,6 @@
 package de.matthi.blocked.item;
 
-import de.matthi.blocked.block.Block;
+import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Overlay;
@@ -15,7 +15,7 @@ public abstract class BlockItem extends Item{
     public BlockItem(BufferedImage texture, boolean isWallItem, int blockId) {
         super(texture, true);
         this.blockId = blockId;
-        Block.blocks[blockId].item = this;
+        BlockRegistry.blocks.get(blockId).item = this;
         if (isWallItem) {
             BufferedImage newTexture = new BufferedImage(15, 15, 2);
             Graphics2D graphics = newTexture.createGraphics();
@@ -37,6 +37,6 @@ public abstract class BlockItem extends Item{
 
     @Override
     public void rightClickAction() {
-        Game.getWorld().setWorldDataAtPosition(Game.getWorld().getSelectedBlockX(), Game.getWorld().getSelectedBlockY(), 4);
+        Game.getWorld().setWorldDataAtPosition(Game.getWorld().getSelectedBlockX(), Game.getWorld().getSelectedBlockY(), 0);
     }
 }

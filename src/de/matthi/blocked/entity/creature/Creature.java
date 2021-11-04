@@ -1,6 +1,7 @@
 package de.matthi.blocked.entity.creature;
 
 import de.matthi.blocked.block.Block;
+import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.entity.Entity;
 import de.matthi.blocked.main.Game;
 
@@ -72,17 +73,17 @@ public abstract class Creature extends Entity
                 checku3 = Game.getWorld().getBlock(blockx, (int) (posy + height + 123) / 60);
             }
             else {
-                checku1 = Block.dirt_block;
-                checku2 = Block.dirt_block;
-                checku3 = Block.dirt_block;
+                checku1 = BlockRegistry.blocks.get(3);
+                checku2 = BlockRegistry.blocks.get(3);
+                checku3 = BlockRegistry.blocks.get(3);
             }
             if ((posx + (width/2D) + (runningStatus*width)/2D) / 60 > 0 && (posx + (width/2D) + (runningStatus*width)/2D) / 60 < Game.getWorld().getWidth() && posy-7>0) {
                 checkv1 = Game.getWorld().getBlock((int) (posx + (width/2) + (runningStatus*(width+2))/2) / 60, (int) (posy+7)/60);
                 checkv2 = Game.getWorld().getBlock((int) (posx + (width/2) + (runningStatus*(width+2))/2) / 60, (int) (posy-67)/60);
             }
             else {
-                checkv1 = Block.dirt_block;
-                checkv2 = Block.dirt_block;
+                checkv1 = BlockRegistry.blocks.get(3);
+                checkv2 = BlockRegistry.blocks.get(3);
             }
 
             if (checkv1.isSolid() && !checkv2.isSolid()) {  //Jump wenn sich vor und vor/über der Creature die Möglichkeit anbietet

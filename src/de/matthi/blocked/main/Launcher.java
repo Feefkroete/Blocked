@@ -1,5 +1,6 @@
 package de.matthi.blocked.main;
 
+import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.utils.FileHandler;
@@ -17,6 +18,7 @@ public class Launcher
 
     public static void main(String[] args) throws URISyntaxException {
         Assets.init();
+        BlockRegistry.init();
         ItemRegistry.init();
         new Game().init();
         versionCheck();

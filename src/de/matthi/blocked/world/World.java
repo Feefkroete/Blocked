@@ -1,6 +1,7 @@
 package de.matthi.blocked.world;
 
 import de.matthi.blocked.block.Block;
+import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.gfx.Assets;
@@ -112,13 +113,13 @@ public class World
             {
                 if(y > noise)
                 {
-                    if (worldData[x][y-1] == 4)     //Oberfläche (=Gras) wird generiert
+                    if (worldData[x][y-1] == 0)     //Oberfläche (=Gras) wird generiert
                     {
-                        worldData[x][y] = 0;
+                        worldData[x][y] = 2;
                     }
                     else {
-                        if (worldData[x][y - 1] == 0 || worldData[x][y - 2] == 0 || worldData[x][y - 3] == 0) {     //Generierung von Dirt bis 4 Blöcke unter dem Gras
-                            worldData[x][y] = 5;
+                        if (worldData[x][y - 1] == 2 || worldData[x][y - 2] == 2 || worldData[x][y - 3] == 2) {     //Generierung von Dirt bis 4 Blöcke unter dem Gras
+                            worldData[x][y] = 3;
                         } else {
                             worldData[x][y] = 1;        //Rest ist Stein
                         }
@@ -126,7 +127,7 @@ public class World
                 }
                 else
                 {
-                    worldData[x][y] = 4;    //Wenn überhalb der Oberfläche => Luft
+                    worldData[x][y] = 0;    //Wenn überhalb der Oberfläche => Luft
                 }
             }
         }
@@ -135,21 +136,17 @@ public class World
         for (int x = 0; x<width-4; x++) {
             if (Math.random() < 0.2 && prevx+2 < x) {       //Wenn der Zufall es gut meint und der Mindestabstand eingehalten wird
                 for (int y = 0; y<height; y++) {
-                    if (worldData[x][y] == 0) {
+                    if (worldData[x][y] == 2) {
                         int[][] treeData = Tree.generate();     //Einen Baum generieren
-                        if (y - Tree.HEIGHT -1>= 0) {       //Darauf achten, dass die Bäume in die Welt passen
-                            System.out.println();
+                        if (y - Tree.HEIGHT -1 >= 0) {       //Darauf achten, dass die Bäume in die Welt passen
                             for (int ax = 0; ax < Tree.WIDTH; ax++) {
                                 for (int ay = 0; ay < Tree.HEIGHT; ay++) {
-                                    if (treeData[ax][ay] != 4 && worldData[(x - ax)+(Tree.WIDTH/2)][y - ay - 1] == 4) {
+                                    if (treeData[ax][ay] != 0 && worldData[(x - ax)+(Tree.WIDTH/2)][y - ay - 1] == 0) {
                                         prevx = x;
                                         worldData[(x - ax)+(Tree.WIDTH/2)][y - ay - 1] = treeData[ax][ay];
                                     }
                                 }
                             }
-                        }
-                        else {
-                            System.out.println(" -> Canceled!");
                         }
                     }
                 }
@@ -200,12 +197,12 @@ public class World
                 }
             }
         }
-        if (Math.random() < 0.05) {
+        if (Math.random() < 0.05) {                 //--- Gras wird zu Erde, wenn solider Block darüber ---//
             for (int y = 1; y < height-1; y++) {
                 for (int x = 0; x < width-1; x++) {
                     if (Math.random() < 0.5) {
-                        if (worldData[x][y] == 0 && worldData[x][y - 1] != 4 && worldData[x][y - 1] != 2 && Math.random() < 0.05) {
-                            worldData[x][y] = 5;
+                        if (worldData[x][y] == 2 && BlockRegistry.blocks.get(worldData[x][y - 1]).isSolid() && Math.random() < 0.05) {
+                            worldData[x][y] = 3;
                         }
                     }
                 }
@@ -247,10 +244,10 @@ public class World
 
     public Block getBlock(int posx, int posy)
     {
-        Block block = Block.blocks[worldData[posx][posy]];
+        Block block = BlockRegistry.blocks.get(worldData[posx][posy]);
         if (block == null)
         {
-            return Block.blocks[3];
+            return BlockRegistry.blocks.get(1);
         }
         return block;
     }
@@ -272,7 +269,7 @@ public class World
     }
 
     public Block getSelectedBlock() {
-        return Block.blocks[worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)]];
+        return BlockRegistry.blocks.get(worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)]);
     }
 
     public Creature getTargetedCreature() {

@@ -5,6 +5,6 @@ import de.matthi.blocked.item.BlockItem;
 
 public class MudBricksItem extends BlockItem {
     public MudBricksItem() {
-        super(Assets.mud_bricks, false, 7);
+        super(Assets.mud_bricks, false, 8);
     }
 }

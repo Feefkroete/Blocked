@@ -18,11 +18,6 @@ public class MudBricksWall extends Block {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public boolean isSolid() {
         return false;
     }

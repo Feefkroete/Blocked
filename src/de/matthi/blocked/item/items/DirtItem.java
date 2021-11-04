@@ -5,6 +5,6 @@ import de.matthi.blocked.item.BlockItem;
 
 public class DirtItem extends BlockItem {
     public DirtItem() {
-        super(Assets.dirt, false, 5);
+        super(Assets.dirt, false, 3);
     }
 }

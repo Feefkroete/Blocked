@@ -20,11 +20,6 @@ public class Trunk extends Block
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public boolean isSolid() {
         return false;
     }
