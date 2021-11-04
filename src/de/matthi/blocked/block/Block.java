@@ -1,6 +1,7 @@
 package de.matthi.blocked.block;
 
 import de.matthi.blocked.block.blocks.*;
+import de.matthi.blocked.item.BlockItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage;
 public abstract class Block
 {
     protected final int id;
+    public BlockItem item;
 
     public static Block[] blocks = new Block[100];
     public static Block grass_block = new Grass(0);

@@ -37,9 +37,6 @@ public class Game extends Canvas implements Runnable
     public static long currentFPS, currentTPS;
     public static boolean showTPSFPS = false;
 
-    private final KeyInput keyInput = new KeyInput();
-    private final MouseInput mouseInput = new MouseInput();
-
     private static World world;
     private static final Overlay overlay = new Overlay();
     private static Player player;
@@ -49,11 +46,10 @@ public class Game extends Canvas implements Runnable
     private static final OptionsMenu optionsMenu = new OptionsMenu();
     private static final UpdateMenu updateMenu = new UpdateMenu();
     private static Font font;
-    private static Graphics graphics;
 
     public void init() throws URISyntaxException {
         new Thread(this).start();
-        font = new Font("Serif", Font.BOLD, 21);
+        font = new Font("Arial", Font.BOLD, 21);
         player = new Player(World.pposx, World.pposy, 60, 60, 20, Assets.spieler2);
         world = new World();
         CodeSource path = Game.class.getProtectionDomain().getCodeSource();
@@ -79,6 +75,7 @@ public class Game extends Canvas implements Runnable
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(false);
+        MouseInput mouseInput = new MouseInput();
         addMouseListener(mouseInput);
 
         gameState = 1;
@@ -89,6 +86,7 @@ public class Game extends Canvas implements Runnable
         fenster.setIconImage(Assets.spieler3);
         fenster.add(this, BorderLayout.CENTER);
 
+        KeyInput keyInput = new KeyInput();
         fenster.addKeyListener(keyInput);
         fenster.addMouseWheelListener(mouseInput);
 
@@ -149,41 +147,30 @@ public class Game extends Canvas implements Runnable
     public void tick()
     {
         switch (gameState) {
-            case 0 :
+            case 0 -> {
                 world.tick(fenster);
                 player.tick();
                 KeyInput.tick();
-                if (KeyInput.save)
-                {
+                if (KeyInput.save) {
                     world.saveWorld(player);
                     System.out.println("Welt gespeichert");
                 }
                 if (KeyInput.inv) {
                     gameState = 4;
                 }
-                break;
-            case 1 :
-                mainMenu.tick(fenster);
-                break;
-            case 2 :
-                worldsMenu.tick(fenster);
-                break;
-            case 3 :
-                newWorldMenu.tick();
-                break;
-            case 4 :
+            }
+            case 1 -> mainMenu.tick(fenster);
+            case 2 -> worldsMenu.tick(fenster);
+            case 3 -> newWorldMenu.tick();
+            case 4 -> {
                 world.tick(fenster);
                 player.tick();
                 if (!KeyInput.inv) {
                     gameState = 0;
                 }
-                break;
-            case 5 :
-                optionsMenu.tick(fenster);
-                break;
-            case 6 :
-                updateMenu.tick(fenster);
-                break;
+            }
+            case 5 -> optionsMenu.tick(fenster);
+            case 6 -> updateMenu.tick(fenster);
         }
     }
 
@@ -195,7 +182,7 @@ public class Game extends Canvas implements Runnable
             createBufferStrategy(3);    //aktiviert trippleBuffering, wenn keine Bufferstrategy gesetzt ist
             return;
         }
-        graphics = bufferStrategy.getDrawGraphics();
+        Graphics graphics = bufferStrategy.getDrawGraphics();
         graphics.setFont(font);
         graphics.clearRect(0,0,getWidth(), getHeight());
 
@@ -238,17 +225,8 @@ public class Game extends Canvas implements Runnable
         return player;
     }
 
-    public static MainMenu getMainMenu() {
-        return mainMenu;
-    }
-
     public static SelectWorldsMenu getWorldsMenu() {
         return worldsMenu;
-    }
-
-    public static Font gettheFont()
-    {
-        return font;
     }
 
     public static JFrame getFenster()

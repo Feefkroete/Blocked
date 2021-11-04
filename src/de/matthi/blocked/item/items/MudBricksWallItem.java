@@ -1,34 +1,10 @@
 package de.matthi.blocked.item.items;
 
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.item.Item;
+import de.matthi.blocked.item.BlockItem;
 
-import java.awt.*;
-
-public class MudBricksWallItem extends Item
-{
-    public MudBricksWallItem(int id)
-    {
-        super(Assets.mud_bricks, id);
-    }
-
-    @Override
-    public void render(Graphics graphics, int posx, int posy, int width, int height) {
-        graphics.drawImage(textur, posx, posy, width, height, null);
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public boolean isWallItem() {
-        return true;
-    }
-
-    @Override
-    public short itemType() {
-        return 0;
+public class MudBricksWallItem extends BlockItem {
+    public MudBricksWallItem() {
+        super(Assets.mud_bricks, true, 8);
     }
 }

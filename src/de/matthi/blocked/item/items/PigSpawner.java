@@ -1,33 +1,31 @@
 package de.matthi.blocked.item.items;
 
+import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.Item;
-
-import java.awt.*;
+import de.matthi.blocked.main.Game;
+import de.matthi.blocked.utils.MouseInput;
+import de.matthi.blocked.world.World;
 
 public class PigSpawner extends Item {
-
-    public PigSpawner(int id) {
-        super(Assets.pigSpawner, id);
+    public PigSpawner() {
+        super(Assets.pigSpawner,false);
     }
 
     @Override
-    public void render(Graphics graphics, int posx, int posy, int width, int height) {
-        graphics.drawImage(Assets.pigSpawner, posx, posy, width, height, null);
+    public void leftClickAction() {
+        World world = Game.getWorld();
+        world.getCreatureData().add(new Pig(world.getMposx()+Game.poffx-30, world.getMposy()+Game.poffy-45, 20));
+        MouseInput.leftMousePressed = false;
     }
 
     @Override
-    public void tick() {
+    public void middleClickAction() {
 
     }
 
     @Override
-    public boolean isWallItem() {
-        return false;
-    }
+    public void rightClickAction() {
 
-    @Override
-    public short itemType() {
-        return 1;
     }
 }

@@ -1,11 +1,6 @@
 package de.matthi.blocked.entity.creature;
 
-import de.matthi.blocked.block.Block;
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.main.Game;
-import de.matthi.blocked.utils.KeyInput;
-
-import java.awt.*;
 
 public class Pig extends Creature
 {

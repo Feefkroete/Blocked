@@ -1,33 +1,37 @@
 package de.matthi.blocked.item.items;
 
+import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.Item;
-
-import java.awt.*;
+import de.matthi.blocked.main.Game;
+import de.matthi.blocked.utils.MouseInput;
 
 public class EntityRemover extends Item {
 
-    public EntityRemover(int id) {
-        super(Assets.entityRemover, id);
+    public EntityRemover() {
+        super(Assets.entityRemover, false);
     }
 
     @Override
-    public void render(Graphics graphics, int posx, int posy, int width, int height) {
-        graphics.drawImage(textur, posx, posy, width, height, null);
+    public void leftClickAction() {
+        Creature target = Game.getWorld().getTargetedCreature();
+        if (target != null) {
+            Game.getWorld().getCreatureData().remove(Game.getWorld().getTargetedCreature());
+        }
+        MouseInput.leftMousePressed = false;
     }
 
     @Override
-    public void tick() {
+    public void middleClickAction() {
 
     }
 
     @Override
-    public boolean isWallItem() {
-        return false;
-    }
-
-    @Override
-    public short itemType() {
-        return 2;
+    public void rightClickAction() {
+        Creature target = Game.getWorld().getTargetedCreature();
+        if (target != null) {
+            Game.getWorld().getCreatureData().remove(Game.getWorld().getTargetedCreature());
+        }
+        MouseInput.rightMouseClicked = false;
     }
 }

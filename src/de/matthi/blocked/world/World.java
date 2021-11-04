@@ -4,7 +4,6 @@ import de.matthi.blocked.block.Block;
 import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.item.Item;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Overlay;
 import de.matthi.blocked.player.Player;
@@ -23,7 +22,7 @@ public class World
 {
     private int width, height;
     private int[][] worldData;
-    private List<Creature> creatureData = new ArrayList<>();
+    private final List<Creature> creatureData = new ArrayList<>();
     private double mposx, mposy;
     public static double pposx, pposy;
     private String path;
@@ -189,30 +188,16 @@ public class World
             mposy = p.getY();
         }
         if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
-            if (MouseInput.leftMousePressed) {
-                if (Item.items[Overlay.selectedBlock].itemType() == 0 && Game.gameState != 4) {
-                    worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = Overlay.selectedBlock;     //Wenn die Maus innerhalb der Welt gelinksklickt wird => Block platzieren
+            if (Game.gameState != 4) {
+                if (MouseInput.leftMousePressed) {
+                    Overlay.selectedItem.leftClickAction();
                 }
-                if (Item.items[Overlay.selectedBlock].itemType() == 1 && Game.gameState != 4) {
-                    switch (Overlay.selectedBlock) {
-                        case 14 -> creatureData.add(new Pig(mposx + Game.poffx - 30, mposy - 28 + Game.poffy - 30, 10));
-                    }
-                    MouseInput.leftMousePressed = false;
+                if (MouseInput.middleMouseClicked) {
+                    Overlay.selectedItem.middleClickAction();
                 }
-                if (Item.items[Overlay.selectedBlock].itemType() == 2) {
-                    for (int i = 0; i < creatureData.size(); i++) {
-                        if (mposx+Game.poffx>creatureData.get(i).getPosX() && mposx+Game.poffx<creatureData.get(i).getPosX()+creatureData.get(i).getWidth() && mposy-28+Game.poffy>creatureData.get(i).getPosY() && mposy-28+Game.poffy<creatureData.get(i).getPosY()+creatureData.get(i).getHeight()) {
-                            creatureData.remove(i);
-                            break;
-                        }
-                    }
+                if (MouseInput.rightMouseClicked) {
+                    Overlay.selectedItem.rightClickAction();
                 }
-            }
-            if (MouseInput.middleMouseClicked) {
-                Overlay.selectedBlock = worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)];
-            }
-            if (MouseInput.rightMouseClicked) {
-                worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)] = 4;
             }
         }
         if (Math.random() < 0.05) {
@@ -226,8 +211,8 @@ public class World
                 }
             }
         }
-        for (int i = 0; i < creatureData.size(); i++) {
-            creatureData.get(i).tick();
+        for (Creature creatureDatum : creatureData) {
+            creatureDatum.tick();
         }
     }
 
@@ -249,14 +234,16 @@ public class World
                 }
             }
         }
-        for (int i = 0; i < creatureData.size(); i++) {
-            creatureData.get(i).render(graphics);
+        for (Creature creatureDatum : creatureData) {
+            creatureDatum.render(graphics);
         }
         //Select-Box bei der Maus abbilden
-        if (Item.items[Overlay.selectedBlock].itemType() == 0 && Game.gameState != 4) {
+        if (Overlay.selectedItem.isBlockItem() && Game.gameState != 4) {
             graphics.drawImage(Assets.select, (int) (((mposx + Game.poffx) / 60)) * 60 - (int) Game.poffx, (int) (((mposy - 28 + Game.poffy) / 60)) * 60 - (int) Game.poffy, 60, 60, null);
         }
     }
+
+    //-------------- GETTERS -----------------//
 
     public Block getBlock(int posx, int posy)
     {
@@ -274,5 +261,44 @@ public class World
 
     public int getHeight() {
         return height;
+    }
+
+    public int getSelectedBlockX() {
+        return (int) ((mposx + Game.poffx) / 60);
+    }
+
+    public int getSelectedBlockY() {
+        return (int) ((mposy - 28 + Game.poffy) / 60);
+    }
+
+    public Block getSelectedBlock() {
+        return Block.blocks[worldData[(int) ((mposx + Game.poffx) / 60)][(int) ((mposy - 28 + Game.poffy) / 60)]];
+    }
+
+    public Creature getTargetedCreature() {
+        for (Creature creatureDatum : creatureData) {
+            if (mposx + Game.poffx > creatureDatum.getPosX() && mposx + Game.poffx < creatureDatum.getPosX() + creatureDatum.getWidth() && mposy - 28 + Game.poffy > creatureDatum.getPosY() && mposy - 28 + Game.poffy < creatureDatum.getPosY() + creatureDatum.getHeight()) {
+                return creatureDatum;
+            }
+        }
+        return null;
+    }
+
+    public double getMposx() {
+        return mposx;
+    }
+
+    public double getMposy() {
+        return mposy;
+    }
+
+    public List<Creature> getCreatureData() {
+        return creatureData;
+    }
+
+    //----------------- SETTERS ----------------//
+
+    public void setWorldDataAtPosition(int posX, int posY, int value) {
+        worldData[posX][posY] = value;
     }
 }

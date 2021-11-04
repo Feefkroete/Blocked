@@ -14,7 +14,7 @@ public class Air extends Block {
     @Override
     public void render(Graphics graphics, int posx, int posy)
     {
-        graphics.drawImage(null, posx, posy, 60, 60, null);
+
     }
 
     @Override

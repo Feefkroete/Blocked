@@ -11,7 +11,7 @@ public class Assets
             spieler1, spieler2, spieler3, spieler4,
             grass, trunk, leaves, stone, glass, stone_bricks, select, inv, selInv, flight, air, dirt, mud_bricks, sand,
             pig, pig2,
-            pigSpawner, wallOverlay, entityRemover,
+            pigSpawner, wallItemOverlay, entityRemover,
             worldBackground, menuBackground, wallBlockOverlay,
             button1, button2, button3, button4, button5, button6, button7, button8,
             sliderBox, sliderHandleOff, sliderHandleOn, sliderName;
@@ -70,7 +70,7 @@ public class Assets
         selInv = ui.pacman(1, HEIGHT + 2, WIDTH, HEIGHT);
 
         air = item.pacman(1, 1, WIDTH, HEIGHT);
-        wallOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
+        wallItemOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
         pigSpawner = item.pacman(WIDTH*2+3, 1, WIDTH, HEIGHT);
         entityRemover = item.pacman(WIDTH*3+4, 1, WIDTH, HEIGHT);
     }

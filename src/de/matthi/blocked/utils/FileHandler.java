@@ -55,7 +55,6 @@ public class FileHandler
         BufferedWriter bufferedWriter;
         try
         {
-            System.out.println(path);
             bufferedWriter = new BufferedWriter(new FileWriter(path));
             for(int i = 0; i< stringData.length; i++)
             {
