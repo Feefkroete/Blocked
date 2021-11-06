@@ -1,4 +1,4 @@
-## Welcome to Blocked! - Wilkommen bei Blocked!
+## Welcome to Blocked! - Willkommen bei Blocked!
 ![-> Wiki](https://github.com/Feefkroete/Blocked/wiki/)
 
 <br><br><br><br>
