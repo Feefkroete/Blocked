@@ -6,7 +6,6 @@ import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.item.Item;
 import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Inventory;
@@ -59,7 +58,7 @@ public class World
             else {
                 Inventory.commonSlotItem[i] = null;
             }
-            Inventory.commonSlotCount[i] = FileHandler.parseInt(data[i+88]);
+            Inventory.commonSlotCount[i] = FileHandler.parseInt(data[i+95]);
         }
         for (int x = 0; x < width; x++)
         {
@@ -90,7 +89,7 @@ public class World
         saveData[6] = String.valueOf(player.getWaterLevel());
         for (int i = 0; i<88; i++) {
             saveData[i+7] = String.valueOf(ItemRegistry.items.indexOf((Inventory.commonSlotItem[i])));
-            saveData[i+88] = String.valueOf(Inventory.commonSlotCount[i]);
+            saveData[i+95] = String.valueOf(Inventory.commonSlotCount[i]);
         }
         for (int x = 0; x < width; x++)
         {
@@ -202,7 +201,7 @@ public class World
 
         for (int i = 0; i<88; i++) {
             saveData[i + 7] = String.valueOf(-1);
-            saveData[i + 88] = String.valueOf(0);
+            saveData[i + 95] = String.valueOf(0);
         }
 
         int newPposx = (int)(Math.random()*width+1);
