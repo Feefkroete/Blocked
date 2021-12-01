@@ -6,6 +6,8 @@ import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
+import de.matthi.blocked.item.Item;
+import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Inventory;
 import de.matthi.blocked.main.Overlay;
@@ -50,14 +52,23 @@ public class World
         Game.getPlayer().setWaterLevel(FileHandler.parseInt(data[6]));
         worldData = new int[width][height];                     //worldData als neues multidimensionales Integerarray
 
+        for (int i = 0; i<88; i++) {
+            if (FileHandler.parseInt(data[i+7]) != -1) {
+                Inventory.commonSlotItem[i] = ItemRegistry.items.get(FileHandler.parseInt(data[i + 7]));
+            }
+            else {
+                Inventory.commonSlotItem[i] = null;
+            }
+            Inventory.commonSlotCount[i] = FileHandler.parseInt(data[i+88]);
+        }
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                    worldData[x][y] = FileHandler.parseInt(data[(x + y * width) + 7]);      //Weltdaten werden gelesen und ins multidimensionale Array geschrieben
+                    worldData[x][y] = FileHandler.parseInt(data[(x + y * width) + 7 + 176]);      //Weltdaten werden gelesen und ins multidimensionale Array geschrieben
             }
         }
-        for (int i = height*width+7; i < data.length; i++) {
+        for (int i = height*width+7+176; i < data.length; i++) {
             String[] entitySplit = data[i].split(":");
             if (entitySplit[0].equals("0")) {
                 creatureData.add(new Pig(FileHandler.parseInt(entitySplit[1]), FileHandler.parseInt(entitySplit[2]), FileHandler.parseInt(entitySplit[3])));
@@ -69,7 +80,7 @@ public class World
 
     public void saveWorld(Player player)
     {
-        String[] saveData = new String[width*height + 7 + creatureData.size()];         //Neues Stringarray mit der Länge breite*höhe+4 für weltdata + 4 Werte für Spielerpos und Weltgröße
+        String[] saveData = new String[width*height + 7 + 176 + creatureData.size()];         //Neues Stringarray mit der Länge breite*höhe+4 für weltdata + 4 Werte für Spielerpos und Weltgröße
         saveData[0] = String.valueOf(width);                      //Setzen der ersten vier Werte
         saveData[1] = String.valueOf(height);
         saveData[2] = String.valueOf((int)(player.getXPosition()));
@@ -77,15 +88,19 @@ public class World
         saveData[4] = String.valueOf(player.getHealth());
         saveData[5] = String.valueOf(player.getFoodLevel());
         saveData[6] = String.valueOf(player.getWaterLevel());
+        for (int i = 0; i<88; i++) {
+            saveData[i+7] = String.valueOf(ItemRegistry.items.indexOf((Inventory.commonSlotItem[i])));
+            saveData[i+88] = String.valueOf(Inventory.commonSlotCount[i]);
+        }
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                saveData[(x+y*width) + 7] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
+                saveData[(x+y*width) + 7 + 176] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
             }
         }
         for (int i = 0; i< creatureData.size(); i++) {
-            saveData[(height*width) + 7 + i] = creatureData.get(i).getType() + ":" + (int)creatureData.get(i).getPosX() + ":" + (int)creatureData.get(i).getPosY() + ":" + creatureData.get(i).getHp();
+            saveData[(height*width) + 7 + i + 176] = creatureData.get(i).getType() + ":" + (int)creatureData.get(i).getPosX() + ":" + (int)creatureData.get(i).getPosY() + ":" + creatureData.get(i).getHp();
         }
         FileHandler.writeStringAsFile(path, saveData, 0);                               //saveData wird vom FileWriter in eine Textdatei gespeichert
         creatureData.clear();
@@ -166,14 +181,14 @@ public class World
             }
         }
 
-        String[] saveData = new String[width * height + 7];
+        String[] saveData = new String[width * height + 7 + 176];
 
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                saveData[(x+y*width) + 7] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
+                saveData[(x+y*width) + 7 + 176] = String.valueOf(worldData[x][y]);        //Stringarray wird mit der Weltdata gefüllt
             }
         }
 
@@ -184,6 +199,11 @@ public class World
         saveData[4] = String.valueOf(20);
         saveData[5] = String.valueOf(10);
         saveData[6] = String.valueOf(10);
+
+        for (int i = 0; i<88; i++) {
+            saveData[i + 7] = String.valueOf(-1);
+            saveData[i + 88] = String.valueOf(0);
+        }
 
         int newPposx = (int)(Math.random()*width+1);
         for (int i = 0; i<height-1; i++) {
@@ -196,6 +216,9 @@ public class World
         FileHandler.writeStringAsFile(Game.worldsPath + "/world" + nummer + ".txt", saveData, 0);       //saveData wird in die Textdatei geschrieben
         Game.getWorldsMenu().init();        //World-select-menu wird neu initialisiert, damit während der runtime erstellte Dateien angezeigt werden
 
+        Game.getPlayer().setHp(20);
+        Game.getPlayer().setWaterLevel(10);
+        Game.getPlayer().setFoodLevel(10);
         loadWorld("/world" + nummer + ".txt");
     }
 
