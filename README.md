@@ -27,3 +27,10 @@
 - [ ] Entity colision System
 - [ ] Swords, Magic, Tools
 - [ ] Armour, magic Items
+
+
+
+#### THANKS A LOT TO:
+
+- Perry
+- Such a Lucy
