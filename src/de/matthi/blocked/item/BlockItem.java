@@ -1,19 +1,22 @@
 package de.matthi.blocked.item;
 
+import de.matthi.blocked.block.Block;
 import de.matthi.blocked.block.BlockRegistry;
+import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.main.Overlay;
+import de.matthi.blocked.world.World;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class BlockItem extends Item{
+public abstract class BlockItem extends Item {
 
     private final int blockId;
 
     public BlockItem(BufferedImage texture, boolean isWallItem, int blockId) {
-        super(texture, true);
+        super(texture, true, 20);
         this.blockId = blockId;
         BlockRegistry.blocks.get(blockId).item = this;
         if (isWallItem) {
@@ -37,6 +40,11 @@ public abstract class BlockItem extends Item{
 
     @Override
     public void rightClickAction() {
-        Game.getWorld().setWorldDataAtPosition(Game.getWorld().getSelectedBlockX(), Game.getWorld().getSelectedBlockY(), 0);
+        World world = Game.getWorld();
+        Block selB = world.getSelectedBlock();
+        if (selB != BlockRegistry.blocks.get(0)) {
+            world.setWorldDataAtPosition(world.getSelectedBlockX(), world.getSelectedBlockY(), 0);
+            world.getItemData().add(new ItemEntity(world.getSelectedBlockX() * 60 + 20 + Math.random()*20, world.getSelectedBlockY() * 60 + 30, selB.item));
+        }
     }
 }

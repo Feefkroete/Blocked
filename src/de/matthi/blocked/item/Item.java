@@ -1,15 +1,19 @@
 package de.matthi.blocked.item;
 
+import de.matthi.blocked.gfx.Assets;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Item {
-    protected BufferedImage texture;
+    public BufferedImage texture;
     protected boolean isBlockItem;
+    public int maxStackSize;
 
-    public Item(BufferedImage texture, boolean isBlockItem) {
+    public Item(BufferedImage texture, boolean isBlockItem, int maxStackSize) {
         this.texture = texture;
         this.isBlockItem = isBlockItem;
+        this.maxStackSize = maxStackSize;
     }
 
     public void render(Graphics graphics, int posx, int posy, int width, int height) {

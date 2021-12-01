@@ -30,8 +30,8 @@ public class OptionsMenu {
     }
 
     public void render(Graphics graphics) {
-        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-        back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getWindow().getWidth(), Game.getWindow().getHeight(), null);
+        back.render(graphics, 30, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         lang.render(graphics, posx, 30, buttonWidth, buttonHeight, Language.langSelect);
         fpsSlider.render(graphics, "FPS");
     }

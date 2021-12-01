@@ -9,7 +9,7 @@ import de.matthi.blocked.utils.MouseInput;
 public class EntityRemover extends Item {
 
     public EntityRemover() {
-        super(Assets.entityRemover, false);
+        super(Assets.entityRemover, false, 1);
     }
 
     @Override

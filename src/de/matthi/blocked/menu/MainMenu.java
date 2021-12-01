@@ -65,7 +65,7 @@ public class MainMenu
 
     public void render(Graphics graphics)
     {
-        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getWindow().getWidth(), Game.getWindow().getHeight(), null);
         newWorldButton.render(graphics, posx, 50, buttonWidth, buttonHeight, Language.createNewWorld);
         selectWorldButton.render(graphics, posx, 230, buttonWidth, buttonHeight, Language.selectWorld);
         optionsButton.render(graphics, posx, 410, buttonWidth, buttonHeight, Language.options);

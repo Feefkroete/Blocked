@@ -36,24 +36,25 @@ public class NewWorldMenu
 
     public void tick()
     {
-        Point p = Game.getFenster().getMousePosition();
+        Point p = Game.getWindow().getMousePosition();
         if (p != null)
         {
             mposx = p.getX();
             mposy = p.getY();
         }
-        back.tick(mposx, mposy, Game.getFenster());
+        back.tick(mposx, mposy, Game.getWindow());
         if (back.isclicked())
         {
             Game.gameState = 1;
             Xsize = 10;
+            Ysize = 10;
         }
-        Xup.tick(mposx, mposy, Game.getFenster());
+        Xup.tick(mposx, mposy, Game.getWindow());
         if (Xup.isclicked())
         {
             Xsize += 10;
         }
-        Xdown.tick(mposx, mposy, Game.getFenster());
+        Xdown.tick(mposx, mposy, Game.getWindow());
         if (Xdown.isclicked())
         {
             if (Xsize >10)
@@ -61,12 +62,12 @@ public class NewWorldMenu
                 Xsize -= 10;
             }
         }
-        Yup.tick(mposx, mposy, Game.getFenster());
+        Yup.tick(mposx, mposy, Game.getWindow());
         if (Yup.isclicked())
         {
             Ysize += 10;
         }
-        Ydown.tick(mposx, mposy, Game.getFenster());
+        Ydown.tick(mposx, mposy, Game.getWindow());
         if (Ydown.isclicked())
         {
             if (Ysize >10)
@@ -74,27 +75,27 @@ public class NewWorldMenu
                 Ysize -= 10;
             }
         }
-        confirm.tick(mposx, mposy, Game.getFenster());
+        confirm.tick(mposx, mposy, Game.getWindow());
         if (confirm.isclicked())
         {
             Game.getWorld().createWorld(Xsize, Ysize);
         }
         if (!back.hover && !Xup.hover && !Xdown.hover && !Yup.hover && !Ydown.hover && !confirm.hover) {
-            Game.getFenster().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            Game.getWindow().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
     }
 
     public void render(Graphics graphics)
     {
-        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-        graphics.drawString(Language.selectWorldSize, Game.getFenster().getWidth()/2-120, 100);
-        back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getWindow().getWidth(), Game.getWindow().getHeight(), null);
+        graphics.drawString(Language.selectWorldSize, Game.getWindow().getWidth()/2-120, 100);
+        back.render(graphics, 30, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         Xup.render(graphics, XButtonsPosx, 180, buttonWidth, buttonHeight, "");
         Xvalue.render(graphics, XButtonsPosx, 330, buttonWidth, buttonHeight, "X: " + Xsize);
         Xdown.render(graphics, XButtonsPosx, 480, buttonWidth, buttonHeight, "");
         Yup.render(graphics, YButtonsPosx, 180, buttonWidth, buttonHeight, "");
         Yvalue.render(graphics, YButtonsPosx, 330, buttonWidth, buttonHeight, "Y: " + Ysize);
         Ydown.render(graphics, YButtonsPosx, 480, buttonWidth, buttonHeight, "");
-        confirm.render(graphics, Game.getFenster().getWidth() - 340, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.createWorld);
+        confirm.render(graphics, Game.getWindow().getWidth() - 340, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.createWorld);
     }
 }

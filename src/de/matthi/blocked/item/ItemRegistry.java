@@ -28,5 +28,7 @@ public class ItemRegistry {
         //----- OTHER ITEMS -----//
         items.add(new EntityRemover());
         items.add(new PigSpawner());
+        items.add(new TestFood());
+        items.add(new TestDrink());
     }
 }
