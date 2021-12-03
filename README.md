@@ -30,7 +30,12 @@
 
 <br><br><br>
 
-#### THANKS A LOT TO:
+#### Contributors:
 
-- Perry
-- Such a Lucy
+- Perry: Co-Developer, Game designer, Texture creator
+- Matthi/Feefkroete: Founder of Blocked, Developer, Creator of scuffed placeholder textures :D
+
+<br><br><br>
+
+#### Thanks To:
+- Such a Lucy for good ideas, good designes and mental support xD
