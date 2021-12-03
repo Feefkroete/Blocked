@@ -1,6 +1,7 @@
 package de.matthi.blocked.utils;
 
 import de.matthi.blocked.main.Game;
+import de.matthi.blocked.main.Hotbar;
 import de.matthi.blocked.main.Overlay;
 import de.matthi.blocked.menu.SelectWorldsMenu;
 
@@ -71,6 +72,7 @@ public class MouseInput implements MouseListener, MouseWheelListener {
             if (Game.gameState == 0)
             {
                 Overlay.up();
+                Hotbar.up();
             }
             if(Game.gameState == 2)
             {
@@ -82,6 +84,7 @@ public class MouseInput implements MouseListener, MouseWheelListener {
             if (Game.gameState == 0)
             {
                 Overlay.down();
+                Hotbar.down();
             }
             if(Game.gameState == 2)
             {

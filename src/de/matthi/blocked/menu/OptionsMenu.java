@@ -51,12 +51,13 @@ public class OptionsMenu {
             Language.setLanguage();
         }
         if (back.isclicked()) {
+            Game.fps = (int) fpsSlider.getCurrentValue();
+            Game.nsperframe = 1000000000/Game.fps;
             Game.gameState = 1;
             ConfigHandler.write();
         }
         if (!back.hover && !lang.hover && !fpsSlider.hover) {
             fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
-        Game.fps = (int) fpsSlider.getCurrentValue();
     }
 }

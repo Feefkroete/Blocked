@@ -8,6 +8,7 @@ import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.main.Game;
+import de.matthi.blocked.main.Hotbar;
 import de.matthi.blocked.main.Inventory;
 import de.matthi.blocked.main.Overlay;
 import de.matthi.blocked.player.Player;
@@ -74,6 +75,7 @@ public class World
             }
         }
         Game.getPlayer().teleport(pposx, pposy);                 //Spieler wird an die gespeicherte Position teleportiert
+        Hotbar.update();
         Game.gameState = 0;                                      //GameState auf 0 gesetzt => Spiel wird angezeigt & läuft
     }
 
@@ -233,13 +235,20 @@ public class World
         if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
             if (Game.gameState != 4) {
                 if (MouseInput.leftMousePressed) {
-                    Overlay.selectedItem.leftClickAction();
+                    //Overlay.selectedItem.leftClickAction();
+                    if (Hotbar.getSelectedItem()!=null) {
+                        Hotbar.getSelectedItem().leftClickAction();
+                        Hotbar.update();
+                    }
                 }
                 if (MouseInput.middleMouseClicked) {
                     Overlay.selectedItem.middleClickAction();
                 }
                 if (MouseInput.rightMouseClicked) {
-                    Overlay.selectedItem.rightClickAction();
+                    //Overlay.selectedItem.rightClickAction();
+                    if (Hotbar.getSelectedItem()!=null) {
+                        Hotbar.getSelectedItem().rightClickAction();
+                    }
                 }
             }
         }
@@ -293,7 +302,7 @@ public class World
             itemEntityDatum.render(graphics);
         }
         //Select-Box bei der Maus abbilden
-        if (Overlay.selectedItem.isBlockItem() && Game.gameState != 4) {
+        if ((Hotbar.getSelectedItem() == null || Hotbar.getSelectedItem().isBlockItem()) && Game.gameState != 4) {
             graphics.drawImage(Assets.select, (int) (((mposx + Game.poffx) / 60)) * 60 - (int) Game.poffx, (int) (((mposy - 28 + Game.poffy) / 60)) * 60 - (int) Game.poffy, 60, 60, null);
         }
     }
@@ -355,7 +364,11 @@ public class World
 
     //----------------- SETTERS ----------------//
 
-    public void setWorldDataAtPosition(int posX, int posY, int value) {
-        worldData[posX][posY] = value;
+    public boolean setWorldDataAtPosition(int posX, int posY, int value) {
+        if (worldData[posX][posY] == 0 || value == 0) {
+            worldData[posX][posY] = value;
+            return true;
+        }
+        return false;
     }
 }

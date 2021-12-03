@@ -111,15 +111,12 @@ public class Overlay
             int xOff = 0;
             for(int i = 0; i<88; i++) {
                 if (Inventory.commonSlotItem[i]!=null) {
+                    graphics.setColor(Color.blue);
                     if (i < 8) {
-                        graphics.drawImage(Inventory.commonSlotItem[i].texture, posx+35, (int) (posy+38+(i*67.5)), 35, 35, null);
-                        graphics.setColor(Color.blue);
-                        graphics.drawString(String.valueOf(Inventory.commonSlotCount[i]), posx+66-String.valueOf(Inventory.commonSlotCount[i]).length()*11, (int) (posy+80+(i*67.5)));
+                        Inventory.commonSlotItem[i].render(graphics, posx+35, (int) (posy+38+(i*67.5)), 35, 35, Inventory.commonSlotCount[i]);
                     }
                     else {
-                        graphics.drawImage(Inventory.commonSlotItem[i].texture, (posx+57+(65*xOff)), (int) (posy+38+yOff*67.5), 35, 35, null);
-                        graphics.setColor(Color.blue);
-                        graphics.drawString(String.valueOf(Inventory.commonSlotCount[i]), posx+88+(65*xOff)-String.valueOf(Inventory.commonSlotCount[i]).length()*11, (int) (posy+80+(yOff*67.5)));
+                        Inventory.commonSlotItem[i].render(graphics, posx+57+(65*xOff), (int) (posy+38+yOff*67.5), 35, 35, Inventory.commonSlotCount[i]);
                     }
                     graphics.setColor(Color.black);
                 }
@@ -131,6 +128,9 @@ public class Overlay
                     xOff++;
                 }
             }
+        }
+        else {
+            Hotbar.render(graphics);
         }
     }
 }

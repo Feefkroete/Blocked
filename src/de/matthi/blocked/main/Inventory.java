@@ -18,6 +18,7 @@ public class Inventory {
             if (commonSlotItem[i]!=null) {    //Wenn in dem Slot ein Item ist und es das gedropte ist auf den Stack eines dazurechnen
                 if (commonSlotItem[i].equals(type) && commonSlotCount[i] < type.maxStackSize) {
                     commonSlotCount[i] += 1;
+                    Hotbar.update();
                     return true;
                 }
             }
@@ -26,6 +27,7 @@ public class Inventory {
             if (commonSlotItem[i] == null) {
                 commonSlotItem[i] = type;
                 commonSlotCount[i] = 1;
+                Hotbar.update();
                 return true;
             }
         }
@@ -47,7 +49,7 @@ public class Inventory {
                         mouseSlotCount = 0;
                         mouseSlotItem = null;
                     } else {
-                        if (mouseSlotItem == commonSlotItem[Overlay.targetedSlot] && commonSlotCount[Overlay.targetedSlot]+mouseSlotCount < commonSlotItem[Overlay.targetedSlot].maxStackSize) {
+                        if (mouseSlotItem == commonSlotItem[Overlay.targetedSlot] && commonSlotCount[Overlay.targetedSlot]+mouseSlotCount <= commonSlotItem[Overlay.targetedSlot].maxStackSize) {
                             commonSlotCount[Overlay.targetedSlot] += mouseSlotCount;
                             mouseSlotItem = null;
                             mouseSlotCount = 0;
@@ -99,10 +101,17 @@ public class Inventory {
 
     public static void render(Graphics graphics) {
         if (mouseSlotItem != null) {
-            graphics.drawImage(mouseSlotItem.texture, (int) Game.getWindow().getMousePosition().getX() + 8, (int) Game.getWindow().getMousePosition().getY(), 20, 20, null);
-            graphics.setColor(Color.BLUE);
-            graphics.drawString(String.valueOf(mouseSlotCount), (int)Game.getWindow().getMousePosition().getX() + 28- (String.valueOf(mouseSlotCount).length()*11), (int) Game.getWindow().getMousePosition().getY() + 32);
-            graphics.setColor(Color.BLACK);
+            mouseSlotItem.render(graphics, (int) Game.getWindow().getMousePosition().getX() + 8, (int) Game.getWindow().getMousePosition().getY(), 20, 20, mouseSlotCount);
+        }
+    }
+
+    public static void consumeItem(int slotId) {
+        if (commonSlotCount[slotId] > 1) {
+            commonSlotCount[slotId] --;
+        }
+        else {
+            commonSlotItem[slotId] = null;
+            commonSlotCount[slotId] = 0;
         }
     }
 }

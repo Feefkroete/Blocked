@@ -35,6 +35,7 @@ public class Game extends Canvas implements Runnable
 
     public static int gameState;
     public static long currentFPS, currentTPS;
+    public static int nsperframe = 1000000000/fps;
     public static boolean showTPSFPS = false;
 
     private static World world;
@@ -67,6 +68,7 @@ public class Game extends Canvas implements Runnable
         worldsMenu.init();
         ConfigHandler.init();
         optionsMenu.init();
+        Hotbar.init();
     }
 
     public Game()
@@ -107,7 +109,6 @@ public class Game extends Canvas implements Runnable
         long frame = 0;
 
         int nspertick = 1000000000/tps;     //umrechnung tps und fps in nanosekunden pro tick/frame
-        int nsperframe = 1000000000/fps;
 
         double deltaTick = 0;       //zeitliche Differenz zwischen dem letzten run-loop und dem jetzigen
         double deltaFrame = 0;
@@ -121,7 +122,7 @@ public class Game extends Canvas implements Runnable
             {
                 tick();
                 tick++;
-                deltaTick = deltaTick - 1;
+                deltaTick--;
             }
 
             deltaFrame += (double) (now-lasttimeFrame) / nsperframe;
@@ -130,7 +131,7 @@ public class Game extends Canvas implements Runnable
             {
                 render();
                 frame++;
-                deltaFrame = deltaFrame - 1;
+                deltaFrame--;
             }
 
             if (System.currentTimeMillis()-lastSecond >= 1000) {
