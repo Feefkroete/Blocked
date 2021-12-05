@@ -60,7 +60,7 @@ public class FileHandler
             {
                 bufferedWriter.write(stringData[i] + " ");
                 if (type == 0) {
-                    if (i == 1 || i == 3) {
+                    if (i == 1 || i == 6) {
                         bufferedWriter.newLine();
                     }
                 }

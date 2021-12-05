@@ -9,7 +9,7 @@ import de.matthi.blocked.world.World;
 
 public class PigSpawner extends Item {
     public PigSpawner() {
-        super(Assets.pigSpawner,false);
+        super(Assets.pigSpawner,false, 1);
     }
 
     @Override

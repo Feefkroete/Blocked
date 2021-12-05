@@ -31,6 +31,10 @@ public abstract class Creature extends Entity
     @Override
     public void tick() {
 
+        if (health<=0) {
+            die();
+        }
+
         /*++COLLISION DETECTION++*/
 
         if (!isCollisionU() || fallSpeed<0) {
@@ -38,6 +42,9 @@ public abstract class Creature extends Entity
             move(0, fallSpeed);
         }
         else {
+            if (fallSpeed>20) {
+                health = health-(fallSpeed-20);
+            }
             fallSpeed = 0;
         }
 
@@ -164,17 +171,15 @@ public abstract class Creature extends Entity
         return true;
     }
 
+    public void die() {
+
+    }
+
 
     /*******GETTERS*******/
 
     public int getType() {
         return type;
-    }
-    public double getPosX() {
-        return posx;
-    }
-    public double getPosY() {
-        return posy;
     }
     public int getHp() {
         return health;

@@ -8,13 +8,16 @@ public class Assets
     private static final int HEIGHT = 15;
 
     public static BufferedImage
-            spieler1, spieler2, spieler3, spieler4,
-            grass, trunk, leaves, stone, glass, stone_bricks, select, inv, selInv, flight, air, dirt, mud_bricks, sand,
-            pig, pig2,
-            pigSpawner, wallItemOverlay, entityRemover,
-            worldBackground, menuBackground, wallBlockOverlay,
-            button1, button2, button3, button4, button5, button6, button7, button8,
-            sliderBox, sliderHandleOff, sliderHandleOn, sliderName;
+        spieler1, spieler2, spieler3, spieler4,
+        grass, trunk, leaves, stone, glass, stone_bricks, air, dirt, mud_bricks, sand,
+        pig, pig2,
+        pigSpawner, wallItemOverlay, entityRemover, testFood, testDrink,
+        worldBackground, menuBackground, wallBlockOverlay,
+        button1, button2, button3, button4, button5, button6, button7, button8,
+        select, inv, selInv, flight, heart, heart_inactive, food, foodEmpty, water, waterEmpty,
+        sliderBox, sliderHandleOff, sliderHandleOn, sliderName,
+        inventory, inventorySelectBox, hotbar, hotbarSelect,
+        gameCursorImage;
 
     public static void init()
     {
@@ -26,6 +29,8 @@ public class Assets
         SpriteSheet item = new SpriteSheet(Texture.load("/textures/sprite_item.png"));
         SpriteSheet player = new SpriteSheet(Texture.load("/textures/sprite_player.png"));
         SpriteSheet ui = new SpriteSheet(Texture.load("/textures/sprite_ui.png"));
+        gameCursorImage = Texture.load("/textures/game_cursor.png");
+
 
         worldBackground = background.pacman(0,0,512, 512);
         menuBackground = background.pacman(513, 0, 511, 512);
@@ -68,10 +73,27 @@ public class Assets
         inv = ui.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
         flight = ui.pacman(WIDTH*2+3, 1, WIDTH, HEIGHT);
         selInv = ui.pacman(1, HEIGHT + 2, WIDTH, HEIGHT);
+        heart = ui.pacman(53, 5, 7, 7);
+        heart_inactive = ui.pacman(53, 21, 7, 7);
+        water = ui.pacman(20, 20, 9, 9);
+        waterEmpty = ui.pacman(36, 20, 9, 9);
+        food = ui.pacman(20, 36, 9, 9);
+        foodEmpty = ui.pacman(36, 36, 9, 9);
+        hotbarSelect = ui.pacman(1, 49, 15, 15);
 
         air = item.pacman(1, 1, WIDTH, HEIGHT);
         wallItemOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
         pigSpawner = item.pacman(WIDTH*2+3, 1, WIDTH, HEIGHT);
         entityRemover = item.pacman(WIDTH*3+4, 1, WIDTH, HEIGHT);
+        testFood = item.pacman(WIDTH*4+5, 1, WIDTH, HEIGHT);
+        testDrink = item.pacman(WIDTH*5+6, 1, WIDTH, HEIGHT);
+
+        inventory = Texture.load("/textures/inventory.png");
+        inventorySelectBox = ui.pacman(1, 33, 15, 15);
+        hotbar = Texture.load("/textures/hotbar.png");
+    }
+
+    public static BufferedImage loadBlockTexture(String textureName) {
+        return Texture.load("/textures/blocks/" + textureName + ".png");
     }
 }

@@ -41,6 +41,7 @@ public class ConfigHandler {
         Language.langInit();
         String fps = data[1].substring(4);
         Game.fps = FileHandler.parseInt(fps);
+        Game.nsperframe = 1000000000/FileHandler.parseInt(fps);
     }
 
     public static void write() {

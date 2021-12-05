@@ -42,8 +42,7 @@ public class Launcher
         }
         catch (IOException e)
         {
-            System.out.println("Something didn't work :( Try again later!");
-            e.printStackTrace();
+            System.out.println("Couldn't reach github.com for Version check. Skipping version check!");
         }
         if (newVersion > Game.VERSION) {
             Game.gameState = 6;

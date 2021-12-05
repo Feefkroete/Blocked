@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
 
-    private BufferedImage bufferedImage;
+    private final BufferedImage bufferedImage;
 
     public SpriteSheet(BufferedImage bufferedImage)
     {

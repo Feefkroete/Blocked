@@ -59,7 +59,7 @@ public class UpdateMenu {
             downloadComplete = true;
             try {
                 oldFile.delete();
-                Game.getFenster().setVisible(false);
+                Game.getWindow().setVisible(false);
                 Runtime.getRuntime().exec("java -jar "+Game.decodedPath+"/Blocked.jar");
                 System.exit(0);
             } catch (IOException e) {
@@ -68,15 +68,15 @@ public class UpdateMenu {
         }
     }
     public void render(Graphics graphics) {
-        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-        back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getWindow().getWidth(), Game.getWindow().getHeight(), null);
+        back.render(graphics, 30, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         if (!downloadComplete) {
             graphics.drawString(Language.downloadUpdate, (int) ((posx + Game.WIDTH / 2) - ((Language.downloadUpdate.length() * 21) / 1.5)), 100);
-            download.render(graphics, posx, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.download);
+            download.render(graphics, posx, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.download);
         }
         else {
             graphics.drawString(Language.downloadComplete, (int) ((posx + Game.WIDTH / 2) - ((Language.downloadComplete.length() * 21) / 1.7)), 100);
-            download.render(graphics, posx, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.download);
+            download.render(graphics, posx, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.download);
         }
     }
 }

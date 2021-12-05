@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable
     public static final int HEIGHT = WIDTH/16*9;
     public static int fps = 70;
     public static final int tps = 40;
-    public static JFrame fenster;
+    public static JFrame window;
     public static String worldsPath;
     public static String decodedPath;
     public static File thisFile;
@@ -35,6 +35,7 @@ public class Game extends Canvas implements Runnable
 
     public static int gameState;
     public static long currentFPS, currentTPS;
+    public static int nsperframe = 1000000000/fps;
     public static boolean showTPSFPS = false;
 
     private static World world;
@@ -50,7 +51,7 @@ public class Game extends Canvas implements Runnable
     public void init() throws URISyntaxException {
         new Thread(this).start();
         font = new Font("Arial", Font.BOLD, 21);
-        player = new Player(World.pposx, World.pposy, 60, 60, 20, Assets.spieler2);
+        player = new Player(World.pposx, World.pposy, 60, 60, 15, 10, 10, Assets.spieler2);
         world = new World();
         CodeSource path = Game.class.getProtectionDomain().getCodeSource();
         thisFile = new File(path.getLocation().toURI().getPath());
@@ -67,6 +68,7 @@ public class Game extends Canvas implements Runnable
         worldsMenu.init();
         ConfigHandler.init();
         optionsMenu.init();
+        Hotbar.init();
     }
 
     public Game()
@@ -74,26 +76,27 @@ public class Game extends Canvas implements Runnable
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
         setFocusable(false);
         MouseInput mouseInput = new MouseInput();
         addMouseListener(mouseInput);
 
         gameState = 1;
 
-        fenster = new JFrame(name);
-        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenster.setLayout(new BorderLayout());
-        fenster.setIconImage(Assets.spieler3);
-        fenster.add(this, BorderLayout.CENTER);
+        window = new JFrame(name);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setLayout(new BorderLayout());
+        window.setIconImage(Assets.spieler3);
+        window.add(this, BorderLayout.CENTER);
 
         KeyInput keyInput = new KeyInput();
-        fenster.addKeyListener(keyInput);
-        fenster.addMouseWheelListener(mouseInput);
+        window.addKeyListener(keyInput);
+        window.addMouseWheelListener(mouseInput);
 
-        fenster.pack();
-        fenster.setResizable(false);
-        fenster.setLocationRelativeTo(null);
-        fenster.setVisible(true);
+        window.pack();
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
 
     }
 
@@ -107,7 +110,6 @@ public class Game extends Canvas implements Runnable
         long frame = 0;
 
         int nspertick = 1000000000/tps;     //umrechnung tps und fps in nanosekunden pro tick/frame
-        int nsperframe;
 
         double deltaTick = 0;       //zeitliche Differenz zwischen dem letzten run-loop und dem jetzigen
         double deltaFrame = 0;
@@ -121,17 +123,16 @@ public class Game extends Canvas implements Runnable
             {
                 tick();
                 tick++;
-                deltaTick = deltaTick - 1;
+                deltaTick--;
             }
 
-            nsperframe = 1000000000/fps;
             deltaFrame += (double) (now-lasttimeFrame) / nsperframe;
             lasttimeFrame = now;
             if (deltaFrame >=1)
             {
                 render();
                 frame++;
-                deltaFrame = deltaFrame - 1;
+                deltaFrame--;
             }
 
             if (System.currentTimeMillis()-lastSecond >= 1000) {
@@ -140,6 +141,10 @@ public class Game extends Canvas implements Runnable
                 currentFPS = frame;
                 tick = 0;
                 frame = 0;
+                if (player != null) {
+                    player.healTick();
+                    player.foodWaterRandomTick();
+                }
             }
         }
     }
@@ -148,7 +153,7 @@ public class Game extends Canvas implements Runnable
     {
         switch (gameState) {
             case 0 -> {
-                world.tick(fenster);
+                world.tick(window);
                 player.tick();
                 KeyInput.tick();
                 if (KeyInput.save) {
@@ -159,18 +164,19 @@ public class Game extends Canvas implements Runnable
                     gameState = 4;
                 }
             }
-            case 1 -> mainMenu.tick(fenster);
-            case 2 -> worldsMenu.tick(fenster);
+            case 1 -> mainMenu.tick(window);
+            case 2 -> worldsMenu.tick(window);
             case 3 -> newWorldMenu.tick();
             case 4 -> {
-                world.tick(fenster);
+                world.tick(window);
                 player.tick();
+                Inventory.tick();
                 if (!KeyInput.inv) {
                     gameState = 0;
                 }
             }
-            case 5 -> optionsMenu.tick(fenster);
-            case 6 -> updateMenu.tick(fenster);
+            case 5 -> optionsMenu.tick(window);
+            case 6 -> updateMenu.tick(window);
         }
     }
 
@@ -204,6 +210,9 @@ public class Game extends Canvas implements Runnable
         {
             newWorldMenu.render(graphics);
         }
+        if (gameState == 4) {
+            Inventory.render(graphics);
+        }
         if (gameState == 5) {
             optionsMenu.render(graphics);
         }
@@ -229,8 +238,8 @@ public class Game extends Canvas implements Runnable
         return worldsMenu;
     }
 
-    public static JFrame getFenster()
+    public static JFrame getWindow()
     {
-        return fenster;
+        return window;
     }
 }

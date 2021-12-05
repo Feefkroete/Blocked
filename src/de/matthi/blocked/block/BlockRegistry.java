@@ -9,19 +9,23 @@ public class BlockRegistry {
     public static List<Block> blocks = new ArrayList<>();
 
     public static void init() {
-        blocks.add(new Air(0));
-        blocks.add(new Stone(1));
-        blocks.add(new Grass(2));
-        blocks.add(new Dirt(3));
-        blocks.add(new DirtWall(4));
-        blocks.add(new StoneBricks(5));
-        blocks.add(new StoneBricksWall(6));
-        blocks.add(new Sand(7));
-        blocks.add(new MudBricks(8));
-        blocks.add(new MudBricksWall(9));
-        blocks.add(new Trunk(10));
-        blocks.add(new Leaves(11));
-        blocks.add(new Glass(12));
-        blocks.add(new GlassWall(13));
+
+        //Reihenfolge in der List nicht ändern! Ids und shit sind scheiß egal; Listposition aber nicht!!11!1!11!
+
+        blocks.add(new Air());
+        blocks.add(new SimpleBlock("grass", "grass", true, false, true));
+        blocks.add(new SimpleBlock("dirt", "dirt", true, false, true));
+        blocks.add(new SimpleBlock("sand", "sand", true, false, true));
+        blocks.add(new SimpleBlock("gravel", "gravel", true, false, true));
+        blocks.add(new SimpleBlock("clay", "clay", true, false, true));
+        blocks.add(new SimpleBlock("stone", "stone", true, false, true));
+        blocks.add(new SimpleBlock("marble", "marble", true, false, true));
+        blocks.add(new SimpleBlock("basalt", "basalt", true, false, true));
+        blocks.add(new SimpleBlock("andesite", "andesite", true, false, true));
+        blocks.add(new SimpleBlock("trunk", "trunk", false, false, false));
+        blocks.add(new SimpleBlock("leaves", "leaves", false, false, true));
+        blocks.add(new SimpleBlock("glass", "glass", true, false, true));
+        blocks.add(new SimpleBlock("stone_bricks", "stone_bricks", true, false, true));
+        blocks.add(new SimpleBlock("mud_bricks", "mud_bricks", true, false, true));
     }
 }

@@ -35,7 +35,7 @@ public class Tree {
                 {
                     if(x == ((WIDTH/2)))
                     {
-                        treeBlocks[x][y] = 10;
+                        treeBlocks[x][y] = 19;
                     }
                     else {
                         treeBlocks[x][y] = 0;
@@ -43,7 +43,7 @@ public class Tree {
                 }
                 else
                 {
-                    treeBlocks[x][y] = 11;       //Baumkrone mit Blättern gefüllt
+                    treeBlocks[x][y] = 21;       //Baumkrone mit Blättern gefüllt
                 }
             }
         }

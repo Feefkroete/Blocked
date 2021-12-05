@@ -30,8 +30,8 @@ public class OptionsMenu {
     }
 
     public void render(Graphics graphics) {
-        graphics.drawImage(Assets.menuBackground, 0,0, Game.getFenster().getWidth(), Game.getFenster().getHeight(), null);
-        back.render(graphics, 30, (Game.getFenster().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
+        graphics.drawImage(Assets.menuBackground, 0,0, Game.getWindow().getWidth(), Game.getWindow().getHeight(), null);
+        back.render(graphics, 30, (Game.getWindow().getHeight()) / 2 - buttonHeight / 2, buttonWidth, buttonHeight, Language.back);
         lang.render(graphics, posx, 30, buttonWidth, buttonHeight, Language.langSelect);
         fpsSlider.render(graphics, "FPS");
     }
@@ -51,12 +51,13 @@ public class OptionsMenu {
             Language.setLanguage();
         }
         if (back.isclicked()) {
+            Game.fps = (int) fpsSlider.getCurrentValue();
+            Game.nsperframe = 1000000000/Game.fps;
             Game.gameState = 1;
             ConfigHandler.write();
         }
         if (!back.hover && !lang.hover && !fpsSlider.hover) {
             fenster.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
-        Game.fps = (int) fpsSlider.getCurrentValue();
     }
 }

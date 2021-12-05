@@ -30,4 +30,11 @@ public abstract class Entity
     }
 
     public abstract void tick();
+
+    public double getPosX() {
+        return posx;
+    }
+    public double getPosY() {
+        return posy;
+    }
 }

@@ -1,6 +1,11 @@
 package de.matthi.blocked.utils;
 
+import de.matthi.blocked.block.BlockRegistry;
+import de.matthi.blocked.entity.itemEntity.ItemEntity;
+import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.main.Game;
+import de.matthi.blocked.main.Hotbar;
+import de.matthi.blocked.main.Inventory;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -46,6 +51,14 @@ public class KeyInput implements KeyListener
             }
             if (Game.gameState == 4) {
                 inv = false;
+                if (Inventory.mouseSlotItem != null) {
+                    for (int i = 0; i < Inventory.mouseSlotCount; i++) {
+                        Game.getWorld().getItemData().add(new ItemEntity(Game.getPlayer().getXPosition() + (Math.random() - 0.8) * 20, Game.getPlayer().getYPosition(), Inventory.mouseSlotItem));
+                    }
+                    Inventory.mouseSlotItem = null;
+                    Inventory.mouseSlotCount = 0;
+                }
+                Hotbar.update();
                 Game.gameState = 0;
             }
         }
@@ -64,7 +77,15 @@ public class KeyInput implements KeyListener
             hitBox = !hitBox;
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
+            Hotbar.update();
             inv = !inv;
+            if (Inventory.mouseSlotItem != null) {
+                for (int i = 0; i < Inventory.mouseSlotCount; i++) {
+                    Game.getWorld().getItemData().add(new ItemEntity(Game.getPlayer().getXPosition() + (Math.random() - 0.8) * 20, Game.getPlayer().getYPosition(), Inventory.mouseSlotItem));
+                }
+                Inventory.mouseSlotItem = null;
+                Inventory.mouseSlotCount = 0;
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_F3) {
             Game.showTPSFPS = !Game.showTPSFPS;
