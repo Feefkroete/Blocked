@@ -6,15 +6,14 @@ import java.awt.*;
 
 public class Air extends Block {
 
-    public Air(int id)
+    public Air()
     {
-        super(null, id);
+        super(null, "air", false);
     }
 
     @Override
     public void render(Graphics graphics, int posx, int posy)
     {
-
     }
 
     @Override
@@ -29,6 +28,6 @@ public class Air extends Block {
 
     @Override
     public String getName() {
-        return "Air";
+        return "air";
     }
 }

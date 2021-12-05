@@ -147,9 +147,9 @@ public class World
                     }
                     else {
                         if (worldData[x][y - 1] == 2 || worldData[x][y - 2] == 2 || worldData[x][y - 3] == 2) {     //Generierung von Dirt bis 4 Blöcke unter dem Gras
-                            worldData[x][y] = 3;
+                            worldData[x][y] = 4;
                         } else {
-                            worldData[x][y] = 1;        //Rest ist Stein
+                            worldData[x][y] = 12;        //Rest ist Stein
                         }
                     }
                 }
@@ -235,20 +235,26 @@ public class World
         if((int)((mposx+Game.poffx)/60) < width && (int)((mposy-28+Game.poffy)/60) < height && (int)((mposx+Game.poffx)/60)>=0 && (int)((mposy-28+Game.poffy)/60)>=0) {
             if (Game.gameState != 4) {
                 if (MouseInput.leftMousePressed) {
-                    //Overlay.selectedItem.leftClickAction();
+                    Overlay.selectedItem.leftClickAction();
+                    /*
                     if (Hotbar.getSelectedItem()!=null) {
                         Hotbar.getSelectedItem().leftClickAction();
                         Hotbar.update();
                     }
+
+                     */
                 }
                 if (MouseInput.middleMouseClicked) {
                     Overlay.selectedItem.middleClickAction();
                 }
                 if (MouseInput.rightMouseClicked) {
-                    //Overlay.selectedItem.rightClickAction();
+                    Overlay.selectedItem.rightClickAction();
+                    /*
                     if (Hotbar.getSelectedItem()!=null) {
                         Hotbar.getSelectedItem().rightClickAction();
                     }
+
+                     */
                 }
             }
         }
@@ -256,8 +262,8 @@ public class World
             for (int y = 1; y < height-1; y++) {
                 for (int x = 0; x < width-1; x++) {
                     if (Math.random() < 0.5) {
-                        if (worldData[x][y] == 2 && BlockRegistry.blocks.get(worldData[x][y - 1]).isSolid() && Math.random() < 0.05) {
-                            worldData[x][y] = 3;
+                        if (worldData[x][y] == 2 && getBlock(x, y-1).isSolid() && Math.random() < 0.05) {
+                            worldData[x][y] = 4;
                         }
                     }
                 }
@@ -290,9 +296,6 @@ public class World
             for (int x = XStart; x < XEnd; x++)
             {
                 getBlock(x, y).render(graphics, (int) (x*60 - (Game.poffx)), (int) (y*60 - (Game.poffy)));      //NUR Blöcke im Bild rendern => Weniger CPU-Auslastung
-                if (getBlock(x, y).isWallBlock()) {
-                    graphics.drawImage(Assets.wallBlockOverlay, (int) (x*60 - (Game.poffx)), (int) (y*60 - (Game.poffy)), 60, 60, null);
-                }
             }
         }
         for (Creature creatureDatum : creatureData) {

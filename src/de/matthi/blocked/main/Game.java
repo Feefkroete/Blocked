@@ -76,6 +76,7 @@ public class Game extends Canvas implements Runnable
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
         setFocusable(false);
         MouseInput mouseInput = new MouseInput();
         addMouseListener(mouseInput);

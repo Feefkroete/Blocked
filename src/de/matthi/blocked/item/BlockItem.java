@@ -13,20 +13,23 @@ import de.matthi.blocked.world.World;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class BlockItem extends Item {
+public class BlockItem extends Item {
 
     private final int blockId;
 
-    public BlockItem(BufferedImage texture, boolean isWallItem, int blockId) {
-        super(texture, true, 20);
+    public BlockItem(String textureName, boolean isWallItem, boolean hasWallItem, int blockId) {
+        super(Assets.loadBlockTexture(textureName), true, 20);
         this.blockId = blockId;
         BlockRegistry.blocks.get(blockId).item = this;
         if (isWallItem) {
             BufferedImage newTexture = new BufferedImage(15, 15, 2);
             Graphics2D graphics = newTexture.createGraphics();
-            graphics.drawImage(texture, 0, 0, texture.getWidth(), texture.getHeight(), null);
-            graphics.drawImage(Assets.wallItemOverlay, 0, 0, texture.getWidth(), texture.getHeight(), null);
+            graphics.drawImage(texture, 0, 0, newTexture.getWidth(), newTexture.getHeight(), null);
+            graphics.drawImage(Assets.wallItemOverlay, 0, 0, newTexture.getWidth(), newTexture.getHeight(), null);
             this.texture = newTexture;
+        }
+        if (hasWallItem) {
+            ItemRegistry.items.add(new BlockItem(textureName, true, false, blockId-1));
         }
     }
 

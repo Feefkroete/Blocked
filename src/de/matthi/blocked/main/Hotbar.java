@@ -16,7 +16,7 @@ public class Hotbar {
             BufferedImage texture = new BufferedImage(42, 233, 2);
             Graphics graphics = texture.createGraphics();
             graphics.drawImage(Assets.hotbar, 0, 0, 42, 233, null);
-            graphics.drawImage(Assets.inventorySelectBox, 10, 11+ i*27, 22, 22, null);
+            graphics.drawImage(Assets.hotbarSelect, 10, 11+ i*27, 22, 22, null);
             graphics.dispose();
             textures[i] = texture;
         }

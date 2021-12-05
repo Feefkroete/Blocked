@@ -1,8 +1,5 @@
 package de.matthi.blocked.gfx;
 
-import de.matthi.blocked.main.Hotbar;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets
@@ -19,7 +16,7 @@ public class Assets
         button1, button2, button3, button4, button5, button6, button7, button8,
         select, inv, selInv, flight, heart, heart_inactive, food, foodEmpty, water, waterEmpty,
         sliderBox, sliderHandleOff, sliderHandleOn, sliderName,
-        inventory, inventorySelectBox, hotbar,
+        inventory, inventorySelectBox, hotbar, hotbarSelect,
         gameCursorImage;
 
     public static void init()
@@ -82,6 +79,7 @@ public class Assets
         waterEmpty = ui.pacman(36, 20, 9, 9);
         food = ui.pacman(20, 36, 9, 9);
         foodEmpty = ui.pacman(36, 36, 9, 9);
+        hotbarSelect = ui.pacman(1, 49, 15, 15);
 
         air = item.pacman(1, 1, WIDTH, HEIGHT);
         wallItemOverlay = item.pacman(WIDTH + 2, 1, WIDTH, HEIGHT);
@@ -93,5 +91,9 @@ public class Assets
         inventory = Texture.load("/textures/inventory.png");
         inventorySelectBox = ui.pacman(1, 33, 15, 15);
         hotbar = Texture.load("/textures/hotbar.png");
+    }
+
+    public static BufferedImage loadBlockTexture(String textureName) {
+        return Texture.load("/textures/blocks/" + textureName + ".png");
     }
 }

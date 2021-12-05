@@ -10,20 +10,20 @@ public class ItemRegistry {
 
     public static void init() {
         //----- BLOCKS -----//
-        items.add(new GrassItem());
-        items.add(new DirtItem());
-        items.add(new DirtWallItem());
-        items.add(new StoneItem());
-        items.add(new StoneBricksItem());
-        items.add(new StoneBricksWallItem());
-        items.add(new MudBricksItem());
-        items.add(new MudBricksWallItem());
-        items.add(new SandItem());
-        items.add(new TrunkItem());
-        items.add(new LeavesItem());
-        items.add(new GlassItem());
-        items.add(new GlassWallItem());
-        items.add(new AirItem());
+        items.add(new BlockItem("grass", false, true, 2));
+        items.add(new BlockItem("dirt", false, true, 4));
+        items.add(new BlockItem("sand", false, true, 6));
+        items.add(new BlockItem("gravel", false, true, 8));
+        items.add(new BlockItem("clay", false, true, 10));
+        items.add(new BlockItem("stone", false, true, 12));
+        items.add(new BlockItem("marble", false, true, 14));
+        items.add(new BlockItem("basalt", false, true, 16));
+        items.add(new BlockItem("andesite", false, true, 18));
+        items.add(new BlockItem("trunk", false, false, 19));
+        items.add(new BlockItem("leaves", false, true, 21));
+        items.add(new BlockItem("glass", false, true, 23));
+        items.add(new BlockItem("stone_bricks", false, true, 25));
+        items.add(new BlockItem("mud_bricks", false, true, 27));
 
         //----- OTHER ITEMS -----//
         items.add(new EntityRemover());
