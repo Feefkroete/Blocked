@@ -6,11 +6,11 @@ import de.matthi.blocked.entity.creature.Creature;
 import de.matthi.blocked.entity.creature.Pig;
 import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
-import de.matthi.blocked.item.ItemRegistry;
-import de.matthi.blocked.main.Game;
 import de.matthi.blocked.gui.Hotbar;
 import de.matthi.blocked.gui.Inventory;
 import de.matthi.blocked.gui.Overlay;
+import de.matthi.blocked.item.ItemRegistry;
+import de.matthi.blocked.main.Game;
 import de.matthi.blocked.player.Player;
 import de.matthi.blocked.structure.Tree;
 import de.matthi.blocked.utils.FileHandler;
@@ -236,6 +236,7 @@ public class World
             if (Game.gameState != 4) {
                 if (MouseInput.leftMousePressed) {
                     Overlay.selectedItem.leftClickAction();
+                    Hotbar.update();
                     /*
                     if (Hotbar.getSelectedItem()!=null) {
                         Hotbar.getSelectedItem().leftClickAction();
