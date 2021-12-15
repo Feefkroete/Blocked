@@ -1,8 +1,8 @@
 package de.matthi.blocked.utils;
 
 import de.matthi.blocked.main.Game;
-import de.matthi.blocked.main.Hotbar;
-import de.matthi.blocked.main.Overlay;
+import de.matthi.blocked.gui.Hotbar;
+import de.matthi.blocked.gui.Overlay;
 import de.matthi.blocked.menu.SelectWorldsMenu;
 
 import java.awt.event.MouseEvent;

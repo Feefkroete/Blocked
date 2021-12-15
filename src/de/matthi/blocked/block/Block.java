@@ -15,7 +15,7 @@ public abstract class Block
     public Block(BufferedImage textur, String id, boolean isWallBlock)
     {
         if (isWallBlock) {
-            Graphics g = texture.createGraphics();
+            Graphics2D g = texture.createGraphics();
             g.drawImage(textur, 0, 0, 12, 12, null);
             g.drawImage(Assets.wallBlockOverlay, 0, 0, 12, 12, null);
         }

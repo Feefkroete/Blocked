@@ -1,11 +1,13 @@
-package de.matthi.blocked.main;
+package de.matthi.blocked.gui;
 
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.Item;
 import de.matthi.blocked.item.ItemRegistry;
+import de.matthi.blocked.main.Game;
 import de.matthi.blocked.utils.KeyInput;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Overlay
 {
@@ -13,10 +15,12 @@ public class Overlay
     private int mposx = 0, mposy = 0;
     private static int scrollPos = 0;
     public static int targetedSlot;
+    private BufferedImage hearts;
 
     public Overlay()
     {
         selectedItem = ItemRegistry.items.get(0);
+        hearts = new BufferedImage(340, 33, 2);
     }
 
     public static void up()

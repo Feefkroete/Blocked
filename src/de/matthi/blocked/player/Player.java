@@ -224,6 +224,8 @@ public class Player {
 
     //-------- ADDERS --------//
 
+    //TODO: ADDER UMSCHREIBEN, DASS MAN NICHT AU MINUS KOMMT
+
     public boolean addFood(int amt) {
         if (foodLevel+amt <= 10) {
             foodLevel += amt;

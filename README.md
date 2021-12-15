@@ -14,7 +14,7 @@
 - [ ] Bioms
 - [ ] Ores
 - [ ] Stone and Dirt Variants (Same Item?)
-- [ ] Item Entities
+- [x] Item Entities
 - [ ] Crafting-System
 - [ ] Survival Mode
 - [ ] Water
@@ -39,3 +39,4 @@
 
 #### Thanks To:
 - Such a Lucy for good ideas, good designes and mental support xD
+- Hugo for the french translationv - VIVE LA FRANCE!!!!111!11!11

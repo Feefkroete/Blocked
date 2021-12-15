@@ -1,6 +1,7 @@
-package de.matthi.blocked.main;
+package de.matthi.blocked.gui;
 
 import de.matthi.blocked.item.Item;
+import de.matthi.blocked.main.Game;
 import de.matthi.blocked.utils.MouseInput;
 
 import java.awt.*;

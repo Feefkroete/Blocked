@@ -1,7 +1,8 @@
-package de.matthi.blocked.main;
+package de.matthi.blocked.gui;
 
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.item.Item;
+import de.matthi.blocked.main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -13,10 +13,10 @@ public class Language {
     public static String langSelect = "Language: EN";
     public static String download = "Download";
     public static String downloadUpdate = "There's an Update available for Blocked!! Do you want to download it?";
-    public static String downloadComplete = "The Download has completed! Delete the old Blocked.jar and run the new one!";
+    public static String downloadComplete = "The Download has completed!";
 
     public static void setLanguage() {
-        if (activeLanguage<1) {
+        if (activeLanguage<2) {
             activeLanguage += 1;
         }
         else {
@@ -36,7 +36,7 @@ public class Language {
             options = "Options";
             langSelect = "Language: EN";
             downloadUpdate = "There's an Update available for Blocked!! Do you want to download it?";
-            downloadComplete = "The Download has completed! Delete the old Blocked.jar and run the new one!";
+            downloadComplete = "The Download has completed!";
         }
         if (activeLanguage == 1) {
             createNewWorld = "Neue Welt erstellen";
@@ -48,7 +48,19 @@ public class Language {
             options = "Einstellungen";
             langSelect = "Sprache: DE";
             downloadUpdate = "Es gibt eine neue Version von Blocked!! Möchtest du sie herunterladen?";
-            downloadComplete = "Der Download ist abgeschlossen. Lösche die alte Blocked.jar und starte die neue.";
+            downloadComplete = "Der Download ist abgeschlossen.";
+        }
+        if (activeLanguage == 2) {
+            createNewWorld = "Creer nouveau monde";
+            createWorld = "Creer monde";
+            selectWorldSize = "Choisir grandeur du monde";
+            selectWorld = "Charger monde";
+            quitGame = "Arrêter le jeu";
+            back = "<-Retour";
+            options = "Paramètres";
+            langSelect = "Langue: FR";
+            downloadUpdate = "Il y a une nouvelle version de Blocked!! Est-ce que tu veux la télécharger?";
+            downloadComplete = "Le téléchargement est terminé.";
         }
     }
 }

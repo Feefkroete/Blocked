@@ -38,6 +38,9 @@ public class ConfigHandler {
         if (lang.equals("EN")) {
             Language.activeLanguage = 0;
         }
+        if (lang.equals("FR")) {
+            Language.activeLanguage = 2;
+        }
         Language.langInit();
         String fps = data[1].substring(4);
         Game.fps = FileHandler.parseInt(fps);
@@ -52,6 +55,9 @@ public class ConfigHandler {
         }
         if (Language.activeLanguage == 1) {
             langidentify = "DE";
+        }
+        if (Language.activeLanguage == 2) {
+            langidentify = "FR";
         }
         data[0] = "language:" + langidentify;
         data[1] = "fps:" + Game.fps;

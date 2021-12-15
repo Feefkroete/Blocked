@@ -1,11 +1,9 @@
 package de.matthi.blocked.utils;
 
-import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.entity.itemEntity.ItemEntity;
-import de.matthi.blocked.item.ItemRegistry;
 import de.matthi.blocked.main.Game;
-import de.matthi.blocked.main.Hotbar;
-import de.matthi.blocked.main.Inventory;
+import de.matthi.blocked.gui.Hotbar;
+import de.matthi.blocked.gui.Inventory;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

@@ -1,6 +1,9 @@
 package de.matthi.blocked.main;
 
 import de.matthi.blocked.gfx.Assets;
+import de.matthi.blocked.gui.Hotbar;
+import de.matthi.blocked.gui.Inventory;
+import de.matthi.blocked.gui.Overlay;
 import de.matthi.blocked.menu.*;
 import de.matthi.blocked.player.Player;
 import de.matthi.blocked.utils.ConfigHandler;
@@ -22,7 +25,7 @@ public class Game extends Canvas implements Runnable
     public static final double VERSION = 1.51;
 
     public static final String name = "Blocked";
-    public static final int WIDTH = 1400;
+    public static final int WIDTH = 1700;
     public static final int HEIGHT = WIDTH/16*9;
     public static int fps = 70;
     public static final int tps = 40;

@@ -5,9 +5,9 @@ import de.matthi.blocked.block.BlockRegistry;
 import de.matthi.blocked.entity.itemEntity.ItemEntity;
 import de.matthi.blocked.gfx.Assets;
 import de.matthi.blocked.main.Game;
-import de.matthi.blocked.main.Hotbar;
-import de.matthi.blocked.main.Inventory;
-import de.matthi.blocked.main.Overlay;
+import de.matthi.blocked.gui.Hotbar;
+import de.matthi.blocked.gui.Inventory;
+import de.matthi.blocked.gui.Overlay;
 import de.matthi.blocked.world.World;
 
 import java.awt.*;
