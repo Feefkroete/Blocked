@@ -39,4 +39,4 @@
 
 #### Thanks To:
 - Such a Lucy for good ideas, good designes and mental support xD
-- Hugo for the french translationv - VIVE LA FRANCE!!!!111!11!11
+- Hugo for the french translation - VIVE LA FRANCE!!!!111!11!11
