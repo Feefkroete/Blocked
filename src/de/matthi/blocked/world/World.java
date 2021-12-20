@@ -318,7 +318,7 @@ public class World
         if (posx < width && posx >= 0 && posy < height && posy >= 0) {      //Stop this mf from returning null so ALL MY PROBLEMS ARE SOLVED
             return BlockRegistry.blocks.get(worldData[posx][posy]);
         }
-        return BlockRegistry.blocks.get(1);
+        return BlockRegistry.blocks.get(2);
     }
 
     public int getWidth() {
