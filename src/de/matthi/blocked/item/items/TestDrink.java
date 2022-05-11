@@ -12,7 +12,7 @@ public class TestDrink extends Item {
 
     @Override
     public void leftClickAction() {
-        Game.getPlayer().addWater(1);
+        Game.getPlayer().changeWaterLevel(1);
         MouseInput.leftMousePressed = false;
     }
 

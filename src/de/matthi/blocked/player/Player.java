@@ -1,6 +1,7 @@
 package de.matthi.blocked.player;
 
 import de.matthi.blocked.block.Block;
+import de.matthi.blocked.gui.Overlay;
 import de.matthi.blocked.main.Game;
 import de.matthi.blocked.utils.KeyInput;
 
@@ -51,7 +52,6 @@ public class Player {
             graphics.fillRect(Game.getWindow().getWidth()/2 - 26, Game.getWindow().getHeight()/2 -22, hitboxWidth, hitboxHeight);
         }
         graphics.drawImage(textur, Game.getWindow().getWidth()/2 - 30, Game.getWindow().getHeight()/2 -30, width, height, null);
-        //Item.items[Overlay.selectedBlock].render(graphics, Game.getFenster().getWidth()/2 + 12, Game.getFenster().getHeight()/2 -24, 15, 15);
     }
 
     public void tick() {
@@ -68,7 +68,7 @@ public class Player {
                 else {
                     if (fallSpeed>30) {
                         if (hp-((fallSpeed-30)/1.5) >= 0) {
-                            hp = (int) (hp - ((fallSpeed - 30) / 1.5));
+                            setHp((int) (hp - ((fallSpeed - 30) / 1.5)));
                         }
                         else {
                             hp = 0;
@@ -107,19 +107,19 @@ public class Player {
 
     public void healTick() {
         if (hp < 20 && foodLevel > 4 && waterLevel > 5) {
-            hp += 1;
-            foodLevel -= 1;
-            waterLevel -= 1;
+            changeHp(1);
+            changeFoodLevel(-1);
+            changeWaterLevel(-1);
         }
     }
 
     public void foodWaterRandomTick() {
         Random r = new Random();
         if (waterLevel>0 && r.nextFloat()<0.005*speed) {
-            waterLevel-=1;
+            changeWaterLevel(-1);
         }
         if (foodLevel>0 && r.nextFloat()<0.002*speed) {
-            foodLevel-=1;
+            changeFoodLevel(-1);
         }
     }
 
@@ -212,22 +212,23 @@ public class Player {
 
     public void setHp(int hp) {
         this.hp = hp;
+        Overlay.updateStats();
     }
 
     public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
+        Overlay.updateStats();
     }
 
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
+        Overlay.updateStats();
     }
 
-    //-------- ADDERS --------//
+    //-------- CHANGERS --------//
 
-    //TODO: ADDER UMSCHREIBEN, DASS MAN NICHT AU MINUS KOMMT
-
-    public boolean addFood(int amt) {
-        if (foodLevel+amt <= 10) {
+    public boolean changeFoodLevel(int amt) {
+        if (foodLevel+amt <= 10 && foodLevel+amt>0) {
             foodLevel += amt;
         }
         else {
@@ -236,10 +237,11 @@ public class Player {
             }
             foodLevel = 10;
         }
+        Overlay.updateStats();
         return true;
     }
-    public boolean addWater(int amt) {
-        if (waterLevel+amt <= 10) {
+    public boolean changeWaterLevel(int amt) {
+        if (waterLevel+amt <= 10 && waterLevel+amt>0) {
             waterLevel += amt;
         }
         else {
@@ -248,6 +250,21 @@ public class Player {
             }
             waterLevel = 10;
         }
+        Overlay.updateStats();
+        return true;
+    }
+
+    public boolean changeHp(int amt) {
+        if (hp+amt <= 20 && hp+amt>0) {
+            hp += amt;
+        }
+        else {
+            if (hp == 20) {
+                return false;
+            }
+            hp = 10;
+        }
+        Overlay.updateStats();
         return true;
     }
 }

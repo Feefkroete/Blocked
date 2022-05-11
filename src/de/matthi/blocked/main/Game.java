@@ -25,8 +25,8 @@ public class Game extends Canvas implements Runnable
     public static final double VERSION = 1.51;
 
     public static final String name = "Blocked";
-    public static final int WIDTH = 1700;
-    public static final int HEIGHT = WIDTH/16*9;
+    public static int WIDTH = 1400;
+    public static int HEIGHT = WIDTH/16*9;
     public static int fps = 70;
     public static final int tps = 40;
     public static JFrame window;
@@ -97,7 +97,7 @@ public class Game extends Canvas implements Runnable
         window.addMouseWheelListener(mouseInput);
 
         window.pack();
-        window.setResizable(false);
+        window.setResizable(true);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
@@ -124,6 +124,7 @@ public class Game extends Canvas implements Runnable
             lasttimeTick = now;
             if (deltaTick >= 1)
             {
+                recalculateFrame();
                 tick();
                 tick++;
                 deltaTick--;
@@ -225,6 +226,23 @@ public class Game extends Canvas implements Runnable
 
         graphics.dispose();         //Leert den cache?
         bufferStrategy.show();      //Zeigt das Bild an
+    }
+
+    private static void recalculateFrame() {
+        WIDTH = window.getWidth();
+        HEIGHT = window.getHeight();
+        if ((double)WIDTH/(double)HEIGHT < 1.728) {
+            Overlay.width = (int) (1005*(WIDTH/1400d));
+            Overlay.height = (int)(Overlay.width*(583f/1005f));
+        }
+        else {
+            Overlay.height = (int) (583*(HEIGHT/787.500d));
+            Overlay.width = (int)(Overlay.height*(1005f/583f));
+        }
+
+        Overlay.posx = ((WIDTH/2)-(Overlay.width/2));
+        Overlay.posy = ((HEIGHT/2)-(Overlay.height/2));
+        Overlay.scale = Overlay.width/1005d;
     }
 
         /*----------------GETTERS------------------*/

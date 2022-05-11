@@ -13,7 +13,7 @@ public class TestFood extends Item {
 
     @Override
     public void leftClickAction() {
-        Game.getPlayer().addFood(1);
+        Game.getPlayer().changeFoodLevel(1);
         MouseInput.leftMousePressed = false;
     }
 
